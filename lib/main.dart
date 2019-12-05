@@ -11,10 +11,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Home Page'),
+      routes: <String, WidgetBuilder>{
+        '/subs': (BuildContext context) => SubsPage(title: "Subscriptions"),
+        '/settings': (BuildContext context) => SettingsPage(title: "Settings"),
+      },
     );
   }
 }
 
+
+// ------------Home--------------
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -37,11 +43,28 @@ class _MyHomePageState extends State<MyHomePage> {
               child: FlutterLogo(),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text("Home"),
+              leading: Icon(Icons.rss_feed),
+              title: Text("My feeds"),
+              onTap: (){
+                Navigator.pushNamed(context, '/');
+              },
             ),
             Divider(
               
+            ),
+            ListTile(
+              leading: Icon(Icons.subscriptions),
+              title: Text("Subscriptions"),
+              onTap: (){
+                Navigator.pushNamed(context, '/subs');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: (){
+                Navigator.pushNamed(context, '/settings');
+              },
             ),
             ListTile(
               leading: Icon(Icons.close),
@@ -57,7 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            title: Text("Home"),
+            title: Text("Feeds"),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: (){
+
+                },
+              ),
+            ],
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -71,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Container(
                       width: 300,
                       height: 150,
-                      child: Text("card"),
+                      child: Text("An article"),
                     ),
                   ),
                 );
@@ -84,4 +115,92 @@ class _MyHomePageState extends State<MyHomePage> {
 
     );
   }
+}
+
+
+// --------------Subscriptions------------
+class SubsPage extends StatefulWidget {
+  SubsPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _SubsPageState createState() => _SubsPageState();
+}
+
+class _SubsPageState extends State<SubsPage>{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+
+        drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                DrawerHeader(
+                  child: FlutterLogo(),
+                ),
+                ListTile(
+                  leading: Icon(Icons.rss_feed),
+                  title: Text("My feeds"),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/');
+                  },
+                ),
+                Divider(
+
+                ),
+                ListTile(
+                  leading: Icon(Icons.subscriptions),
+                  title: Text("Subscriptions"),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/subs');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text("Settings"),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/settings');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.close),
+                  title: Text('Close Drawer'),
+                  onTap: () {
+                    // change app state...
+                    Navigator.pop(context); // close the drawer
+                  },
+                ),
+              ],
+            )
+        ),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              title: Text("Subscriptions"),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: (){
+
+                  },
+                ),
+              ],
+            ),
+
+          ],
+        )
+
+    );
+  }
+}
+
+// -------------Settings-------------------
+class SettingsPage extends StatefulWidget {
+  SettingsPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
 }
