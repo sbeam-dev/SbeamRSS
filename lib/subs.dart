@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 
 class RssSource {
@@ -35,6 +34,76 @@ Future<RssSource> _querySourceDatabase(int id) async {
 }
 
 
+// ----------build list of source---------
+class SourceListTile extends StatefulWidget {
+  @override
+  _SourceListTileState createState() => _SourceListTileState();
+}
+
+class _SourceListTileState extends State<SourceListTile> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        splashColor: Colors.blue.withAlpha(30),
+        child: ListTile(
+          title: Text("Title of RSS source"),
+          subtitle: Text("http://url/"),
+          trailing: Icon(Icons.more_vert),
+        ),
+        onTap: (){
+          showModalBottomSheet(context: context,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              builder: (BuildContext context){
+                return SourceBottomSheet();
+            }
+          );
+        },
+      ),
+    );
+  }
+}
+
+class SourceBottomSheet extends StatefulWidget {
+  @override
+  _SourceBottomSheet createState() => _SourceBottomSheet();
+}
+
+class _SourceBottomSheet extends State<SourceBottomSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.edit),
+          title: Text("Edit Name"),
+          onTap: (){
+
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.link),
+          title: Text("Edit URL"),
+          onTap: (){
+
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.delete, color: Colors.red),
+          title: Text("Delete this source", style: TextStyle(color: Colors.red),),
+          onTap: (){
+
+          },
+        )
+      ],
+    );
+  }
+}
+
 Widget _buildSubItem(int index){
 //  if (_querySourceDatabase(index) == null) {
 //    return null;
@@ -47,39 +116,11 @@ Widget _buildSubItem(int index){
   if (index > 5) {
     return null;
   }
-  return Slidable(
-    actionPane: SlidableDrawerActionPane(),
-    actionExtentRatio: 0.25,
-    child: Container(
-      color: Colors.white,
-      child: ListTile(
-        title: Text('Title of RSSSource'),
-        subtitle: Text('http://sourceurl/'),
-      ),
-    ),
-    actions: <Widget>[
-      IconSlideAction(
-        caption: 'Edit',
-        color: Colors.grey,
-        icon: Icons.edit,
-        onTap: (){
-
-        },
-      ),
-    ],
-    secondaryActions: <Widget>[
-      IconSlideAction(
-        caption: 'Delete',
-        color: Colors.red,
-        icon: Icons.delete,
-        onTap: (){
-
-        },
-      ),
-    ],
-  );;
+  return SourceListTile();
 }
 
+
+// ---------------Page--------------
 class SubsPage extends StatefulWidget {
   SubsPage({Key key, this.title}) : super(key: key);
 
