@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'subs.dart';
 import 'settings.dart';
 import 'feeds.dart';
-import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 
 // ------------Home--------------
 class MyHomePage extends StatefulWidget {
@@ -43,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: SizedBox.expand(
         child: PageView(
+          physics: new NeverScrollableScrollPhysics(),
           controller: _pageController,
           onPageChanged: (index) {
             setState(() => _currentIndex = index);
@@ -54,17 +54,26 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: FancyBottomNavigation(
-        tabs: [
-          TabData(iconData: Icons.rss_feed, title: "Feeds"),
-          TabData(iconData: Icons.radio, title: "Source"),
-          TabData(iconData: Icons.settings, title: "Settings")
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.rss_feed),
+            title: Text('Feeds'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.radio),
+            title: Text('Source'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('Settings'),
+          ),
         ],
-        onTabChangedListener: (position) {
-          setState(() {
-            _currentIndex = position;
-            _pageController.jumpToPage(position);
-          });
+        currentIndex: _currentIndex,
+        selectedItemColor: Colors.blueAccent[700],
+        onTap: (int index){
+          _currentIndex = index;
+          _pageController.jumpToPage(index);
         },
       ),
     );

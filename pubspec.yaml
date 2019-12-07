@@ -21,7 +21,6 @@ dependencies:
     sdk: flutter
   sqflite:
   path:
-  fancy_bottom_navigation: ^0.3.2
   provider: ^3.0.0
 
   # The following adds the Cupertino Icons font to your application.

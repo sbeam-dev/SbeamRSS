@@ -47,7 +47,7 @@ class SourceDBOperations{
     }));
   }
 
-  static void addSourceToDB(RssSource newsource) {
+  static Future<void> addSourceToDB(RssSource newsource) async{
     Database database;
     openDB () async{
       database = await openDatabase(
@@ -60,8 +60,8 @@ class SourceDBOperations{
         version: 1,
       );
     }
-    openDB();
-    database.insert(
+    await openDB();
+    await database.insert(
       'source',
       newsource.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
