@@ -1,41 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
-
-class RssSource {
-  final int id;
-  final String name;
-  final String url;
-  RssSource({this.id, this.name, this.url});
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'url': url,
-    };
-  }
-}
-
-
-Future<RssSource> _querySourceDatabase(int id) async {
-  final Future<Database> database = openDatabase(
-    join(await getDatabasesPath(), 'source_database.db'),
-    onCreate: (db, version) {
-      return db.execute(
-        "CREATE TABLE source(id INTEGER PRIMARY KEY, name TEXT, url TEXT)",
-      );
-    },
-    version: 1,
-  );
-
-}
+import 'sourcedb.dart';
 
 
 // ----------build list of source---------
 class SourceListTile extends StatefulWidget {
+  final RssSource source;
+  const SourceListTile({this.source});
   @override
   _SourceListTileState createState() => _SourceListTileState();
 }
@@ -47,8 +18,8 @@ class _SourceListTileState extends State<SourceListTile> {
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
         child: ListTile(
-          title: Text("Title of RSS source"),
-          subtitle: Text("http://url/"),
+          title: Text("${widget.source.name}"),
+          subtitle: Text("${widget.source.url}"),
           trailing: Icon(Icons.more_vert),
         ),
         onTap: (){
@@ -104,22 +75,64 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
   }
 }
 
-Widget _buildSubItem(int index){
-//  if (_querySourceDatabase(index) == null) {
-//    return null;
-//  }
-//  RssSource _fetchedsource;
-//  setfetched() async{
-//    _fetchedsource = await _querySourceDatabase(index);
-//  }
-//  setfetched();
-  if (index > 5) {
+Widget _buildSubItem(int index, var sourcedump){
+  if (sourcedump == null) return null;
+  if (sourcedump.isEmpty) return null;
+  if (sourcedump[index] == null) {
     return null;
   }
-  return SourceListTile();
+  RssSource fetchedsource = sourcedump[index];
+  return SourceListTile(source: fetchedsource,);
 }
 
+// --------------Add button-----------
+class AddSourceBottomSheet extends StatefulWidget {
+  @override
+  _AddSourceBottomSheet createState() => _AddSourceBottomSheet();
+}
 
+class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding:
+        EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Center(
+                child: Text("New RSS Source",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Name",
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: "URL",
+              ),
+            ),
+            ListTile(
+              dense: true,
+              trailing: IconButton(
+                icon: Icon(Icons.check),
+                onPressed: (){},
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 // ---------------Page--------------
 class SubsPage extends StatefulWidget {
   SubsPage({Key key, this.title}) : super(key: key);
@@ -131,6 +144,17 @@ class SubsPage extends StatefulWidget {
 }
 
 class _SubsPageState extends State<SubsPage> {
+  var _sourcedump;
+  @override
+  void initState() {
+    SourceDBOperations.querySourceDatabase().then(
+        (result){
+          setState(() {
+            _sourcedump = result;
+          });
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -141,7 +165,16 @@ class _SubsPageState extends State<SubsPage> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: (){
-
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context){
+                      return AddSourceBottomSheet();
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                );
               },
             ),
           ],
@@ -149,7 +182,8 @@ class _SubsPageState extends State<SubsPage> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-              return _buildSubItem(index);
+                  if (_sourcedump == null) return null;
+                  return _buildSubItem(index, _sourcedump);
             },
           ),
         ),
