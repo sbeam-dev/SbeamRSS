@@ -67,4 +67,26 @@ class SourceDBOperations{
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  static Future<void> deleteSourceDB(int delId) async{
+    Database database;
+    openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'source_database.db'),
+        onCreate: (db, version) {
+          return db.execute(
+            "CREATE TABLE source(id INTEGER PRIMARY KEY, name TEXT, url TEXT)",
+          );
+        },
+        version: 1,
+      );
+    }
+    await openDB();
+    await database.delete(
+      'source',
+      where: 'id = ?',
+      whereArgs: [delId],
+    );
+    await database.rawUpdate("UPDATE source SET id = id-1 WHERE id > ?", [delId]);
+  }
 }

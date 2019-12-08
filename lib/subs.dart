@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/models/sourcemodel.dart';
+import 'package:provider/provider.dart';
 
 import 'sourcedb.dart';
 
@@ -28,7 +30,7 @@ class _SourceListTileState extends State<SourceListTile> {
                 borderRadius: BorderRadius.circular(10),
               ),
               builder: (BuildContext context){
-                return SourceBottomSheet();
+                return SourceBottomSheet(source: widget.source);
             }
           );
         },
@@ -38,6 +40,8 @@ class _SourceListTileState extends State<SourceListTile> {
 }
 
 class SourceBottomSheet extends StatefulWidget {
+  final RssSource source;
+  const SourceBottomSheet({this.source});
   @override
   _SourceBottomSheet createState() => _SourceBottomSheet();
 }
@@ -67,7 +71,8 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           leading: Icon(Icons.delete, color: Colors.red),
           title: Text("Delete this source", style: TextStyle(color: Colors.red),),
           onTap: (){
-
+            Provider.of<SourceModel>(context, listen: false).deleteEntry(widget.source.id);
+            Navigator.pop(context);
           },
         )
       ],
@@ -76,11 +81,6 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
 }
 
 Widget _buildSubItem(int index, var sourcedump){
-  if (sourcedump == null) return null;
-  if (sourcedump.isEmpty) return null;
-  if (sourcedump[index] == null) {
-    return null;
-  }
   RssSource fetchedsource = sourcedump[index];
   return SourceListTile(source: fetchedsource,);
 }
@@ -92,6 +92,9 @@ class AddSourceBottomSheet extends StatefulWidget {
 }
 
 class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
+  String inputName;
+  String inputUrl;
+  int inputId;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -114,17 +117,25 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
               decoration: InputDecoration(
                 labelText: "Name",
               ),
+              onChanged: (text){inputName = text;},
             ),
             TextField(
               decoration: InputDecoration(
                 labelText: "URL",
               ),
+              onChanged: (text){inputUrl = text;},
             ),
             ListTile(
               dense: true,
               trailing: IconButton(
                 icon: Icon(Icons.check),
-                onPressed: (){},
+                onPressed: (){
+                  inputId = Provider.of<SourceModel>(context, listen: false).listlen;
+                  Provider.of<SourceModel>(context, listen: false).addEntry(
+                    RssSource(id: inputId, name: inputName, url: inputUrl)
+                  );
+                  Navigator.pop(context);
+                },
               ),
             )
           ],
@@ -144,17 +155,6 @@ class SubsPage extends StatefulWidget {
 }
 
 class _SubsPageState extends State<SubsPage> {
-  var _sourcedump;
-  @override
-  void initState() {
-    SourceDBOperations.querySourceDatabase().then(
-        (result){
-          setState(() {
-            _sourcedump = result;
-          });
-        }
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -179,13 +179,44 @@ class _SubsPageState extends State<SubsPage> {
             ),
           ],
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  if (_sourcedump == null) return null;
-                  return _buildSubItem(index, _sourcedump);
-            },
-          ),
+        Consumer<SourceModel>(
+          builder: (context, sourcemodel, child){
+            if(sourcemodel.sourcedump == null) {
+              return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return CircularProgressIndicator();
+                      },
+                    childCount: 1,
+                  ),
+              );
+            } else if (sourcemodel.listlen == 0) {
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                    return Card(
+                      child: InkWell(
+                        splashColor: Colors.blue.withAlpha(30),
+                        child: ListTile(
+                          title: Text("No subscribed RSS source."),
+                        ),
+                      ),
+                    );
+                  },
+                  childCount: 1,
+                ),
+              );
+            } else {
+              return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                    return _buildSubItem(index, sourcemodel.sourcedump);
+                  },
+                  childCount: sourcemodel.listlen,
+                ),
+              );
+            }
+          },
         ),
       ],
     );
