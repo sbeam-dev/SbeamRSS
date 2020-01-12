@@ -2,6 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FeedEntry {
+  final int id;
   final String title;
   final String link;
   final String description;
@@ -9,7 +10,7 @@ class FeedEntry {
   final int gettime;  //sqlite format, seconds after 1970-01-01
   final int sourceid;
   final int readstate; //haven't read 0 read 1
-  FeedEntry({this.title, this.link, this.description, this.author, this.gettime, this.sourceid, this.readstate});
+  FeedEntry({this.id, this.title, this.link, this.description, this.author, this.gettime, this.sourceid, this.readstate});
 }
 
 class FeedDBOperations{
@@ -39,6 +40,7 @@ class FeedDBOperations{
     await fetchRaw();
     return Future.value(List.generate(fetcheddb.length, (i) {
       return FeedEntry(
+        id: fetcheddb[i]['id'],
         title: fetcheddb[i]['title'],
         link: fetcheddb[i]['url'],
         description: fetcheddb[i]['description'],

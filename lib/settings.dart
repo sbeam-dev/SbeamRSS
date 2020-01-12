@@ -12,40 +12,23 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          title: Text("Settings"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: (){
-
-              },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Settings", style: TextStyle(color: Colors.black)),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: ListView(
+        children: <Widget>[
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.info_outline),
+              title: Text("About"),
             ),
-          ],
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-              return Card(
-                child: InkWell(
-                  splashColor: Colors.blue.withAlpha(30),
-                  onTap: (){
-                    print("Tapped");
-                  },
-                  child: Container(
-                    width: 300,
-                    height: 150,
-                    child: Text("A Setting"),
-                  ),
-                ),
-              );
-            },
-            childCount: 20,
-          ),
-        ),
-      ],
+          )
+
+        ],
+      ),
     );
   }
 }

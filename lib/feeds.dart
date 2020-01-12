@@ -15,7 +15,10 @@ class _FeedsPageState extends State<FeedsPage> {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          title: Text("Feeds"),
+          floating: true,
+          snap: true,
+          title: Text("Feeds", style: TextStyle(color: Colors.black)),
+          centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.refresh),
@@ -34,11 +37,27 @@ class _FeedsPageState extends State<FeedsPage> {
                   onTap: (){
                     print("Tapped");
                   },
-                  child: Container(
-                    width: 300,
-                    height: 150,
-                    child: Text("An article"),
-                  ),
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text("Title of the article"),
+                        subtitle: Text("The first few words of the article..."),
+                      ),
+                      ButtonBar(
+                        alignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "1 minutes ago",
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: (){},
+                          )
+                        ],
+                      )
+                    ],
+                  )
                 ),
               );
             },

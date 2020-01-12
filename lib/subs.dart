@@ -157,7 +157,10 @@ class _SubsPageState extends State<SubsPage> {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          title: Text("Subscriptions"),
+          floating: true,
+          snap: true,
+          title: Text("Subscriptions", style: TextStyle(color: Colors.black)),
+          centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
