@@ -21,10 +21,13 @@ class SourceDBOperations{
     Database database;
     Future openDB () async{
       database = await openDatabase(
-        join(await getDatabasesPath(), 'source_database.db'),
+        join(await getDatabasesPath(), 'database.db'),
         onCreate: (db, version) {
-          return db.execute(
+          db.execute(
             "CREATE TABLE source(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT)",
+          );
+          db.execute(
+            "CREATE TABLE feed(id INTEGER PRIMARY KEY, title TEXT, link TEXT, description TEXT, author TEXT, gettime INTEGER, sourceid INTEGER, readstate INTEGER)",
           );
         },
         version: 1,
@@ -51,12 +54,7 @@ class SourceDBOperations{
     Database database;
     openDB () async{
       database = await openDatabase(
-        join(await getDatabasesPath(), 'source_database.db'),
-        onCreate: (db, version) {
-          return db.execute(
-            "CREATE TABLE source(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT)",
-          );
-        },
+        join(await getDatabasesPath(), 'database.db'),
         version: 1,
       );
     }
@@ -72,12 +70,7 @@ class SourceDBOperations{
     Database database;
     openDB () async{
       database = await openDatabase(
-        join(await getDatabasesPath(), 'source_database.db'),
-        onCreate: (db, version) {
-          return db.execute(
-            "CREATE TABLE source(id INTEGER PRIMARY KEY, name TEXT, url TEXT)",
-          );
-        },
+        join(await getDatabasesPath(), 'database.db'),
         version: 1,
       );
     }
