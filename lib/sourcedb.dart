@@ -24,7 +24,7 @@ class SourceDBOperations{
         join(await getDatabasesPath(), 'source_database.db'),
         onCreate: (db, version) {
           return db.execute(
-            "CREATE TABLE source(id INTEGER PRIMARY KEY, name TEXT, url TEXT)",
+            "CREATE TABLE source(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT)",
           );
         },
         version: 1,
@@ -47,14 +47,14 @@ class SourceDBOperations{
     }));
   }
 
-  static Future<void> addSourceToDB(RssSource newsource) async{
+  static Future<void> addSourceToDB(String name, String address) async{
     Database database;
     openDB () async{
       database = await openDatabase(
         join(await getDatabasesPath(), 'source_database.db'),
         onCreate: (db, version) {
           return db.execute(
-            "CREATE TABLE source(id INTEGER PRIMARY KEY, name TEXT, url TEXT)",
+            "CREATE TABLE source(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT)",
           );
         },
         version: 1,
@@ -63,7 +63,7 @@ class SourceDBOperations{
     await openDB();
     await database.insert(
       'source',
-      newsource.toMap(),
+      {'name': name, 'url':address},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -87,6 +87,5 @@ class SourceDBOperations{
       where: 'id = ?',
       whereArgs: [delId],
     );
-    await database.rawUpdate("UPDATE source SET id = id-1 WHERE id > ?", [delId]);
   }
 }

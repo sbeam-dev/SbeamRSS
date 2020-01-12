@@ -21,11 +21,9 @@ class SourceModel extends ChangeNotifier{
     _listlen = _sourcedump.length;
   }
 
-  Future<void> addEntry(RssSource newsource) async {
-    await SourceDBOperations.addSourceToDB(newsource);
-    _listlen++;
-    _sourcedump.add(newsource);
-    notifyListeners();
+  Future<void> addEntry(String name, String address) async {
+    await SourceDBOperations.addSourceToDB(name, address);
+    await loadData();
   }
 
   Future<void> deleteEntry(int delId) async {

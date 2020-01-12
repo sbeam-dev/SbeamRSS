@@ -130,10 +130,7 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
               trailing: IconButton(
                 icon: Icon(Icons.check),
                 onPressed: (){
-                  inputId = Provider.of<SourceModel>(context, listen: false).listlen;
-                  Provider.of<SourceModel>(context, listen: false).addEntry(
-                    RssSource(id: inputId, name: inputName, url: inputUrl)
-                  );
+                  Provider.of<SourceModel>(context, listen: false).addEntry(inputName, inputUrl);
                   Navigator.pop(context);
                 },
               ),
