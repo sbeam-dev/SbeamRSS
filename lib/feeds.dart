@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'reader.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key, this.title}) : super(key: key);
@@ -35,6 +36,8 @@ class _FeedsPageState extends State<FeedsPage> {
                 child: InkWell(
                   splashColor: Colors.blue.withAlpha(30),
                   onTap: (){
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ReaderScreen()));
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
