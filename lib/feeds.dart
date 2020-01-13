@@ -17,7 +17,7 @@ class _FeedsPageState extends State<FeedsPage> {
         SliverAppBar(
           floating: true,
           snap: true,
-          title: Text("Feeds", style: TextStyle(color: Colors.black)),
+          title: Text("Feeds", style: Theme.of(context).textTheme.title),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -35,9 +35,9 @@ class _FeedsPageState extends State<FeedsPage> {
                 child: InkWell(
                   splashColor: Colors.blue.withAlpha(30),
                   onTap: (){
-                    print("Tapped");
                   },
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       ListTile(
                         title: Text("Title of the article"),

@@ -55,7 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.color,
+//        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.rss_feed),
@@ -71,7 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _currentIndex,
-        selectedItemColor: Colors.blueAccent[700],
         onTap: (int index){
           _currentIndex = index;
           _pageController.jumpToPage(index);

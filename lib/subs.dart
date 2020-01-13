@@ -159,7 +159,7 @@ class _SubsPageState extends State<SubsPage> {
         SliverAppBar(
           floating: true,
           snap: true,
-          title: Text("Subscriptions", style: TextStyle(color: Colors.black)),
+          title: Text("Subscriptions",style: Theme.of(context).textTheme.title),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
