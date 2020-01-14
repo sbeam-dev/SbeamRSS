@@ -7,10 +7,10 @@ class FeedEntry {
   final String link;
   final String description;
   final String author;
-  final int gettime;  //sqlite format, seconds after 1970-01-01
-  final int sourceid;
-  final int readstate; //haven't read 0 read 1
-  FeedEntry({this.id, this.title, this.link, this.description, this.author, this.gettime, this.sourceid, this.readstate});
+  final int getTime;  //sqlite format, seconds after 1970-01-01
+  final int sourceID;
+  final int readState; //haven't read 0 read 1
+  FeedEntry({this.id, this.title, this.link, this.description, this.author, this.getTime, this.sourceID, this.readState});
 }
 
 class FeedDBOperations{
@@ -24,7 +24,7 @@ class FeedDBOperations{
             "CREATE TABLE source(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT)",
           );
           db.execute(
-            "CREATE TABLE feed(id INTEGER PRIMARY KEY, title TEXT, link TEXT, description TEXT, author TEXT, gettime INTEGER, sourceid INTEGER, readstate INTEGER)",
+            "CREATE TABLE feed(id INTEGER PRIMARY KEY, title TEXT, link TEXT, description TEXT, author TEXT, getTime INTEGER, sourceID INTEGER, readState INTEGER)",
           );
         },
         version: 1,
@@ -45,9 +45,9 @@ class FeedDBOperations{
         link: fetcheddb[i]['url'],
         description: fetcheddb[i]['description'],
         author: fetcheddb[i]['author'],
-        gettime: fetcheddb[i]['gettime'],
-        sourceid: fetcheddb[i]['sourceid'],
-        readstate: fetcheddb[i]['readstate'],
+        getTime: fetcheddb[i]['getTime'],
+        sourceID: fetcheddb[i]['sourceID'],
+        readState: fetcheddb[i]['readState'],
       );
     }));
   }
@@ -63,7 +63,7 @@ class FeedDBOperations{
     await database.insert(
       'feed',
       {'title': entry.title, 'link': entry.link, 'description': entry.description, 'author': entry.author,
-      'gettime': entry.gettime, 'sourceid': entry.sourceid, 'readstate': entry.readstate},
+      'getTime': entry.getTime, 'sourceID': entry.sourceID, 'readState': entry.readState},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }

@@ -34,18 +34,18 @@ class SourceDBOperations{
       );
     }
     await openDB();
-    List<Map> fetcheddb;
+    List<Map> fetchedDB;
     fetchRaw () async {
-      fetcheddb = await database.query(
+      fetchedDB = await database.query(
         'source',
       );
     }
     await fetchRaw();
-    return Future.value(List.generate(fetcheddb.length, (i) {
+    return Future.value(List.generate(fetchedDB.length, (i) {
       return RssSource(
-        id: fetcheddb[i]['id'],
-        name: fetcheddb[i]['name'],
-        url: fetcheddb[i]['url'],
+        id: fetchedDB[i]['id'],
+        name: fetchedDB[i]['name'],
+        url: fetchedDB[i]['url'],
       );
     }));
   }

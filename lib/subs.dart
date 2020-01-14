@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app1/models/sourcemodel.dart';
+import 'package:flutter_app1/models/sourceModel.dart';
 import 'package:provider/provider.dart';
 
 import 'sourcedb.dart';
@@ -80,9 +80,9 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
   }
 }
 
-Widget _buildSubItem(int index, var sourcedump){
-  RssSource fetchedsource = sourcedump[index];
-  return SourceListTile(source: fetchedsource,);
+Widget _buildSubItem(int index, var sourceDump){
+  RssSource fetchedSource = sourceDump[index];
+  return SourceListTile(source: fetchedSource);
 }
 
 // --------------Add button-----------
@@ -180,8 +180,8 @@ class _SubsPageState extends State<SubsPage> {
           ],
         ),
         Consumer<SourceModel>(
-          builder: (context, sourcemodel, child){
-            if(sourcemodel.sourcedump == null) {
+          builder: (context, sourceModel, child){
+            if(sourceModel.sourceDump == null) {
               return SliverList(
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
@@ -190,7 +190,7 @@ class _SubsPageState extends State<SubsPage> {
                     childCount: 1,
                   ),
               );
-            } else if (sourcemodel.listlen == 0) {
+            } else if (sourceModel.listLen == 0) {
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
@@ -210,9 +210,9 @@ class _SubsPageState extends State<SubsPage> {
               return SliverList(
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    return _buildSubItem(index, sourcemodel.sourcedump);
+                    return _buildSubItem(index, sourceModel.sourceDump);
                   },
-                  childCount: sourcemodel.listlen,
+                  childCount: sourceModel.listLen,
                 ),
               );
             }

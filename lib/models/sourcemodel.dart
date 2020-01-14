@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_app1/sourcedb.dart';
 
 class SourceModel extends ChangeNotifier{
-  List<RssSource> _sourcedump;
-  int _listlen = 0;
-  get sourcedump => _sourcedump;
-  get listlen => _listlen;
+  List<RssSource> _sourceDump;
+  int _listLen = 0;
+  get sourceDump => _sourceDump;
+  get listLen => _listLen;
 
-  set sourcedump(List<RssSource> newdump) {
-    _sourcedump = newdump;
+  set sourceDump(List<RssSource> newDump) {
+    _sourceDump = newDump;
     notifyListeners();
   }
 
@@ -17,8 +17,8 @@ class SourceModel extends ChangeNotifier{
   }
 
   Future<void> loadData() async {
-    sourcedump = await SourceDBOperations.querySourceDatabase();
-    _listlen = _sourcedump.length;
+    _sourceDump = await SourceDBOperations.querySourceDatabase();
+    _listLen = _sourceDump.length;
   }
 
   Future<void> addEntry(String name, String address) async {
