@@ -24,7 +24,7 @@ dependencies:
   provider: ^3.0.0
   webfeed: ^0.4.2
   http: ^0.12.0+4
-  flutter_widget_from_html_core:
+  flutter_html: ^1.0.0-pre.1
   shared_preferences:
 
   # The following adds the Cupertino Icons font to your application.
