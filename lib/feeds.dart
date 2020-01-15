@@ -36,29 +36,31 @@ class _FeedsPageState extends State<FeedsPage> {
                 child: InkWell(
                   splashColor: Colors.blue.withAlpha(30),
                   onTap: (){
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ReaderScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen()));
                   },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Row(
                     children: <Widget>[
-                      ListTile(
-                        title: Text("Title of the article"),
-                        subtitle: Text("The first few words of the article..."),
-                      ),
-                      ButtonBar(
-                        alignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            "1 minutes ago",
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Title of the article"),
+                          subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("The first few words of the article..."),
+                                Text(""),
+                                Text(
+                                  "1 minutes ago",
+                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                                ),
+                              ]
                           ),
-                          IconButton(
-                            icon: Icon(Icons.more_vert),
-                            onPressed: (){},
-                          )
-                        ],
-                      )
+                          contentPadding: EdgeInsets.all(8.0),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.more_vert),
+                        onPressed: (){},
+                      ),
                     ],
                   )
                 ),
