@@ -43,6 +43,8 @@ class FeedDBOperations{
     }
     await fetchRaw();
     return Future.value(List.generate(fetchedDB.length, (i) {
+//      print("querying");
+//      print(fetchedDB[i]['sourceID']);
       return FeedEntry(
         id: fetchedDB[i]['id'],
         title: fetchedDB[i]['title'],
@@ -72,7 +74,7 @@ class FeedDBOperations{
         where: 'link == "${entry.link}"'
     );
     if(sameLinkEntry.length != 0){
-      print("${entry.link} duplicated.");
+//      print("${entry.link} duplicated.");
       return;
     }
 
@@ -101,6 +103,7 @@ class FeedDBOperations{
           sourceID: source.id,
           readState: 0
         );
+//        print("before add entry:" + entry.sourceID.toString());
         await FeedDBOperations.addFeedToDB(entry);
       }
     }

@@ -10,11 +10,16 @@ class FeedModel extends ChangeNotifier {
   }
 
   Future<void> loadFeed() async {
-
+    _feedDump = await FeedDBOperations.queryTenEntries();
+//    print("loading check");
+//    print(_feedDump[0].sourceID);
+    notifyListeners();
   }
 
   Future<void> refreshFeed() async {
-    FeedDBOperations.refreshToDB();
+//    print("called");
+    await FeedDBOperations.refreshToDB();
+//    print("refreshed");
     loadFeed();
   }
 }

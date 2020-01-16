@@ -18,16 +18,19 @@ class _SettingsPageState extends State<SettingsPage> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: ListView(
-        children: <Widget>[
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.info_outline),
-              title: Text("About"),
-            ),
-          )
+      body: Container(
+        color: Theme.of(context).backgroundColor,
+        child: ListView(
+          children: <Widget>[
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.info_outline),
+                title: Text("About"),
+              ),
+            )
 
-        ],
+          ],
+        ),
       ),
     );
   }

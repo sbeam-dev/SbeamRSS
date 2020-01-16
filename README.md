@@ -11,7 +11,7 @@ During the first stage of development, the app will be working full offline(rely
 ### Todos
 
 - [x] Subscription source management
-- [ ] Feed pull and storage
-- [ ] UI for reading feed articles
+- [x] Feed pull and storage
+- [ ] UI for reading feed articles (Currently working on)
 - [ ] Frontend refinement and theming
 - [ ] Feed filtering

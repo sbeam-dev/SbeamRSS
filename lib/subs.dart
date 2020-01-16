@@ -154,18 +154,20 @@ class SubsPage extends StatefulWidget {
 class _SubsPageState extends State<SubsPage> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          floating: true,
-          snap: true,
-          title: Text("Subscriptions",style: Theme.of(context).textTheme.title),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: (){
-                showModalBottomSheet(
+    return Container(
+      color: Theme.of(context).backgroundColor,
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            floating: true,
+            snap: true,
+            title: Text("Subscriptions",style: Theme.of(context).textTheme.title),
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: (){
+                  showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
                     builder: (BuildContext context){
@@ -174,51 +176,53 @@ class _SubsPageState extends State<SubsPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                );
-              },
-            ),
-          ],
-        ),
-        Consumer<SourceModel>(
-          builder: (context, sourceModel, child){
-            if(sourceModel.sourceDump == null) {
-              return SliverList(
+                  );
+                },
+              ),
+            ],
+          ),
+          Consumer<SourceModel>(
+            builder: (context, sourceModel, child){
+              if(sourceModel.sourceDump == null) {
+                return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return CircularProgressIndicator();
-                      },
+                        (BuildContext context, int index) {
+                      return CircularProgressIndicator();
+                    },
                     childCount: 1,
                   ),
-              );
-            } else if (sourceModel.listLen == 0) {
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    return Card(
-                      child: InkWell(
-                        splashColor: Colors.blue.withAlpha(30),
-                        child: ListTile(
-                          title: Text("No subscribed RSS source."),
-                        ),
-                      ),
-                    );
-                  },
-                  childCount: 1,
-                ),
-              );
-            } else {
-              return SliverList(
+                );
+              } else if (sourceModel.listLen == 0) {
+                return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    return _buildSubItem(index, sourceModel.sourceDump);
-                  },
-                  childCount: sourceModel.listLen,
-                ),
-              );
-            }
-          },
-        ),
-      ],
+                        (BuildContext context, int index) {
+                      return Card(
+                        child: InkWell(
+                          splashColor: Colors.blue.withAlpha(30),
+                          onTap: (){},
+                          child: ListTile(
+                            title: Text("No subscribed RSS source."),
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: 1,
+                  ),
+                );
+              } else {
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      return _buildSubItem(index, sourceModel.sourceDump);
+                    },
+                    childCount: sourceModel.listLen,
+                  ),
+                );
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
