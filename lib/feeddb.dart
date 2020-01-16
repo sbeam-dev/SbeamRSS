@@ -1,6 +1,9 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:flutter_app1/sourcedb.dart';
+import 'sourcedb.dart';
+import 'package:http/http.dart' as Http;
+import 'package:webfeed/webfeed.dart' as WebFeed;
+import 'dart:core';
 
 class FeedEntry {
   final int id;
@@ -32,23 +35,23 @@ class FeedDBOperations{
       );
     }
     await openDB();
-    List<Map> fetcheddb;
+    List<Map> fetchedDB;
     fetchRaw () async {
-      fetcheddb = await database.rawQuery(
+      fetchedDB = await database.rawQuery(
           'SELECT * from feed ORDER BY id DESC LIMIT 10'
       );
     }
     await fetchRaw();
-    return Future.value(List.generate(fetcheddb.length, (i) {
+    return Future.value(List.generate(fetchedDB.length, (i) {
       return FeedEntry(
-        id: fetcheddb[i]['id'],
-        title: fetcheddb[i]['title'],
-        link: fetcheddb[i]['url'],
-        description: fetcheddb[i]['description'],
-        author: fetcheddb[i]['author'],
-        getTime: fetcheddb[i]['getTime'],
-        sourceID: fetcheddb[i]['sourceID'],
-        readState: fetcheddb[i]['readState'],
+        id: fetchedDB[i]['id'],
+        title: fetchedDB[i]['title'],
+        link: fetchedDB[i]['url'],
+        description: fetchedDB[i]['description'],
+        author: fetchedDB[i]['author'],
+        getTime: fetchedDB[i]['getTime'],
+        sourceID: fetchedDB[i]['sourceID'],
+        readState: fetchedDB[i]['readState'],
       );
     }));
   }
@@ -62,7 +65,17 @@ class FeedDBOperations{
       );
     }
     await openDB();
+
     //check if the link exists in db
+    List<Map> sameLinkEntry = await database.query(
+        'feed',
+        where: 'link == "${entry.link}"'
+    );
+    if(sameLinkEntry.length != 0){
+      print("${entry.link} duplicated.");
+      return;
+    }
+
     await database.insert(
       'feed',
       {'title': entry.title, 'link': entry.link, 'description': entry.description, 'author': entry.author,
@@ -75,7 +88,21 @@ class FeedDBOperations{
     List<RssSource> sourceList;
     sourceList = await SourceDBOperations.querySourceDatabase();
     for (final source in sourceList){
-      //pull rss from web and add
+      Http.Response response = await Http.get(source.url).catchError((error) => error);
+      WebFeed.RssFeed feed = new WebFeed.RssFeed.parse(response.body);
+      for (final item in feed.items){
+        FeedEntry entry = new FeedEntry(
+          id: null,
+          title: item.title,
+          link: item.link,
+          description: item.description,
+          author: item.author,
+          getTime: new DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          sourceID: source.id,
+          readState: 0
+        );
+        await FeedDBOperations.addFeedToDB(entry);
+      }
     }
   }
 }

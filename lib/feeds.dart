@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'reader.dart';
-import 'package:flutter_app1/feeddb.dart';
 import 'package:time_formatter/time_formatter.dart';
 import 'htmlparse.dart';
+import 'feeddb.dart';
+
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key, this.title}) : super(key: key);
