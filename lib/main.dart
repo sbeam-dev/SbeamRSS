@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/models/sourcemodel.dart';
+import 'package:flutter_app1/models/feedmodel.dart';
 import 'package:provider/provider.dart';
 import 'home.dart';
 
@@ -9,8 +10,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new ChangeNotifierProvider.value(
-      value: SourceModel(),
+    return new MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SourceModel()),
+        ChangeNotifierProvider(create: (context) => FeedModel())
+      ],
       child:  MaterialApp(
         title: 'Sbeam RSS Reader',
         theme: ThemeData(

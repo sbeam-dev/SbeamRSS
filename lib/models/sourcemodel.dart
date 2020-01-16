@@ -19,6 +19,7 @@ class SourceModel extends ChangeNotifier{
   Future<void> loadData() async {
     _sourceDump = await SourceDBOperations.querySourceDatabase();
     _listLen = _sourceDump.length;
+    notifyListeners();
   }
 
   Future<void> addEntry(String name, String address) async {

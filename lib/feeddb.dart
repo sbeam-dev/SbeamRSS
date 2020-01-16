@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter_app1/sourcedb.dart';
 
 class FeedEntry {
   final int id;
@@ -51,6 +52,7 @@ class FeedDBOperations{
       );
     }));
   }
+
   static Future<void> addFeedToDB(FeedEntry entry) async{
     Database database;
     Future openDB () async{
@@ -60,11 +62,20 @@ class FeedDBOperations{
       );
     }
     await openDB();
+
     await database.insert(
       'feed',
       {'title': entry.title, 'link': entry.link, 'description': entry.description, 'author': entry.author,
       'getTime': entry.getTime, 'sourceID': entry.sourceID, 'readState': entry.readState},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  static Future<void> refreshToDB() async{
+    List<RssSource> sourceList;
+    sourceList = await SourceDBOperations.querySourceDatabase();
+    for (final source in sourceList){
+      //pull rss from web and add
+    }
   }
 }
