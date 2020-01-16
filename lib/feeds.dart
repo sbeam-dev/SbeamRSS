@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'reader.dart';
+import 'feeddb.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key, this.title}) : super(key: key);
@@ -24,7 +25,7 @@ class _FeedsPageState extends State<FeedsPage> {
             IconButton(
               icon: Icon(Icons.refresh),
               onPressed: (){
-
+                FeedDBOperations.refreshToDB();
               },
             ),
           ],
