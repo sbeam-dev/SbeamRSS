@@ -62,7 +62,7 @@ class FeedDBOperations{
       );
     }
     await openDB();
-
+    //check if the link exists in db
     await database.insert(
       'feed',
       {'title': entry.title, 'link': entry.link, 'description': entry.description, 'author': entry.author,
