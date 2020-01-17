@@ -1,4 +1,4 @@
-package dev.sbeam.flutter_app1
+package dev.sbeam.rss
 
 import android.os.Bundle
 import io.flutter.app.FlutterActivity
