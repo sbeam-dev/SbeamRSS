@@ -90,7 +90,9 @@ class FeedDBOperations{
     List<RssSource> sourceList;
     sourceList = await SourceDBOperations.querySourceDatabase();
     for (final source in sourceList){
-      Http.Response response = await Http.get(source.url).catchError((error) => error);
+      bool successFlag = true;
+      Http.Response response = await Http.get(source.url).catchError((error){successFlag = false;});
+      if(!successFlag) continue;
       WebFeed.RssFeed feed = new WebFeed.RssFeed.parse(response.body);
       for (final item in feed.items){
         FeedEntry entry = new FeedEntry(
