@@ -7,6 +7,7 @@ import 'package:time_formatter/time_formatter.dart';
 import 'htmlparse.dart';
 import 'feeddb.dart';
 import 'package:provider/provider.dart';
+import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key, this.title}) : super(key: key);
@@ -81,12 +82,14 @@ class _FeedsPageState extends State<FeedsPage> {
                   return RefreshIndicator(
                     displacement: 20,
                     onRefresh: Provider.of<FeedModel>(context, listen: false).refreshFeed,
-                    child: ListView.builder(
+                    child: IncrementallyLoadingListView(
                       padding: EdgeInsets.zero,
-                      itemBuilder: (BuildContext context, int index) {
+                      hasMore: () => !feedModel.isFinished,
+                      itemCount: () => feedModel.feedDump.length,
+                      loadMore: feedModel.loadMore,
+                      itemBuilder: (context, index) {
                         return FeedCard(entry: feedModel.feedDump[index]);
                       },
-                      itemCount: 10,
                     ),
                   );
                 }

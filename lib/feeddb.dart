@@ -38,13 +38,11 @@ class FeedDBOperations{
     List<Map> fetchedDB;
     fetchRaw () async {
       fetchedDB = await database.rawQuery(
-          'SELECT * from feed ORDER BY id DESC LIMIT 10'
+          'SELECT * FROM feed ORDER BY id DESC LIMIT 10'
       );
     }
     await fetchRaw();
     return Future.value(List.generate(fetchedDB.length, (i) {
-//      print("querying");
-//      print(fetchedDB[i]['sourceID']);
       return FeedEntry(
         id: fetchedDB[i]['id'],
         title: fetchedDB[i]['title'],
@@ -57,6 +55,37 @@ class FeedDBOperations{
       );
     }));
   }
+
+  static Future<List<FeedEntry>> queryMore(int lastLoadedID) async{
+    Database database;
+    Future openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'database.db'),
+        version: 1,
+      );
+    }
+    await openDB();
+    List<Map> newlyFetched;
+    fetchMore() async {
+      newlyFetched = await database.rawQuery(
+        'SELECT * FROM feed WHERE id < ? ORDER BY id DESC LIMIT 1', [lastLoadedID]
+      );
+    }
+    await fetchMore();
+    return Future.value(List.generate(newlyFetched.length, (i) {
+      return FeedEntry(
+        id: newlyFetched[i]['id'],
+        title: newlyFetched[i]['title'],
+        link: newlyFetched[i]['url'],
+        description: newlyFetched[i]['description'],
+        author: newlyFetched[i]['author'],
+        getTime: newlyFetched[i]['getTime'],
+        sourceID: newlyFetched[i]['sourceID'],
+        readState: newlyFetched[i]['readState'],
+      );
+    }));
+  }
+
 
   static Future<void> addFeedToDB(FeedEntry entry) async{
     Database database;
