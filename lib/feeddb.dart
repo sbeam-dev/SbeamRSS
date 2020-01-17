@@ -73,7 +73,7 @@ class FeedDBOperations{
         'feed',
         where: 'link == "${entry.link}"'
     );
-    if(sameLinkEntry.length != 0){
+    if(sameLinkEntry.isNotEmpty){
 //      print("${entry.link} duplicated.");
       return;
     }

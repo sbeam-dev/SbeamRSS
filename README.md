@@ -1,4 +1,5 @@
 # SbeamRSS
+[![CodeFactor](https://www.codefactor.io/repository/github/sbeam-dev/sbeamrss/badge)](https://www.codefactor.io/repository/github/sbeam-dev/sbeamrss)
 
 An Android RSS reader based on flutter.
 
