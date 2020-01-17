@@ -52,6 +52,7 @@ class _FeedsPageState extends State<FeedsPage> {
                     displacement: 20,
                     onRefresh: Provider.of<FeedModel>(context, listen: false).refreshFeed,
                     child: ListView.builder(
+                        padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
                             child: InkWell(
