@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app1/sourcedb.dart';
 
+import '../sourcedb.dart';
+
 class SourceModel extends ChangeNotifier{
   List<RssSource> _sourceDump;
   int _listLen = 0;
@@ -29,6 +31,11 @@ class SourceModel extends ChangeNotifier{
 
   Future<void> deleteEntry(int delId) async {
     await SourceDBOperations.deleteSourceDB(delId);
+    await loadData();
+  }
+  
+  Future<void> editEntry(int id, String name, String url) async{
+    await SourceDBOperations.editSourceDB(id, name, url);
     await loadData();
   }
 }

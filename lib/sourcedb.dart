@@ -81,4 +81,24 @@ class SourceDBOperations{
       whereArgs: [delId],
     );
   }
+
+  static Future<void> editSourceDB(int id, String name, String url) async{
+    Database database;
+    openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'database.db'),
+        version: 1,
+      );
+    }
+    await openDB();
+    await database.update(
+      'source',
+      {
+        'name': name,
+        'url': url
+      },
+      where: "id == $id",
+      conflictAlgorithm: ConflictAlgorithm.abort
+    );
+  }
 }

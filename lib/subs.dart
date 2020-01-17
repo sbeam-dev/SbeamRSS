@@ -57,14 +57,38 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           leading: Icon(Icons.edit),
           title: Text("Edit Name"),
           onTap: (){
-
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context){
+                return EditBottomSheet(
+                  source: widget.source,
+                  editType: 0,
+                );
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            );
           },
         ),
         ListTile(
           leading: Icon(Icons.link),
           title: Text("Edit URL"),
           onTap: (){
-
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context){
+                return EditBottomSheet(
+                  source: widget.source,
+                  editType: 1,
+                );
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            );
           },
         ),
         ListTile(
@@ -94,7 +118,7 @@ class AddSourceBottomSheet extends StatefulWidget {
 class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
   String inputName;
   String inputUrl;
-  int inputId;
+  //int inputId;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -141,6 +165,97 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
     );
   }
 }
+// --------------Edit---------------
+class EditBottomSheet extends StatefulWidget{
+  final RssSource source;
+  final int editType;//0 - Edit Name, 1 - Edit URL
+  EditBottomSheet({this.source, this.editType});
+
+  @override
+  _EditBottomSheet createState() => _EditBottomSheet();
+}
+
+class _EditBottomSheet extends State<EditBottomSheet>{
+  String inputName;
+  String inputUrl;
+
+  String _titleGen(){
+    switch(widget.editType){
+      case 0: return "Edit Name";
+      case 1: return "Edit URL";
+    }
+    return "ERROR";
+  }
+
+  String _inputTitleGen(){
+  }
+
+  String _defaultText(){
+    switch(widget.editType){
+      case 0: return inputName;
+      case 1: return inputUrl;
+    }
+    return "ERROR";
+  }
+
+  void _dealInput(String text){
+    switch(widget.editType){
+      case 0:
+        inputName = text;
+        break;
+      case 1:
+        inputUrl = text;
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    inputName = widget.source.name;
+    inputUrl = widget.source.url;
+    final controller = TextEditingController();
+    controller.text = _defaultText();
+    return SingleChildScrollView(
+      child: Container(
+        padding:
+        EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Center(
+                child: Text(_titleGen(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                labelText: _inputTitleGen(),
+              ),
+              onChanged: _dealInput,
+
+            ),
+            ListTile(
+              dense: true,
+              trailing: IconButton(
+                icon: Icon(Icons.check),
+                onPressed: (){
+                  Provider.of<SourceModel>(context, listen: false).editEntry(widget.source.id, inputName, inputUrl);
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ---------------Page--------------
 class SubsPage extends StatefulWidget {
   SubsPage({Key key, this.title}) : super(key: key);
