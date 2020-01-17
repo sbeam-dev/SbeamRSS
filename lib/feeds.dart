@@ -132,7 +132,7 @@ class FeedCard extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: entry)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: entry, sourceName: sourceName,)));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

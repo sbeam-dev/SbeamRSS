@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(color: Colors.black54),
               elevation: 4
           ),
+          pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
         ),
         darkTheme: ThemeData(
           backgroundColor: Color(0xFF121212),
