@@ -115,8 +115,8 @@ class AddSourceBottomSheet extends StatefulWidget {
 }
 
 class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
-  String inputName;
-  String inputUrl;
+  String inputName = "";
+  String inputUrl = "";
   //int inputId;
   @override
   Widget build(BuildContext context) {
