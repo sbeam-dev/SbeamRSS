@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app1/feeddb.dart';
+import '../feeddb.dart';
 
 class FeedModel extends ChangeNotifier {
   List<FeedEntry> _feedDump;
