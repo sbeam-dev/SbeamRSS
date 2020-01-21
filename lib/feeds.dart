@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app1/models/feedmodel.dart';
-import 'package:flutter_app1/models/sourcemodel.dart';
+import 'models/feedmodel.dart';
+import 'models/sourcemodel.dart';
 import 'reader.dart';
 import 'package:time_formatter/time_formatter.dart';
 import 'htmlparse.dart';

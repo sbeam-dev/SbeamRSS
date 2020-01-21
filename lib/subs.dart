@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app1/models/sourcemodel.dart';
+import 'models/sourcemodel.dart';
 import 'package:provider/provider.dart';
-
 import 'sourcedb.dart';
 
 
@@ -116,8 +115,8 @@ class AddSourceBottomSheet extends StatefulWidget {
 }
 
 class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
-  String inputName;
-  String inputUrl;
+  String inputName = "";
+  String inputUrl = "";
   //int inputId;
   @override
   Widget build(BuildContext context) {

@@ -128,13 +128,17 @@ class FeedDBOperations{
           id: null,
           title: item.title,
           link: item.link,
-          description: item.description,
-          author: item.author,
+          description: item.description == null ? "" : item.description,
+          author: item.author == null ? "NULL" : item.author,
           getTime: new DateTime.now().millisecondsSinceEpoch ~/ 1000,
           sourceID: source.id,
           readState: 0
         );
-//        print("before add entry:" + entry.sourceID.toString());
+        print("title: ${item.title}");
+        print("des: ${item.description}");
+        print("author: ${item.author}");
+        print("getTime: ${item.title}");
+        print("------------------------------------");
         await FeedDBOperations.addFeedToDB(entry);
       }
     }
