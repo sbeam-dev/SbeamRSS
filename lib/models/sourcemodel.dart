@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../sourcedb.dart';
 
-import '../sourcedb.dart';
 
 class SourceModel extends ChangeNotifier{
   List<RssSource> _sourceDump;

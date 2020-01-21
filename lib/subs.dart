@@ -19,8 +19,8 @@ class _SourceListTileState extends State<SourceListTile> {
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
         child: ListTile(
-          title: Text("${widget.source.name}"),
-          subtitle: Text("${widget.source.url}"),
+          title: Text("${widget.source.name}", maxLines: 1, overflow: TextOverflow.ellipsis,),
+          subtitle: Text("${widget.source.url}", maxLines: 1, overflow: TextOverflow.ellipsis,),
           trailing: Icon(Icons.more_vert),
         ),
         onTap: (){

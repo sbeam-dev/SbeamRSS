@@ -124,21 +124,23 @@ class FeedDBOperations{
       if(!successFlag) continue;
       WebFeed.RssFeed feed = new WebFeed.RssFeed.parse(response.body);
       for (final item in feed.items){
+        String fullText = "";
+        fullText = fullText + item.description + (item.content == null? "" : item.content.value);
         FeedEntry entry = new FeedEntry(
           id: null,
           title: item.title,
           link: item.link,
-          description: item.description == null ? "" : item.description,
-          author: item.author == null ? "NULL" : item.author,
+          description: fullText,
+          author: item.author == null ? "Unknown Author" : item.author,
           getTime: new DateTime.now().millisecondsSinceEpoch ~/ 1000,
           sourceID: source.id,
           readState: 0
         );
-        print("title: ${item.title}");
-        print("des: ${item.description}");
-        print("author: ${item.author}");
-        print("getTime: ${item.title}");
-        print("------------------------------------");
+//        print("title: ${item.title}");
+//        print("des: $fullText");
+//        print("author: ${item.author}");
+//        print("getTime: ${item.title}");
+//        print("------------------------------------");
         await FeedDBOperations.addFeedToDB(entry);
       }
     }

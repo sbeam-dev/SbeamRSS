@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(color: Colors.white),
               elevation: 4
           ),
+          pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
         ),
         home: MyHomePage(title: 'Home Page'),
       ),
