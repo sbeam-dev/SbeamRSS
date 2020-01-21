@@ -10,9 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 
 class FeedsPage extends StatefulWidget {
-  FeedsPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  FeedsPage({Key key}) : super(key: key);
 
   @override
   _FeedsPageState createState() => _FeedsPageState();
