@@ -25,6 +25,10 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(color: Colors.black54),
               elevation: 4
           ),
+          popupMenuTheme: PopupMenuThemeData(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.black, fontSize: 16)
+          ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
         ),
         darkTheme: ThemeData(
@@ -35,6 +39,10 @@ class MyApp extends StatelessWidget {
               color: Color(0xFF383838),
               iconTheme: IconThemeData(color: Colors.white),
               elevation: 4
+          ),
+          popupMenuTheme: PopupMenuThemeData(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+              textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.white, fontSize: 16)
           ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
         ),

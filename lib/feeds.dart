@@ -137,13 +137,13 @@ class FeedCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(16, 4, 16, 10),
+                  padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                   child: Text("From " + sourceName,
-                      style: TextStyle(fontSize: 14), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                      style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 10),
-                  child: Text(entry.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
+                  child: Text(entry.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans"), maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -158,10 +158,14 @@ class FeedCard extends StatelessWidget {
                         formatTime(entry.getTime * 1000),
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
                       ),
-                      IconButton(
-                        iconSize: 18,
-                        icon: Icon(Icons.more_vert),
-                        onPressed: (){},
+                      SizedBox(
+                        height: 32,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          iconSize: 18,
+                          icon: Icon(Icons.more_vert),
+                          onPressed: (){},
+                        ),
                       ),
                     ],
                   ),

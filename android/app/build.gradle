@@ -41,8 +41,8 @@ android {
         applicationId "dev.sbeam.rss"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
-        versionName "0.1.0"
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

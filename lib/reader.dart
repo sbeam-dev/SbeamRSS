@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 import 'feeddb.dart';
+
+enum menuItems { share, open, customize }
 
 class ReaderScreen extends StatefulWidget {
   ReaderScreen({Key key, this.entry, this.sourceName}) : super(key: key);
@@ -55,6 +58,66 @@ class _ReaderScreenState extends State<ReaderScreen> {
                 pinned: true,
                 snap: true,
                 title: Text("Article", style: Theme.of(context).textTheme.title,),
+                actions: <Widget>[
+                  PopupMenuButton(
+                    icon: Icon(Icons.more_vert),
+                    onSelected: (menuItems selected) {
+                      if (selected == menuItems.share) {
+                        Share.share("Check out this RSS article (\"${entry.title}\") from $sourceName! ${entry.link}");
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry<menuItems>>[
+                      new PopupMenuItem<menuItems>(
+                        value: menuItems.share,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: Icon(Icons.share),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text("Share..."),
+                            ),
+                          ],
+                        )
+                      ),
+                      new PopupMenuItem<menuItems>(
+                        value: menuItems.open,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: Icon(Icons.open_in_new),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text("Open link..."),
+                            ),
+                          ],
+                        ),
+                      ),
+                      new PopupMenuItem<menuItems>(
+                          value: menuItems.customize,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                child: Icon(Icons.text_fields),
+                              ),
+                              SizedBox(
+                                width: 100,
+                                child: Text("Customize"),
+                              ),
+                            ],
+                          )
+                      )
+                    ],
+                  )
+                ],
                 bottom: PreferredSize(
                   child: SizedBox(
                     child: LinearProgressIndicator(value: _scrollValue),
@@ -68,11 +131,11 @@ class _ReaderScreenState extends State<ReaderScreen> {
                     [
                       Padding(
                         padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                        child: Text(entry.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4)),
+                        child: Text(entry.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4, fontFamily: "NotoSans")),
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                        child: Text(entry.author + ' from ' + sourceName, style: TextStyle(fontFamily: "serif", fontSize: 15)),
+                        child: Text(entry.author + ' from ' + sourceName, style: TextStyle(fontFamily: "NotoSans", fontSize: 15)),
                       ),
                       Divider(
                         indent: 16,

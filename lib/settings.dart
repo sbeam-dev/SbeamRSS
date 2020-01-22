@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
               child: ListTile(
                 leading: Icon(Icons.info_outline),
                 title: Text("About"),
-                subtitle: Text("Version 0.1"),
+                subtitle: Text("Version 0.1.1"),
               ),
             )
 

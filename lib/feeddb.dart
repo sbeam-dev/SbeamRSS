@@ -46,7 +46,7 @@ class FeedDBOperations{
       return FeedEntry(
         id: fetchedDB[i]['id'],
         title: fetchedDB[i]['title'],
-        link: fetchedDB[i]['url'],
+        link: fetchedDB[i]['link'],
         description: fetchedDB[i]['description'],
         author: fetchedDB[i]['author'],
         getTime: fetchedDB[i]['getTime'],
@@ -76,7 +76,7 @@ class FeedDBOperations{
       return FeedEntry(
         id: newlyFetched[i]['id'],
         title: newlyFetched[i]['title'],
-        link: newlyFetched[i]['url'],
+        link: newlyFetched[i]['link'],
         description: newlyFetched[i]['description'],
         author: newlyFetched[i]['author'],
         getTime: newlyFetched[i]['getTime'],
@@ -136,7 +136,7 @@ class FeedDBOperations{
           sourceID: source.id,
           readState: 0
         );
-//        print("title: ${item.title}");
+//        print("link: ${item.link}");
 //        print("des: $fullText");
 //        print("author: ${item.author}");
 //        print("getTime: ${item.title}");
