@@ -31,6 +31,9 @@ class MyApp extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
             textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.black, fontSize: 16)
           ),
+          textTheme: TextTheme(
+            title: TextStyle(fontFamily: "NotoSans")
+          ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
         ),
         darkTheme: ThemeData(
@@ -45,6 +48,9 @@ class MyApp extends StatelessWidget {
           popupMenuTheme: PopupMenuThemeData(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
               textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.white, fontSize: 16)
+          ),
+          textTheme: TextTheme(
+              title: TextStyle(fontFamily: "NotoSans")
           ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
         ),

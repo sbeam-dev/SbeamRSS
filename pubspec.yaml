@@ -76,6 +76,14 @@ flutter:
          style: italic
        - asset: fonts/NotoSans-Bold.ttf
          weight: 700
+       - asset: fonts/NotoSans-BoldItalic.ttf
+         weight: 700
+         style: italic
+       - asset: fonts/NotoSans-Medium.ttf
+         weight: 500
+       - asset: fonts/NotoSans-MediumItalic.ttf
+         weight: 500
+         style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
