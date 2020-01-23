@@ -38,4 +38,9 @@ class FeedModel extends ChangeNotifier {
 //    print("refreshed");
     loadFeed();
   }
+
+  Future<void> setRead(FeedEntry entry, int value) async {
+    await FeedDBOperations.updateReadToDB(entry, value);
+    loadFeed();
+  }
 }

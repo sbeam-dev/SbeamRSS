@@ -28,11 +28,25 @@ class _SettingsPageState extends State<SettingsPage> {
             Card(
               elevation: 0,
               child: InkWell(
-                onTap: (){},
+                onTap: (){
+                  showAboutDialog(
+                      context: context,
+                      applicationVersion: "v0.1.3",
+                      applicationLegalese: "Distributed under MPL-2.0 license",
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 8, 0, 8),
+                          child: Text("Github:"),
+                        ),
+                        Center(
+                            child: Text("github.com/sbeam-dev/SbeamRSS", style: Theme.of(context).textTheme.body1,)
+                        )
+                      ]
+                  );
+                },
                 child: ListTile(
                   leading: Icon(Icons.info_outline),
                   title: Text("About"),
-                  subtitle: Text("Version 0.1.3"),
                 ),
               )
             )

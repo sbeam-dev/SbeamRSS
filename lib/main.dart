@@ -37,11 +37,19 @@ class MyApp extends StatelessWidget {
             textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.black, fontSize: 16)
         ),
         textTheme: TextTheme(
-          title: TextStyle(fontFamily: "NotoSans"),
+          title: TextStyle(fontFamily: "NotoSans", color: Colors.black),
           subhead: TextStyle(fontFamily: "NotoSans"),
+          headline: TextStyle(fontFamily: "NotoSans"),
+        ),
+        primaryTextTheme: TextTheme(
+          title: TextStyle(fontFamily: "NotoSans", color: Colors.black),
+          subhead: TextStyle(fontFamily: "NotoSans"),
+          headline: TextStyle(fontFamily: "NotoSans"),
         ),
         pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
-
+        dialogTheme: DialogTheme(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        ),
       ),
       darkTheme: ThemeData(
           backgroundColor: Color(0xFF121212),
@@ -57,10 +65,19 @@ class MyApp extends StatelessWidget {
               textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.white, fontSize: 16)
           ),
           textTheme: TextTheme(
-            title: TextStyle(fontFamily: "NotoSans"),
+            title: TextStyle(fontFamily: "NotoSans", color: Colors.white),
             subhead: TextStyle(fontFamily: "NotoSans"),
+            headline: TextStyle(fontFamily: "NotoSans"),
           ),
-          pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()})
+          primaryTextTheme: TextTheme(
+            title: TextStyle(fontFamily: "NotoSans", color: Colors.white),
+            subhead: TextStyle(fontFamily: "NotoSans"),
+            headline: TextStyle(fontFamily: "NotoSans"),
+          ),
+          pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
+          dialogTheme: DialogTheme(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          ),
       ),
       home: MyHomePage(title: 'Home Page'),
       themeMode: (Provider.of<ThemeModel>(context).currentTheme == ThemeOptions.system) ? ThemeMode.system

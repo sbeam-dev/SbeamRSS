@@ -145,4 +145,21 @@ class FeedDBOperations{
       }
     }
   }
+
+  static Future<void> updateReadToDB(FeedEntry entry, int value) async {
+    Database database;
+    Future openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'database.db'),
+        version: 1,
+      );
+    }
+    await openDB();
+    await database.insert(
+      'feed',
+      {'id': entry.id, 'title': entry.title, 'link': entry.link, 'description': entry.description, 'author': entry.author,
+        'getTime': entry.getTime, 'sourceID': entry.sourceID, 'readState': value},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 }

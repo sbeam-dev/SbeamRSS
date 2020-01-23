@@ -74,7 +74,7 @@ class _FeedsPageState extends State<FeedsPage> {
                     child: ListView.builder(
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
-                          return FeedCard(entry: feedModel.feedDump[index]);
+                          return new FeedCard(entry: feedModel.feedDump[index]);
                         },
                         itemCount: _len,
                     ),
@@ -89,7 +89,7 @@ class _FeedsPageState extends State<FeedsPage> {
                       itemCount: () => feedModel.feedDump.length,
                       loadMore: feedModel.loadMore,
                       itemBuilder: (context, index) {
-                        return FeedCard(entry: feedModel.feedDump[index]);
+                        return new FeedCard(entry: feedModel.feedDump[index]);
                       },
                     ),
                   );
@@ -102,22 +102,26 @@ class _FeedsPageState extends State<FeedsPage> {
   }
 }
 
-class FeedCard extends StatelessWidget {
+class FeedCard extends StatefulWidget {
   FeedCard({Key key, this.entry}) : super(key: key);
   final FeedEntry entry;
+  @override
+  _FeedCardState createState() => new _FeedCardState();
+}
 
+class _FeedCardState extends State<FeedCard> {
   String removeAllHtmlTags(String htmlText) {
     RegExp exp = RegExp(
         r"<[^>]*>",
         multiLine: true,
         caseSensitive: true
     );
-
     return htmlText.replaceAll(exp, '');
   }
 
   @override
   Widget build(BuildContext context) {
+    final FeedEntry entry = widget.entry;
     String sourceName;
     for (final source in Provider.of<SourceModel>(context, listen: false).sourceDump) {
       if (source.id == entry.sourceID) {
@@ -134,6 +138,7 @@ class FeedCard extends StatelessWidget {
             splashColor: Colors.blue.withAlpha(30),
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: entry, sourceName: sourceName,)));
+              Provider.of<FeedModel>(context, listen: false).setRead(entry, 1);
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +150,11 @@ class FeedCard extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
-                  child: Text(entry.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans"), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  child: Text(entry.title,
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                      color: (Theme.of(context).brightness == Brightness.light) ? (entry.readState == 0 ? Colors.black : Colors.black54) : (entry.readState == 0 ? Colors.white : Colors.white70)
+                      ),
+                      maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
