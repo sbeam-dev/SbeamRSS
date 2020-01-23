@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.info_outline),
+                  leading: Icon(Icons.info_outline, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
                   title: Text("About"),
                 ),
               )
@@ -118,7 +118,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
             );
           },
           child: ListTile(
-            leading: Icon(Icons.palette),
+            leading: Icon(Icons.palette, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
             title: Text("Theme"),
             subtitle: Text((_currentOption == ThemeOptions.system) ? "System default"
                 : ((_currentOption == ThemeOptions.light) ? "Light" : "Dark")),

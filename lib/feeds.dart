@@ -8,6 +8,8 @@ import 'htmlparse.dart';
 import 'feeddb.dart';
 import 'package:provider/provider.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key}) : super(key: key);
@@ -175,7 +177,15 @@ class _FeedCardState extends State<FeedCard> {
                           padding: EdgeInsets.zero,
                           iconSize: 18,
                           icon: Icon(Icons.more_vert),
-                          onPressed: (){},
+                          onPressed: (){
+                            showModalBottomSheet(
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                builder: (BuildContext context) => FeedBottomSheet(entry: entry, sourceName: sourceName,)
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -190,6 +200,58 @@ class _FeedCardState extends State<FeedCard> {
           thickness: 2,
           indent: 16,
           endIndent: 16,
+        )
+      ],
+    );
+  }
+}
+
+class FeedBottomSheet extends StatefulWidget {
+  final FeedEntry entry;
+  final String sourceName;
+  const FeedBottomSheet({this.entry, this.sourceName});
+  @override
+  _FeedBottomSheetState createState() => _FeedBottomSheetState();
+}
+
+class _FeedBottomSheetState extends State<FeedBottomSheet> {
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      return;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.markunread),
+          title: Text((widget.entry.readState == 0) ? "Mark as read" : "Mark as unread"),
+          onTap: (){
+            Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, (widget.entry.readState == 0) ? 1 : 0);
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.share),
+          title: Text("Share..."),
+          onTap: (){
+            Share.share("Check out this RSS article (\"${widget.entry.title}\") from ${widget.sourceName}! ${widget.entry.link}");
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.open_in_new),
+          title: Text("Open in browser..."),
+          onTap: (){
+            _launchURL(widget.entry.link);
+            Navigator.pop(context);
+          },
         )
       ],
     );
