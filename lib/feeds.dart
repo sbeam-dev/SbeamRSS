@@ -33,7 +33,7 @@ class _FeedsPageState extends State<FeedsPage> {
                 icon: Icon(Icons.refresh),
                 onPressed: (){
                   Provider.of<FeedModel>(context, listen: false).refreshFeed();
-                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Loading...")));
+                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Loading...(It may take a long time for new entries to appear.)")));
                 },
               )
             ],
@@ -42,7 +42,9 @@ class _FeedsPageState extends State<FeedsPage> {
         body: Consumer<FeedModel>(
             builder: (context, feedModel, child){
               if(feedModel.feedDump == null) {
-                return CircularProgressIndicator();
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
                 int _len = feedModel.feedDump.length;
                 if (_len == 0) {
