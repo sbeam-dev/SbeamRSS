@@ -39,9 +39,11 @@ class FeedModel extends ChangeNotifier {
     loadFeed();
   }
 
-  Future<void> setRead(FeedEntry entry, int value) async {
+  Future<void> setRead(FeedEntry entry, int value, int isLoad) async {
     await FeedDBOperations.updateReadToDB(entry, value);
-    loadFeed();
+    if (isLoad == 1) {
+      loadFeed();
+    }
   }
 
   Future<void> deleteSource(int sourceID) async {

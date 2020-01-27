@@ -120,7 +120,10 @@ class _FeedCardState extends State<FeedCard> {
     );
     return htmlText.replaceAll(exp, '');
   }
-
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final FeedEntry entry = widget.entry;
@@ -140,7 +143,7 @@ class _FeedCardState extends State<FeedCard> {
             splashColor: Colors.blue.withAlpha(30),
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: entry, sourceName: sourceName,)));
-              Provider.of<FeedModel>(context, listen: false).setRead(entry, 1);
+              Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, 1, 1);
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +157,7 @@ class _FeedCardState extends State<FeedCard> {
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
                   child: Text(entry.title,
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
-                      color: (Theme.of(context).brightness == Brightness.light) ? (entry.readState == 0 ? Colors.black : Colors.black54) : (entry.readState == 0 ? Colors.white : Colors.white70)
+                      color: (Theme.of(context).brightness == Brightness.light) ? (widget.entry.readState == 0 ? Colors.black : Colors.black54) : (widget.entry.readState == 0 ? Colors.white : Colors.white70)
                       ),
                       maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
@@ -233,7 +236,7 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           leading: Icon(Icons.markunread),
           title: Text((widget.entry.readState == 0) ? "Mark as read" : "Mark as unread"),
           onTap: (){
-            Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, (widget.entry.readState == 0) ? 1 : 0);
+            Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, (widget.entry.readState == 0) ? 1 : 0, 1);
             Navigator.pop(context);
           },
         ),
