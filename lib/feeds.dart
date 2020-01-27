@@ -30,15 +30,15 @@ class _FeedsPageState extends State<FeedsPage> {
             snap: true,
             title: Text("Feeds", style: Theme.of(context).textTheme.title),
             centerTitle: true,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: (){
-                  Provider.of<FeedModel>(context, listen: false).refreshFeed();
-                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Loading...(It may take a long time for new entries to appear.)")));
-                },
-              )
-            ],
+//            actions: <Widget>[
+//              IconButton(
+//                icon: Icon(Icons.refresh),
+//                onPressed: (){
+//                  Provider.of<FeedModel>(context, listen: false).refreshFeed();
+//                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Loading...(It may take a long time for new entries to appear.)")));
+//                },
+//              )
+//            ],
           ),
         ],
         body: Consumer<FeedModel>(

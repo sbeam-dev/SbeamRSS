@@ -162,4 +162,16 @@ class FeedDBOperations{
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  static Future<void> deleteSourceDB(int sourceID) async {
+    Database database;
+    Future openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'database.db'),
+        version: 1,
+      );
+    }
+    await openDB();
+    await database.delete('feed', where: '$sourceID = ?', whereArgs: [sourceID]);
+  }
 }

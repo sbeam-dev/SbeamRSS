@@ -44,4 +44,5 @@ class ReaderModel extends ChangeNotifier{
     }
     _loadPrefs();
   }
+
 }

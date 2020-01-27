@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'models/sourcemodel.dart';
+import 'models/feedmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_progress_dialog/flutter_progress_dialog.dart';
 import 'sourcedb.dart';
 
 
@@ -94,7 +96,10 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           leading: Icon(Icons.delete, color: Colors.red),
           title: Text("Delete this source", style: TextStyle(color: Colors.red),),
           onTap: (){
-            Provider.of<SourceModel>(context, listen: false).deleteEntry(widget.source.id);
+            showProgressDialog(context: context, loadingText: "Loading...", radius: 10, backgroundColor: Color(0xFF383838));
+            Future.wait([Provider.of<SourceModel>(context, listen: false).deleteEntry(widget.source.id),
+              Provider.of<FeedModel>(context, listen: false).deleteSource(widget.source.id)])
+              .then((values) => dismissProgressDialog());
             Navigator.pop(context);
           },
         )
