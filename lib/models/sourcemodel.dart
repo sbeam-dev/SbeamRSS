@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../sourcedb.dart';
+import 'package:http/http.dart' as Http;
 
 
 class SourceModel extends ChangeNotifier{
@@ -36,5 +37,15 @@ class SourceModel extends ChangeNotifier{
   Future<void> editEntry(int id, String name, String url) async{
     await SourceDBOperations.editSourceDB(id, name, url);
     await loadData();
+  }
+
+  Future<bool> checkEntry(String url) async {
+    bool flag = true;
+    var response = await Http.get(url).catchError((error){flag = false;});
+    if (flag == false) return flag;
+    if (response.statusCode > 350) {
+      flag = false;
+    }
+    return flag;
   }
 }

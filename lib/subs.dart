@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'models/sourcemodel.dart';
 import 'models/feedmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_progress_dialog/flutter_progress_dialog.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'sourcedb.dart';
 
 
@@ -17,7 +17,7 @@ class SourceListTile extends StatefulWidget {
 class _SourceListTileState extends State<SourceListTile> {
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return new Card(
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
         child: ListTile(
@@ -31,7 +31,7 @@ class _SourceListTileState extends State<SourceListTile> {
                 borderRadius: BorderRadius.circular(10),
               ),
               builder: (BuildContext context){
-                return SourceBottomSheet(source: widget.source);
+                return new SourceBottomSheet(source: widget.source);
             }
           );
         },
@@ -50,7 +50,7 @@ class SourceBottomSheet extends StatefulWidget {
 class _SourceBottomSheet extends State<SourceBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return new Column(
       mainAxisSize: MainAxisSize.min,
 
       children: <Widget>[
@@ -58,11 +58,12 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           leading: Icon(Icons.edit),
           title: Text("Edit Name"),
           onTap: (){
+            Navigator.pop(context);
             showModalBottomSheet(
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context){
-                return EditBottomSheet(
+                return new EditBottomSheet(
                   source: widget.source,
                   editType: 0,
                 );
@@ -77,11 +78,12 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           leading: Icon(Icons.link),
           title: Text("Edit URL"),
           onTap: (){
+            Navigator.pop(context);
             showModalBottomSheet(
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context){
-                return EditBottomSheet(
+                return new EditBottomSheet(
                   source: widget.source,
                   editType: 1,
                 );
@@ -96,11 +98,21 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           leading: Icon(Icons.delete, color: Colors.red),
           title: Text("Delete this source", style: TextStyle(color: Colors.red),),
           onTap: (){
-            showProgressDialog(context: context, loadingText: "Loading...", radius: 10, backgroundColor: Color(0xFF383838));
+            ProgressDialog pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+            pr.style(
+              message: "Loading...",
+              borderRadius: 10,
+              backgroundColor: Theme.of(context).appBarTheme.color,
+              progressWidget: Padding(
+                child: CircularProgressIndicator(),
+                padding: EdgeInsets.all(16),
+              ),
+              messageTextStyle: Theme.of(context).textTheme.title,
+            );
+            pr.show();
             Future.wait([Provider.of<SourceModel>(context, listen: false).deleteEntry(widget.source.id),
               Provider.of<FeedModel>(context, listen: false).deleteSource(widget.source.id)])
-              .then((values) => dismissProgressDialog());
-            Navigator.pop(context);
+              .then((values) => pr.hide().then((isHidden){Navigator.pop(context);}));
           },
         )
       ],
@@ -122,10 +134,24 @@ class AddSourceBottomSheet extends StatefulWidget {
 class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
   String inputName = "";
   String inputUrl = "";
+  int changeColor;
   //int inputId;
+
+  void toggleColor(int value) {
+    setState(() {
+      changeColor = value;
+    });
+  }
+
+  @override
+  void initState() {
+    changeColor = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return new SingleChildScrollView(
       child: Container(
         padding:
         EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -135,34 +161,105 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
             ListTile(
               title: Center(
                 child: Text("New RSS Source",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
             ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: "Name",
+            Padding(
+              child: TextField(
+                decoration: InputDecoration(
+                    labelText: "Name",
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.all(8),
+                    icon: Icon(Icons.note)
+                ),
+                onChanged: (text){inputName = text;},
               ),
-              onChanged: (text){inputName = text;},
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
             ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: "URL",
+            Padding(
+              child: TextField(
+                decoration: InputDecoration(
+                    labelText: "URL",
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.all(8),
+                    icon: Icon(Icons.link)
+                ),
+                onChanged: (text){
+                  inputUrl = text;
+                  if (text != "" && changeColor == 0) {
+                    toggleColor(1);
+                  } else if (text == "" && changeColor == 1) {
+                    toggleColor(0);
+                  }
+                  },
               ),
-              onChanged: (text){inputUrl = text;},
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
             ),
-            ListTile(
-              dense: true,
-              trailing: IconButton(
-                icon: Icon(Icons.check),
-                onPressed: (){
-                  Provider.of<SourceModel>(context, listen: false).addEntry(inputName, inputUrl);
-                  Navigator.pop(context);
-                },
-              ),
-            )
+            ButtonBar(
+              children: <Widget>[
+                Ink(
+                  decoration: ShapeDecoration(
+                    color: changeColor == 1 ? Colors.lightBlue:Colors.transparent,
+                    shape: CircleBorder(),
+
+                  ),
+                  child: IconButton(
+                    iconSize: 24,
+                    icon: Icon(
+                      Icons.send,
+                      color: changeColor == 0 ? Theme.of(context).appBarTheme.iconTheme.color : Colors.white,
+                    ),
+                    onPressed: (){
+                      ProgressDialog pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+                      pr.style(
+                        message: "Loading...",
+                        borderRadius: 10,
+                        backgroundColor: Theme.of(context).appBarTheme.color,
+                        progressWidget: Padding(
+                          child: CircularProgressIndicator(),
+                          padding: EdgeInsets.all(16),
+                        ),
+                        messageTextStyle: Theme.of(context).textTheme.title
+                      );
+                      pr.show();
+                      Provider.of<SourceModel>(context, listen: false).checkEntry(inputUrl).then(
+                              (value) {
+                                if (value == false) {
+                                  pr.hide().then((isHidden){
+                                    showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (context) {
+                                          return new AlertDialog(
+                                            title: Text("URL not valid!"),
+                                            content: Text("Check your URL, or the webfeed server is temporarily unavailable."),
+                                            actions: <Widget>[
+                                              FlatButton(
+                                                child: Text('OK'),
+                                                onPressed: (){Navigator.pop(context);},
+                                              )
+                                            ],
+                                          );
+                                        }
+                                    );
+                                  });
+                                } else {
+                                  Provider.of<SourceModel>(context, listen: false).addEntry(inputName, inputUrl).then(
+                                      (value) {
+                                        pr.hide().then((isHidden){
+                                          Navigator.pop(context);
+                                        });
+                                        }
+                                  );
+                                }
+                              }
+                              );
+                    },
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -219,7 +316,7 @@ class _EditBottomSheet extends State<EditBottomSheet>{
     inputUrl = widget.source.url;
     final controller = TextEditingController();
     controller.text = _defaultText();
-    return SingleChildScrollView(
+    return new SingleChildScrollView(
       child: Container(
         padding:
         EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -229,29 +326,81 @@ class _EditBottomSheet extends State<EditBottomSheet>{
             ListTile(
               title: Center(
                 child: Text(_titleGen(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
             ),
-            TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                labelText: _inputTitleGen(),
-              ),
-              onChanged: _dealInput,
-
+            Padding(
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                          labelText: _inputTitleGen(),
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(8),
+                          icon: Icon(Icons.edit)
+                      ),
+                      onChanged: _dealInput,
+                ),
             ),
-            ListTile(
-              dense: true,
-              trailing: IconButton(
-                icon: Icon(Icons.check),
-                onPressed: (){
-                  Provider.of<SourceModel>(context, listen: false).editEntry(widget.source.id, inputName, inputUrl);
-                  Navigator.pop(context);
-                },
-              ),
+            ButtonBar(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.check),
+                  iconSize: 24,
+                  onPressed: (){
+                    if(widget.editType == 0) {
+                      Provider.of<SourceModel>(context, listen: false).editEntry(widget.source.id, inputName, inputUrl);
+                      Navigator.pop(context);
+                    } else {
+                      ProgressDialog pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+                      pr.style(
+                          message: "Loading...",
+                          borderRadius: 10,
+                          backgroundColor: Theme.of(context).appBarTheme.color,
+                          progressWidget: Padding(
+                            child: CircularProgressIndicator(),
+                            padding: EdgeInsets.all(16),
+                          ),
+                          messageTextStyle: Theme.of(context).textTheme.title
+                      );
+                      pr.show();
+                      Provider.of<SourceModel>(context, listen: false).checkEntry(inputUrl).then(
+                              (value) {
+                            if (value == false) {
+                              pr.hide().then((isHidden){
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      return new AlertDialog(
+                                        title: Text("URL not valid!"),
+                                        content: Text("Check your URL, or the webfeed server is temporarily unavailable."),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text('OK'),
+                                            onPressed: (){Navigator.pop(context);},
+                                          )
+                                        ],
+                                      );
+                                    }
+                                );
+                              });
+                            } else {
+                              Provider.of<SourceModel>(context, listen: false).editEntry(widget.source.id, inputName, inputUrl).then(
+                                      (value) {
+                                    pr.hide().then((isHidden){
+                                      Navigator.pop(context);
+                                    });
+                                  }
+                              );
+                            }
+                          }
+                      );
+                    }
+                  },
+                )
+              ],
             )
           ],
         ),

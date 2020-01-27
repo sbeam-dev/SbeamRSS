@@ -61,7 +61,7 @@ class _FeedsPageState extends State<FeedsPage> {
                               splashColor: Colors.blue.withAlpha(30),
                               onTap: (){},
                               child: ListTile(
-                                title: Text("No articles. Press the button to refresh."),
+                                title: Text("No articles. Swipe down to refresh."),
                               ),
                             ),
                           );

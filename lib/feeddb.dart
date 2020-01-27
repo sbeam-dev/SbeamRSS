@@ -122,7 +122,12 @@ class FeedDBOperations{
       bool successFlag = true;
       Http.Response response = await Http.get(source.url).catchError((error){successFlag = false;});
       if(!successFlag) continue;
-      WebFeed.RssFeed feed = new WebFeed.RssFeed.parse(response.body);
+      WebFeed.RssFeed feed;
+      try {
+        feed = new WebFeed.RssFeed.parse(response.body);
+      } catch (e) {
+        return;
+      }
       for (final item in feed.items){
         String fullText = "";
         fullText = fullText + item.description + (item.content == null? "" : item.content.value);
