@@ -13,6 +13,9 @@ During the first stage of development, the app will be working full offline(rely
 
 - [x] Subscription source management
 - [x] Feed pull and storage
-- [ ] UI for reading feed articles (Currently working on)
-- [ ] Frontend refinement and theming
+- [x] UI for reading feed articles (Still lots of improvements to make)
+- [x] Frontend refinement and theming (Basically completed)
+- [ ] Put on Beta testing
 - [ ] Feed filtering
+- [ ] Search articles
+- [ ] Advanced filter options when viewing the feeds list
