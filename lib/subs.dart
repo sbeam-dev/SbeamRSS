@@ -110,6 +110,7 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
               messageTextStyle: Theme.of(context).textTheme.title,
             );
             pr.show();
+//            print("Delete ${widget.source.id}");
             Future.wait([Provider.of<SourceModel>(context, listen: false).deleteEntry(widget.source.id),
               Provider.of<FeedModel>(context, listen: false).deleteSource(widget.source.id)])
               .then((values) => pr.hide().then((isHidden){Navigator.pop(context);}));

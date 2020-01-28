@@ -13,7 +13,7 @@ class FeedEntry {
   final String author;
   final int getTime;  //sqlite format, seconds after 1970-01-01
   final int sourceID;
-  final int readState; //haven't read 0 read 1
+  int readState; //haven't read 0 read 1
   FeedEntry({this.id, this.title, this.link, this.description, this.author, this.getTime, this.sourceID, this.readState});
 }
 
@@ -100,7 +100,8 @@ class FeedDBOperations{
     //check if the link exists in db
     List<Map> sameLinkEntry = await database.query(
         'feed',
-        where: 'link == "${entry.link}"'
+        where: 'link = ?',
+        whereArgs: [entry.link]
     );
     if(sameLinkEntry.isNotEmpty){
 //      print("${entry.link} duplicated.");
@@ -177,6 +178,6 @@ class FeedDBOperations{
       );
     }
     await openDB();
-    await database.delete('feed', where: '$sourceID = ?', whereArgs: [sourceID]);
+    await database.delete('feed', where: 'sourceID = ?', whereArgs: [sourceID]);
   }
 }

@@ -97,7 +97,7 @@ class SourceDBOperations{
         'name': name,
         'url': url
       },
-      where: "id == $id",
+      where: "id = $id",
       conflictAlgorithm: ConflictAlgorithm.abort
     );
   }
