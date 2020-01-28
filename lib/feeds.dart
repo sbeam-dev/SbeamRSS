@@ -120,16 +120,24 @@ class _FeedCardState extends State<FeedCard> {
     );
     return htmlText.replaceAll(exp, '');
   }
+  int _currentReadState;
+  void softSetRead(int value) {
+    Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, value, 0);
+    setState(() {
+      _currentReadState = value;
+    });
+  }
+
   @override
   void initState() {
+    _currentReadState = widget.entry.readState;
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    final FeedEntry entry = widget.entry;
     String sourceName;
     for (final source in Provider.of<SourceModel>(context, listen: false).sourceDump) {
-      if (source.id == entry.sourceID) {
+      if (source.id == widget.entry.sourceID) {
         sourceName = source.name;
         break;
       }
@@ -142,8 +150,8 @@ class _FeedCardState extends State<FeedCard> {
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: entry, sourceName: sourceName,)));
-              Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, 1, 1);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
+              softSetRead(1);
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,15 +163,15 @@ class _FeedCardState extends State<FeedCard> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
-                  child: Text(entry.title,
+                  child: Text(widget.entry.title,
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
-                      color: (Theme.of(context).brightness == Brightness.light) ? (widget.entry.readState == 0 ? Colors.black : Colors.black54) : (widget.entry.readState == 0 ? Colors.white : Colors.white70)
+                      color: (Theme.of(context).brightness == Brightness.light) ? (_currentReadState == 0 ? Colors.black : Colors.black54) : (_currentReadState == 0 ? Colors.white : Colors.white70)
                       ),
                       maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: Text(removeAllHtmlTags(entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 4, overflow: TextOverflow.ellipsis),
+                  child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 4, overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 4, 0),
@@ -171,7 +179,7 @@ class _FeedCardState extends State<FeedCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        formatTime(entry.getTime * 1000),
+                        formatTime(widget.entry.getTime * 1000),
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(
@@ -186,7 +194,11 @@ class _FeedCardState extends State<FeedCard> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                builder: (BuildContext context) => FeedBottomSheet(entry: entry, sourceName: sourceName,)
+                                builder: (BuildContext context) => FeedBottomSheet(
+                                  entry: widget.entry,
+                                  sourceName: sourceName,
+                                  softSetRead: softSetRead,
+                                  parameterReadState: _currentReadState,)
                             );
                           },
                         ),
@@ -212,7 +224,9 @@ class _FeedCardState extends State<FeedCard> {
 class FeedBottomSheet extends StatefulWidget {
   final FeedEntry entry;
   final String sourceName;
-  const FeedBottomSheet({this.entry, this.sourceName});
+  final Function softSetRead;
+  final int parameterReadState;
+  const FeedBottomSheet({this.entry, this.sourceName, this.softSetRead, this.parameterReadState});
   @override
   _FeedBottomSheetState createState() => _FeedBottomSheetState();
 }
@@ -226,7 +240,6 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
       return;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -234,9 +247,9 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
       children: <Widget>[
         ListTile(
           leading: Icon(Icons.markunread),
-          title: Text((widget.entry.readState == 0) ? "Mark as read" : "Mark as unread"),
+          title: Text((widget.parameterReadState == 0) ? "Mark as read" : "Mark as unread"),
           onTap: (){
-            Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, (widget.entry.readState == 0) ? 1 : 0, 1);
+            widget.softSetRead(widget.parameterReadState == 0 ? 1 : 0);
             Navigator.pop(context);
           },
         ),
