@@ -56,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).appBarTheme.color,
+        unselectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
+        selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
 //        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

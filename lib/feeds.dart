@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key}) : super(key: key);
@@ -149,6 +151,7 @@ class _FeedCardState extends State<FeedCard> {
       }
     }
     String headImageSrc = HtmlParsing.headImage(widget.entry.description);
+//    print("check");
     if (headImageSrc == null || headImageSrc == "") {
       return Column(
         children: <Widget>[
@@ -174,7 +177,9 @@ class _FeedCardState extends State<FeedCard> {
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
                     child: Text(widget.entry.title,
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
-                            color: (Theme.of(context).brightness == Brightness.light) ? (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.black : Colors.black54) : (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.white : Colors.white70)
+                            color: (Theme.of(context).brightness == Brightness.light) ?
+                            (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.black : Colors.black54) :
+                            (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.white : Colors.white70)
                         ),
                         maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
@@ -242,22 +247,48 @@ class _FeedCardState extends State<FeedCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                      child: Text("From " + sourceName,
-                          style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
-                    child: Text(widget.entry.title,
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
-                            color: (Theme.of(context).brightness == Brightness.light) ? (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.black : Colors.black54) : (Provider.of<FeedModel>(context).feedDump[widget.index].readState ? Colors.white : Colors.white70)
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                                child: Text("From " + sourceName,
+                                    style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(16, 0, 0, 6),
+                              child: Text(widget.entry.title,
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                                      color: (Theme.of(context).brightness == Brightness.light) ?
+                                      (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.black : Colors.black54) :
+                                      (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.white : Colors.white70)
+                                  ),
+                                  maxLines: 3, overflow: TextOverflow.ellipsis),
+                            ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                            child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 2, overflow: TextOverflow.ellipsis),
+                          ),
+                          ],
                         ),
-                        maxLines: 2, overflow: TextOverflow.ellipsis),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 4, overflow: TextOverflow.ellipsis),
+                      ),
+                      SizedBox(
+                        height: 140,
+                        width: 140,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                          child: CachedNetworkImage(
+                            imageUrl: headImageSrc,
+                            placeholder: (context, url) => Image.memory(kTransparentImage),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 4, 0),
