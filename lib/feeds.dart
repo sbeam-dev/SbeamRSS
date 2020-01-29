@@ -281,6 +281,10 @@ class _FeedCardState extends State<FeedCard> {
                         width: 140,
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+//                          child: ExtendedImage.network(
+//                            headImageSrc,
+//                            cache: true,
+//                          ),
                           child: CachedNetworkImage(
                             imageUrl: headImageSrc,
                             placeholder: (context, url) => Image.memory(kTransparentImage),
