@@ -3,7 +3,13 @@
 
 An Android RSS reader based on flutter.
 
-In early development state. Due to the lack of time and skill of the developer, no feature nor stability is guaranteed.
+In early development state.
+
+[Documentation](https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md)
+
+## Try out our Beta version!
+
+<a href='https://play.google.com/store/apps/details?id=dev.sbeam.rss&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height=80/></a>
 
 ## Features
 
@@ -15,7 +21,7 @@ During the first stage of development, the app will be working full offline(rely
   - [x] Feed pull and storage
   - [x] UI for reading feed articles (Still lots of improvements to make)
   - [x] Frontend refinement and theming (Basically completed)
-  - [ ] Put on Beta testing
+  - [x] Put on Beta testing
   - [ ] Feed filtering
   - [ ] Search articles
   - [ ] Advanced filter options when viewing the feeds list
