@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/thememodel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key, this.title}) : super(key: key);
@@ -26,12 +27,24 @@ class _SettingsPageState extends State<SettingsPage> {
           children: <Widget>[
             ThemeSettingCard(),
             Card(
+                elevation: 0,
+                child: InkWell(
+                  onTap: (){
+                    launch("https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md");
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.help, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+                    title: Text("Help"),
+                  ),
+                )
+            ),
+            Card(
               elevation: 0,
               child: InkWell(
                 onTap: (){
                   showAboutDialog(
                       context: context,
-                      applicationVersion: "v0.1.5",
+                      applicationVersion: "v0.2.0-beta",
                       applicationLegalese: "Distributed under MPL-2.0 license",
                       children: <Widget>[
                         Padding(
