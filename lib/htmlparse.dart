@@ -10,6 +10,11 @@ class HtmlParsing {
       return null;
     }
     if (img == null) return null;
-    return img.attributes['src'];
+    RegExp re = RegExp(r"\.jpg|\.png|\.gif|\.jpeg|\.webp|\.bmp");
+    String srcLink = img.attributes['src'];
+    if (srcLink.contains(re)) {
+      return srcLink;
+    }
+    return null;
   }
 }

@@ -30,7 +30,7 @@ class _FeedsPageState extends State<FeedsPage> {
           SliverAppBar(
             floating: true,
             snap: true,
-            title: Text("Feeds", style: Theme.of(context).textTheme.title),
+            title: Text("Feeds", style: Theme.of(context).textTheme.headline6),
             centerTitle: true,
 //            actions: <Widget>[
 //              IconButton(
@@ -151,7 +151,7 @@ class _FeedCardState extends State<FeedCard> {
       }
     }
     String headImageSrc = HtmlParsing.headImage(widget.entry.description);
-//    print("check");
+//    print(headImageSrc);
     if (headImageSrc == null || headImageSrc == "") {
       return Column(
         children: <Widget>[

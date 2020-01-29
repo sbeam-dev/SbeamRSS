@@ -4,6 +4,7 @@ import 'sourcedb.dart';
 import 'package:http/http.dart' as Http;
 import 'package:webfeed/webfeed.dart' as WebFeed;
 import 'dart:core';
+import 'dart:convert' show utf8;
 
 class FeedEntry {
   final int id;
@@ -119,35 +120,72 @@ class FeedDBOperations{
   static Future<void> refreshToDB() async{
     List<RssSource> sourceList;
     sourceList = await SourceDBOperations.querySourceDatabase();
-    for (final source in sourceList){
+    for (final source in sourceList) {
       bool successFlag = true;
-      Http.Response response = await Http.get(source.url).catchError((error){successFlag = false;});
-      if(!successFlag) continue;
+      Http.Response response = await Http.get(source.url).catchError((error) {
+        successFlag = false;
+      });
+      if (!successFlag) continue;
+//      print(response.body);
+      int feedCategory; //0 rss 1 atom
       WebFeed.RssFeed feed;
+      WebFeed.AtomFeed atomFeed;
       try {
         feed = new WebFeed.RssFeed.parse(response.body);
+        feedCategory = 0;
       } catch (e) {
-        return;
+        try {
+//          print("Enter atom parsing");
+          atomFeed = new WebFeed.AtomFeed.parse(utf8.decode(response.bodyBytes));
+          feedCategory = 1;
+        } catch (e) {
+          return;
+        }
       }
-      for (final item in feed.items){
-        String fullText = "";
-        fullText = fullText + item.description + (item.content == null? "" : item.content.value);
-        FeedEntry entry = new FeedEntry(
-          id: null,
-          title: item.title,
-          link: item.link,
-          description: fullText,
-          author: item.author == null ? "Unknown Author" : item.author,
-          getTime: new DateTime.now().millisecondsSinceEpoch ~/ 1000,
-          sourceID: source.id,
-          readState: 0
-        );
+      if (feedCategory == 0) {
+        for (final item in feed.items) {
+          String fullText = "";
+          fullText = fullText + (item.description ?? "")  +
+              (item.content == null ? "" : item.content.value);
+          FeedEntry entry = new FeedEntry(
+              id: null,
+              title: item.title,
+              link: item.link,
+              description: fullText,
+              author: item.author == null ? "Unknown Author" : item.author,
+              getTime: new DateTime.now().millisecondsSinceEpoch ~/ 1000,
+              sourceID: source.id,
+              readState: 0
+          );
 //        print("link: ${item.link}");
 //        print("des: $fullText");
 //        print("author: ${item.author}");
 //        print("getTime: ${item.title}");
 //        print("------------------------------------");
-        await FeedDBOperations.addFeedToDB(entry);
+          await FeedDBOperations.addFeedToDB(entry);
+        }
+      } else {
+        for (final item in atomFeed.items) {
+          String fullText = "";
+          fullText = fullText + (item.content == null ? "" : item.content);
+          FeedEntry entry = new FeedEntry(
+              id: null,
+              title: item.title,
+              link: item.links[0].href,
+              description: fullText,
+              author: item.authors == null ? "Unknown Author" : item.authors[0]
+                  .name,
+              getTime: new DateTime.now().millisecondsSinceEpoch ~/ 1000,
+              sourceID: source.id,
+              readState: 0
+          );
+//        print("link: ${item.link}");
+//        print("des: $fullText");
+//        print("author: ${item.author}");
+//        print("getTime: ${item.title}");
+//        print("------------------------------------");
+          await FeedDBOperations.addFeedToDB(entry);
+        }
       }
     }
   }

@@ -60,7 +60,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                 floating: true,
                 pinned: true,
                 snap: true,
-                title: Text("Article", style: Theme.of(context).textTheme.title,),
+                title: Text("Article", style: Theme.of(context).textTheme.headline6,),
                 actions: <Widget>[
                   PopupMenuButton(
                     icon: Icon(Icons.more_vert),

@@ -16,7 +16,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings", style: Theme.of(context).textTheme.title),
+        title: Text("Settings", style: Theme.of(context).textTheme.headline6),
         centerTitle: true,
       ),
       body: Container(
@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: Text("Github:"),
                         ),
                         Center(
-                            child: Text("github.com/sbeam-dev/SbeamRSS", style: Theme.of(context).textTheme.body1,)
+                            child: Text("github.com/sbeam-dev/SbeamRSS", style: Theme.of(context).textTheme.bodyText2,)
                         )
                       ]
                   );

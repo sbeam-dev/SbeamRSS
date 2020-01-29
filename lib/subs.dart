@@ -107,7 +107,7 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
                 child: CircularProgressIndicator(),
                 padding: EdgeInsets.all(16),
               ),
-              messageTextStyle: Theme.of(context).textTheme.title,
+              messageTextStyle: Theme.of(context).textTheme.headline6,
             );
             pr.show();
 //            print("Delete ${widget.source.id}");
@@ -162,7 +162,7 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
             ListTile(
               title: Center(
                 child: Text("New RSS Source",
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ),
@@ -211,7 +211,7 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
                       Icons.send,
                       color: changeColor == 0 ? Theme.of(context).appBarTheme.iconTheme.color : Colors.white,
                     ),
-                    onPressed: (){
+                    onPressed: changeColor == 0 ? null : (){
                       ProgressDialog pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
                       pr.style(
                         message: "Loading...",
@@ -221,7 +221,7 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
                           child: CircularProgressIndicator(),
                           padding: EdgeInsets.all(16),
                         ),
-                        messageTextStyle: Theme.of(context).textTheme.title
+                        messageTextStyle: Theme.of(context).textTheme.headline6
                       );
                       pr.show();
                       Provider.of<SourceModel>(context, listen: false).checkEntry(inputUrl).then(
@@ -327,7 +327,7 @@ class _EditBottomSheet extends State<EditBottomSheet>{
             ListTile(
               title: Center(
                 child: Text(_titleGen(),
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ),
@@ -363,7 +363,7 @@ class _EditBottomSheet extends State<EditBottomSheet>{
                             child: CircularProgressIndicator(),
                             padding: EdgeInsets.all(16),
                           ),
-                          messageTextStyle: Theme.of(context).textTheme.title
+                          messageTextStyle: Theme.of(context).textTheme.headline6
                       );
                       pr.show();
                       Provider.of<SourceModel>(context, listen: false).checkEntry(inputUrl).then(
@@ -430,7 +430,7 @@ class _SubsPageState extends State<SubsPage> {
           SliverAppBar(
             floating: true,
             snap: true,
-            title: Text("Subscriptions",style: Theme.of(context).textTheme.title),
+            title: Text("Subscriptions",style: Theme.of(context).textTheme.headline6),
             centerTitle: true,
             actions: <Widget>[
               IconButton(

@@ -37,14 +37,14 @@ class MyApp extends StatelessWidget {
             textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.black, fontSize: 16)
         ),
         textTheme: TextTheme(
-          title: TextStyle(fontFamily: "NotoSans", color: Colors.black),
-          subhead: TextStyle(fontFamily: "NotoSans"),
-          headline: TextStyle(fontFamily: "NotoSans"),
+          headline6: TextStyle(fontFamily: "NotoSans", color: Colors.black),
+          subtitle1: TextStyle(fontFamily: "NotoSans"),
+          headline5: TextStyle(fontFamily: "NotoSans"),
         ),
         primaryTextTheme: TextTheme(
-          title: TextStyle(fontFamily: "NotoSans", color: Colors.black),
-          subhead: TextStyle(fontFamily: "NotoSans"),
-          headline: TextStyle(fontFamily: "NotoSans"),
+          headline6: TextStyle(fontFamily: "NotoSans", color: Colors.black),
+          subtitle1: TextStyle(fontFamily: "NotoSans"),
+          headline5: TextStyle(fontFamily: "NotoSans"),
         ),
         pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
         dialogTheme: DialogTheme(
@@ -65,14 +65,14 @@ class MyApp extends StatelessWidget {
               textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.white, fontSize: 16)
           ),
           textTheme: TextTheme(
-            title: TextStyle(fontFamily: "NotoSans", color: Colors.white),
-            subhead: TextStyle(fontFamily: "NotoSans"),
-            headline: TextStyle(fontFamily: "NotoSans"),
+            headline6: TextStyle(fontFamily: "NotoSans", color: Colors.white),
+            subtitle1: TextStyle(fontFamily: "NotoSans"),
+            headline5: TextStyle(fontFamily: "NotoSans"),
           ),
           primaryTextTheme: TextTheme(
-            title: TextStyle(fontFamily: "NotoSans", color: Colors.white),
-            subhead: TextStyle(fontFamily: "NotoSans"),
-            headline: TextStyle(fontFamily: "NotoSans"),
+            headline6: TextStyle(fontFamily: "NotoSans", color: Colors.white),
+            subtitle1: TextStyle(fontFamily: "NotoSans"),
+            headline5: TextStyle(fontFamily: "NotoSans"),
           ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
           dialogTheme: DialogTheme(
