@@ -131,7 +131,7 @@ class FeedDBOperations{
       WebFeed.RssFeed feed;
       WebFeed.AtomFeed atomFeed;
       try {
-        feed = new WebFeed.RssFeed.parse(response.body);
+        feed = new WebFeed.RssFeed.parse(utf8.decode(response.bodyBytes));
         feedCategory = 0;
       } catch (e) {
         try {

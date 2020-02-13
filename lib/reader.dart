@@ -29,6 +29,15 @@ class _ReaderScreenState extends State<ReaderScreen> {
     }
   }
 
+  String _toHTML(String str) {
+    RegExp exp = RegExp(
+        r"<[^>]*>",
+        multiLine: true,
+        caseSensitive: true
+    );
+    if (str.contains(exp)) return str;
+    return '<p>' + str + '</p>';
+  }
 
   ScrollController _scrollController;
   double _scrollValue = 0;
@@ -162,7 +171,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                         child: Consumer<ReaderModel>(
                           builder: (context, readerModel, child){
                             return Html(
-                              data: entry.description,
+                              data: _toHTML(entry.description),
                               onLinkTap: (url) => _launchURL(url),
                               style: {
                                 "html": Style(
