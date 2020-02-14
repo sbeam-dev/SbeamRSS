@@ -290,8 +290,6 @@ class _EditBottomSheet extends State<EditBottomSheet>{
     return "ERROR";
   }
 
-  String _inputTitleGen(){
-  }
 
   String _defaultText(){
     switch(widget.editType){
@@ -344,7 +342,6 @@ class _EditBottomSheet extends State<EditBottomSheet>{
               child: TextField(
                       controller: controller,
                       decoration: InputDecoration(
-                          labelText: _inputTitleGen(),
                           border: OutlineInputBorder(),
                           contentPadding: EdgeInsets.all(8),
                           icon: Icon(Icons.edit)

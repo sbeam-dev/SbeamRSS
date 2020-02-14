@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'sourcedb.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as Http;
 import 'package:webfeed/webfeed.dart' as WebFeed;
 import 'dart:core';
@@ -217,5 +218,72 @@ class FeedDBOperations{
     }
     await openDB();
     await database.delete('feed', where: 'sourceID = ?', whereArgs: [sourceID]);
+  }
+
+  static Future<List<FeedEntry>> searchFeedDB(String query) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> searchHistory = prefs.getStringList("searchHistory") ?? [];
+    bool historyNoExist = true;
+    for (var history in searchHistory) {
+      if (query == history) {
+        historyNoExist = false;
+        break;
+      }
+    }
+    if (historyNoExist) {
+      searchHistory.insert(0, query);
+      if (searchHistory.length > 8) {
+        searchHistory.removeLast();
+      }
+    }
+    prefs.setStringList("searchHistory", searchHistory);
+    List<String> wordList = query.split(" ");
+    Database database;
+    Future openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'database.db'),
+        version: 1,
+      );
+    }
+    await openDB();
+    List<Map> fetchedDB;
+    fetchRaw () async {
+      fetchedDB = await database.rawQuery(
+          "SELECT id, title FROM feed ORDER BY id DESC"
+      );
+    }
+    await fetchRaw();
+    List<int> resultIDs = [];
+    for (var entry in fetchedDB) {
+      bool flag = true;
+      for (var word in wordList) {
+        if (!entry['title'].contains(word)) {
+          flag = false;
+          break;
+        }
+      }
+      if (flag) resultIDs.add(entry['id']);
+    }
+//    print("pass");
+//    print(resultIDs);
+    List<FeedEntry> result = [];
+    for (var id in resultIDs) {
+      List<Map> fetchedRes = await database.rawQuery(
+        "SELECT * FROM feed WHERE id = $id"
+      );
+//      print(fetchedRes);
+      result.add(FeedEntry(
+        id: fetchedRes[0]['id'],
+        title: fetchedRes[0]['title'],
+        link: fetchedRes[0]['link'],
+        description: fetchedRes[0]['description'],
+        author: fetchedRes[0]['author'],
+        getTime: fetchedRes[0]['getTime'],
+        sourceID: fetchedRes[0]['sourceID'],
+        readState: fetchedRes[0]['readState'],
+      ));
+    }
+
+    return result;
   }
 }

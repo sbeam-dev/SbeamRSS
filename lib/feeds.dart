@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'models/feedmodel.dart';
+import 'feeddb.dart';
 import 'models/sourcemodel.dart';
 import 'reader.dart';
 import 'package:time_formatter/time_formatter.dart';
 import 'htmlparse.dart';
-import 'feeddb.dart';
 import 'package:provider/provider.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key}) : super(key: key);
@@ -32,15 +33,17 @@ class _FeedsPageState extends State<FeedsPage> {
             snap: true,
             title: Text("Feeds", style: Theme.of(context).textTheme.headline6),
             centerTitle: true,
-//            actions: <Widget>[
-//              IconButton(
-//                icon: Icon(Icons.refresh),
-//                onPressed: (){
-//                  Provider.of<FeedModel>(context, listen: false).refreshFeed();
-//                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Loading...(It may take a long time for new entries to appear.)")));
-//                },
-//              )
-//            ],
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  showSearch(
+                      context: context,
+                      delegate: FeedSearchDelegate(),
+                  );
+                },
+              )
+            ],
           ),
         ],
         body: Consumer<FeedModel>(
@@ -211,6 +214,7 @@ class _FeedCardState extends State<FeedCard> {
                                   builder: (BuildContext context) => FeedBottomSheet(
                                     entry: widget.entry,
                                     sourceName: sourceName,
+                                    index: widget.index,
                                     )
                               );
                             },
@@ -391,6 +395,300 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           },
         )
       ],
+    );
+  }
+}
+
+class FeedSearchDelegate extends SearchDelegate {
+
+  Future<List<String>> getHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> searchHistory = prefs.getStringList("searchHistory") ?? [];
+    return searchHistory;
+  }
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return theme;
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context){
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return StreamBuilder(
+      stream: Stream.fromFuture(FeedDBOperations.searchFeedDB(query)),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError)
+          return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.none: return LoadingCard();
+          case ConnectionState.waiting: return LoadingCard();
+          case ConnectionState.active: return LoadingCard();
+          case ConnectionState.done: return new Container(
+            color: Theme.of(context).backgroundColor,
+            child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return new ResultFeedCard(entry: snapshot.data[index]);
+                }
+            ),
+          );
+        }
+        return null;
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return FutureBuilder(
+      future: getHistory(),
+      builder: (context, snapshot){
+        if (snapshot.hasData) {
+          return ListView.builder(
+              itemCount: snapshot.data.length + 1,
+              itemBuilder: (context, index){
+                if (index == 0) {
+                  return ListTile(
+                    leading: Icon(Icons.info),
+                    title: Text("Keywords seperated by spaces, case sensitive", style: TextStyle(fontFamily: "sans"),),
+                  );
+                } else {
+                  return ListTile(
+                    leading: Icon(Icons.restore),
+                    title: Text(snapshot.data[index-1]),
+                    onTap: (){
+                      query = snapshot.data[index-1];
+                      showResults(context);
+                    },
+                  );
+                }
+              }
+          );
+        } else {
+          return ListTile(
+            leading: Icon(Icons.info),
+            title: Text("Keywords seperated by spaces, case sensitive", style: TextStyle(fontFamily: "sans"),),
+          );
+        }
+      },
+    );
+  }
+}
+
+class ResultFeedCard extends StatefulWidget {
+  ResultFeedCard({Key key, this.entry}) : super(key: key);
+  final FeedEntry entry;
+  @override
+  _ResultFeedCardState createState() => new _ResultFeedCardState();
+}
+
+class _ResultFeedCardState extends State<ResultFeedCard> {
+  String removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(
+        r"<[^>]*>",
+        multiLine: true,
+        caseSensitive: true
+    );
+    return htmlText.replaceAll(exp, '');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String sourceName;
+    for (final source in Provider.of<SourceModel>(context, listen: false).sourceDump) {
+      if (source.id == widget.entry.sourceID) {
+        sourceName = source.name;
+        break;
+      }
+    }
+    String headImageSrc = HtmlParsing.headImage(widget.entry.description);
+//    print(headImageSrc);
+    if (headImageSrc == null || headImageSrc == "") {
+      return Column(
+        children: <Widget>[
+          Card(
+            color: Theme.of(context).backgroundColor,
+            elevation: 0,
+            child: InkWell(
+              splashColor: Colors.blue.withAlpha(30),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                      child: Text("From " + sourceName,
+                          style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
+                    child: Text(widget.entry.title,
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                            color: (Theme.of(context).brightness == Brightness.light) ?
+                            (Colors.black) :
+                            (Colors.white)
+                        ),
+                        maxLines: 2, overflow: TextOverflow.ellipsis),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 4, overflow: TextOverflow.ellipsis),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 4, 4, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          formatTime(widget.entry.getTime * 1000),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Divider(
+            height: 8,
+            thickness: 2,
+            indent: 16,
+            endIndent: 16,
+          )
+        ],
+      );
+    } else {
+      return Column(
+        children: <Widget>[
+          Card(
+            color: Theme.of(context).backgroundColor,
+            elevation: 0,
+            child: InkWell(
+              splashColor: Colors.blue.withAlpha(30),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                                child: Text("From " + sourceName,
+                                    style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(16, 0, 0, 6),
+                              child: Text(widget.entry.title,
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                                      color: (Theme.of(context).brightness == Brightness.light) ?
+                                      (Colors.black) :
+                                      (Colors.white)
+                                  ),
+                                  maxLines: 3, overflow: TextOverflow.ellipsis),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                              child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 2, overflow: TextOverflow.ellipsis),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 140,
+                        width: 140,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+//                          child: ExtendedImage.network(
+//                            headImageSrc,
+//                            cache: true,
+//                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: headImageSrc,
+                            placeholder: (context, url) => Image.memory(kTransparentImage),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 4, 4, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          formatTime(widget.entry.getTime * 1000),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Divider(
+            height: 8,
+            thickness: 2,
+            indent: 16,
+            endIndent: 16,
+          )
+        ],
+      );
+    }
+  }
+}
+
+class LoadingCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemBuilder: (BuildContext context, int index) {
+        return Card(
+          child: InkWell(
+            splashColor: Colors.blue.withAlpha(30),
+            onTap: (){},
+            child: ListTile(
+              title: Text("Loading..."),
+            ),
+          ),
+        );
+      },
+      itemCount: 1,
     );
   }
 }

@@ -50,5 +50,4 @@ class FeedModel extends ChangeNotifier {
     await FeedDBOperations.deleteSourceDB(sourceID);
     loadFeed();
   }
-
 }

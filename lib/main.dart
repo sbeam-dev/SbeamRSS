@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'Sbeam RSS Reader',
       theme: ThemeData(
         backgroundColor: Colors.white,
+        primaryColor: Colors.white,
         brightness: Brightness.light,
         appBarTheme: AppBarTheme(
             color: Colors.white,

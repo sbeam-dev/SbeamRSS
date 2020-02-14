@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).appBarTheme.color,
         unselectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
         selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
+        selectedItemColor: Colors.blueAccent,
 //        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
