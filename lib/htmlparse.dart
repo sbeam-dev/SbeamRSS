@@ -12,6 +12,7 @@ class HtmlParsing {
     if (img == null) return null;
     RegExp re = RegExp(r"\.jpg|\.png|\.gif|\.jpeg|\.webp|\.bmp");
     String srcLink = img.attributes['src'];
+    if (srcLink == null) return null;
     if (srcLink.contains(re)) {
       return srcLink;
     }
