@@ -280,6 +280,7 @@ class EditBottomSheet extends StatefulWidget{
 class _EditBottomSheet extends State<EditBottomSheet>{
   String inputName;
   String inputUrl;
+  TextEditingController controller;
 
   String _titleGen(){
     switch(widget.editType){
@@ -306,17 +307,24 @@ class _EditBottomSheet extends State<EditBottomSheet>{
         inputName = text;
         break;
       case 1:
+//        print("set!");
         inputUrl = text;
+//        print(inputUrl);
         break;
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     inputName = widget.source.name;
     inputUrl = widget.source.url;
-    final controller = TextEditingController();
+    controller = TextEditingController();
     controller.text = _defaultText();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return new SingleChildScrollView(
       child: Container(
         padding:
@@ -368,6 +376,7 @@ class _EditBottomSheet extends State<EditBottomSheet>{
                       pr.show();
                       Provider.of<SourceModel>(context, listen: false).checkEntry(inputUrl).then(
                               (value) {
+//                                print(inputUrl);
                             if (value == false) {
                               pr.hide().then((isHidden){
                                 showDialog(
