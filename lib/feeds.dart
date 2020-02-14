@@ -409,8 +409,16 @@ class FeedSearchDelegate extends SearchDelegate {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme;
+    if (Theme.of(context).brightness == Brightness.light) {
+      final ThemeData base = Theme.of(context);
+      return base.copyWith(
+        primaryColor: Colors.white,
+        primaryIconTheme: base.iconTheme
+      );
+    } else {
+      final ThemeData theme = Theme.of(context);
+      return theme;
+    }
   }
 
   @override
@@ -446,15 +454,35 @@ class FeedSearchDelegate extends SearchDelegate {
           case ConnectionState.none: return LoadingCard();
           case ConnectionState.waiting: return LoadingCard();
           case ConnectionState.active: return LoadingCard();
-          case ConnectionState.done: return new Container(
-            color: Theme.of(context).backgroundColor,
-            child: ListView.builder(
-                itemCount: snapshot.data.length,
+          case ConnectionState.done: {
+            if (snapshot.data.isEmpty) {
+              return new ListView.builder(
+                padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) {
-                  return new ResultFeedCard(entry: snapshot.data[index]);
-                }
-            ),
-          );
+                  return Card(
+                    child: InkWell(
+                      splashColor: Colors.blue.withAlpha(30),
+                      onTap: (){},
+                      child: ListTile(
+                        title: Text("No result found."),
+                      ),
+                    ),
+                  );
+                },
+                itemCount: 1,
+              );
+            } else {
+              return new Container(
+                color: Theme.of(context).backgroundColor,
+                child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new ResultFeedCard(entry: snapshot.data[index]);
+                    }
+                ),
+              );
+            }
+          }
         }
         return null;
       },
