@@ -23,5 +23,6 @@ During the first stage of development, the app will be working full offline(rely
   - [x] Frontend refinement and theming (Basically completed)
   - [x] Put on Beta testing
   - [ ] Feed filtering
-  - [ ] Search articles
+  - [x] Search articles
+  - [ ] Favorite articles
   - [ ] Advanced filter options when viewing the feeds list
