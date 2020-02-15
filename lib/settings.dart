@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/thememodel.dart';
+import 'models/feedmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             ThemeSettingCard(),
+            ClearDataCard(),
             Card(
                 elevation: 0,
                 child: InkWell(
@@ -135,6 +137,77 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
             title: Text("Theme"),
             subtitle: Text((_currentOption == ThemeOptions.system) ? "System default"
                 : ((_currentOption == ThemeOptions.light) ? "Light" : "Dark")),
+          ),
+        )
+    );
+  }
+}
+
+class ClearDataCard extends StatefulWidget {
+  @override
+  _ClearDataCardState createState() => _ClearDataCardState();
+}
+
+class _ClearDataCardState extends State<ClearDataCard> {
+  // 0 (default) all 1 a week 2 a month 3 a season 4 a year
+  @override
+  void initState() {
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        elevation: 0,
+        child: InkWell(
+          onTap: (){
+            showDialog(
+                context: context,
+                child: SimpleDialog(
+                  title: Text("Delete old feeds"),
+                  children: <Widget>[
+                    SimpleDialogOption(
+                      onPressed: (){
+                        Provider.of<FeedModel>(context).clearFeeds(0);
+                        Navigator.pop(context);
+                      },
+                      child: Text("All", style: Theme.of(context).textTheme.subtitle1,),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: (){
+                        Provider.of<FeedModel>(context).clearFeeds(1);
+                        Navigator.pop(context);
+                      },
+                      child: Text("A week ago", style: Theme.of(context).textTheme.subtitle1,),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: (){
+                        Provider.of<FeedModel>(context).clearFeeds(2);
+                        Navigator.pop(context);
+                      },
+                      child: Text("A month ago", style: Theme.of(context).textTheme.subtitle1,),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: (){
+                        Provider.of<FeedModel>(context).clearFeeds(3);
+                        Navigator.pop(context);
+                      },
+                      child: Text("3 months ago", style: Theme.of(context).textTheme.subtitle1,),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: (){
+                        Provider.of<FeedModel>(context).clearFeeds(4);
+                        Navigator.pop(context);
+                      },
+                      child: Text("A year ago", style: Theme.of(context).textTheme.subtitle1,),
+                    ),
+                  ],
+                )
+            );
+          },
+          child: ListTile(
+            leading: Icon(Icons.storage, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+            title: Text("Clear cache"),
+            subtitle: Text("Delete stored old feeds"),
           ),
         )
     );

@@ -50,4 +50,9 @@ class FeedModel extends ChangeNotifier {
     await FeedDBOperations.deleteSourceDB(sourceID);
     loadFeed();
   }
+
+  Future<void> clearFeeds(int option) async {
+    await FeedDBOperations.clearDB(option);
+    loadFeed();
+  }
 }

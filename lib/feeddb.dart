@@ -220,6 +220,32 @@ class FeedDBOperations{
     await database.delete('feed', where: 'sourceID = ?', whereArgs: [sourceID]);
   }
 
+  static Future<void> clearDB(int option) async {
+//    print(option);
+    Database database;
+    Future openDB () async{
+      database = await openDatabase(
+        join(await getDatabasesPath(), 'database.db'),
+        version: 1,
+      );
+    }
+    await openDB();
+    int deleteTime;
+    switch (option) {
+      case 0: deleteTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+        break;
+      case 1: deleteTime = (DateTime.now().millisecondsSinceEpoch ~/ 1000) - 604800;
+        break;
+      case 2: deleteTime = (DateTime.now().millisecondsSinceEpoch ~/ 1000) - 2592000;
+        break;
+      case 3: deleteTime = (DateTime.now().millisecondsSinceEpoch ~/ 1000) - 7776000;
+        break;
+      case 4: deleteTime = (DateTime.now().millisecondsSinceEpoch ~/ 1000) - 31536000;
+        break;
+    }
+    await database.delete('feed', where: 'getTime < ?', whereArgs: [deleteTime]);
+  }
+
   static Future<List<FeedEntry>> searchFeedDB(String query) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> searchHistory = prefs.getStringList("searchHistory") ?? [];
