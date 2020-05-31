@@ -38,3 +38,5 @@ lib/generated_plugin_registrant.dart
 
 #.lock File
 pubspec.lock
+
+/android/key.properties

@@ -8,7 +8,7 @@ After installation, you need to add some RSS subscription sources to begin your 
 
 #### Where to find RSS source links?
 
-Most news websites come with an RSS feed link, so you can check your favorite website for one. [RSShub](https://docs.rsshub.app/en/) also provides a variety of RSS sources. It's worth noting that the app **only supports RSS feeds that contain full text articles**, and feeds that don't meet this requirement can't be parsed correctly. Thus source links from RSShub is preferred as they usually contain full text. For websites that don't provide an RSS feed, there are plenty of tools on the web to generate one from these sites.
+Most news websites come with an RSS feed link, so you can check your favorite website for one. [RSShub](https://docs.rsshub.app/en/) also provides a variety of RSS sources. Source links from RSShub is preferred as they usually contain full text. For websites that don't provide an RSS feed, there are plenty of tools on the web to generate one from these sites.
 
 ### Fetching feeds
 
@@ -16,7 +16,7 @@ Pull down from the "Feeds" page to fetch new articles. It will take a long time 
 
 ### Begin Reading
 
-Simply press on an article to read full text. You can share, open the article in browser and customize fonts by pressing the topright button.
+Simply press on an article to read full text. You can share, open the article in browser and customize fonts by pressing the top-right button.
 
 ## Q&A
 
