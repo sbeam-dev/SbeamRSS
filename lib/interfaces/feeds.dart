@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'models/feedmodel.dart';
-import 'feeddb.dart';
-import 'models/sourcemodel.dart';
+import '../models/feedmodel.dart';
+import '../databases/feeddb.dart';
+import '../models/sourcemodel.dart';
 import 'reader.dart';
 import 'package:time_formatter/time_formatter.dart';
-import 'htmlparse.dart';
+import '../components/htmlparse.dart';
 import 'package:provider/provider.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -48,7 +48,7 @@ class _FeedsPageState extends State<FeedsPage> {
         ],
         body: Consumer<FeedModel>(
             builder: (context, feedModel, child){
-              if(feedModel.feedDump == null) {
+              if(feedModel.feedDump == null || Provider.of<SourceModel>(context).sourceDump == null) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
@@ -96,6 +96,7 @@ class _FeedsPageState extends State<FeedsPage> {
                       itemCount: () => feedModel.feedDump.length,
                       loadMore: feedModel.loadMore,
                       itemBuilder: (context, index) {
+//                        print(index);
                         return new FeedCard(entry: feedModel.feedDump[index], index: index,);
                       },
                     ),
@@ -146,13 +147,17 @@ class _FeedCardState extends State<FeedCard> {
   }
   @override
   Widget build(BuildContext context) {
+//    print("Start building...");
     String sourceName;
+//    print(Provider.of<SourceModel>(context, listen: false).sourceDump);
     for (final source in Provider.of<SourceModel>(context, listen: false).sourceDump) {
+//      print("looping");
       if (source.id == widget.entry.sourceID) {
         sourceName = source.name;
         break;
       }
     }
+//    print("Reached before actual widgets");
     String headImageSrc = HtmlParsing.headImage(widget.entry.description);
 //    print(headImageSrc);
     if (headImageSrc == null || headImageSrc == "") {
@@ -166,7 +171,7 @@ class _FeedCardState extends State<FeedCard> {
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
 //                softSetRead(1);
-                Provider.of<FeedModel>(context).setRead(widget.entry, 1, widget.index);
+                Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, 1, widget.index);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,7 +251,7 @@ class _FeedCardState extends State<FeedCard> {
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
 //                softSetRead(1);
-                Provider.of<FeedModel>(context).setRead(widget.entry, 1, widget.index);
+                Provider.of<FeedModel>(context, listen: false).setRead(widget.entry, 1, widget.index);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

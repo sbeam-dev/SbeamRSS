@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'subs.dart';
 import 'settings.dart';
 import 'feeds.dart';
+import 'favorite.dart';
 
 // ------------Home--------------
 class MyHomePage extends StatefulWidget {
@@ -33,7 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
     switch(i) {
       case(0): return new FeedsPage();
       case(1): return new SubsPage();
-      case(2): return new SettingsPage();
+      case(2): return new FavPage();
+      case(3): return new SettingsPage();
     }
     return Text("Error");
   }
@@ -51,14 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
             _getMainPage(0),
             _getMainPage(1),
             _getMainPage(2),
+            _getMainPage(3),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).appBarTheme.color,
-        unselectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
+        unselectedLabelStyle: TextStyle(fontFamily: "NotoSans", color: Theme.of(context).appBarTheme.iconTheme.color),
         selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
         selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
+        showUnselectedLabels: true,
 //        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -68,6 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.radio),
             title: Text('Source'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            title: Text('Favorite'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

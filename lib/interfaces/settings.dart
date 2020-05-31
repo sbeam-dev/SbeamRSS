@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/thememodel.dart';
-import 'models/feedmodel.dart';
+import '../models/feedmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -97,7 +97,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
                       value: ThemeOptions.system,
                       groupValue: _currentOption,
                       onChanged: (value) {
-                        Provider.of<ThemeModel>(context).setTheme(value);
+                        Provider.of<ThemeModel>(context, listen: false).setTheme(value);
                         setState(() {
                           _currentOption = value;
                         });
@@ -109,7 +109,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
                       value: ThemeOptions.light,
                       groupValue: _currentOption,
                       onChanged: (value) {
-                        Provider.of<ThemeModel>(context).setTheme(value);
+                        Provider.of<ThemeModel>(context, listen: false).setTheme(value);
                         setState(() {
                           _currentOption = value;
                         });
@@ -121,7 +121,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
                       value: ThemeOptions.dark,
                       groupValue: _currentOption,
                       onChanged: (value) {
-                        Provider.of<ThemeModel>(context).setTheme(value);
+                        Provider.of<ThemeModel>(context, listen: false).setTheme(value);
                         setState(() {
                           _currentOption = value;
                         });
@@ -167,35 +167,35 @@ class _ClearDataCardState extends State<ClearDataCard> {
                   children: <Widget>[
                     SimpleDialogOption(
                       onPressed: (){
-                        Provider.of<FeedModel>(context).clearFeeds(0);
+                        Provider.of<FeedModel>(context, listen: false).clearFeeds(0);
                         Navigator.pop(context);
                       },
                       child: Text("All", style: Theme.of(context).textTheme.subtitle1,),
                     ),
                     SimpleDialogOption(
                       onPressed: (){
-                        Provider.of<FeedModel>(context).clearFeeds(1);
+                        Provider.of<FeedModel>(context, listen: false).clearFeeds(1);
                         Navigator.pop(context);
                       },
                       child: Text("A week ago", style: Theme.of(context).textTheme.subtitle1,),
                     ),
                     SimpleDialogOption(
                       onPressed: (){
-                        Provider.of<FeedModel>(context).clearFeeds(2);
+                        Provider.of<FeedModel>(context, listen: false).clearFeeds(2);
                         Navigator.pop(context);
                       },
                       child: Text("A month ago", style: Theme.of(context).textTheme.subtitle1,),
                     ),
                     SimpleDialogOption(
                       onPressed: (){
-                        Provider.of<FeedModel>(context).clearFeeds(3);
+                        Provider.of<FeedModel>(context, listen: false).clearFeeds(3);
                         Navigator.pop(context);
                       },
                       child: Text("3 months ago", style: Theme.of(context).textTheme.subtitle1,),
                     ),
                     SimpleDialogOption(
                       onPressed: (){
-                        Provider.of<FeedModel>(context).clearFeeds(4);
+                        Provider.of<FeedModel>(context, listen: false).clearFeeds(4);
                         Navigator.pop(context);
                       },
                       child: Text("A year ago", style: Theme.of(context).textTheme.subtitle1,),

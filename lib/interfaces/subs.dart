@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'models/sourcemodel.dart';
-import 'models/feedmodel.dart';
+import '../models/sourcemodel.dart';
+import '../models/feedmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'sourcedb.dart';
+import '../databases/sourcedb.dart';
 
 
 // ----------build list of source---------

@@ -5,8 +5,8 @@ import 'package:flutter_html/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 import 'package:provider/provider.dart';
-import 'models/readermodel.dart';
-import 'feeddb.dart';
+import '../models/readermodel.dart';
+import '../databases/feeddb.dart';
 
 enum MenuItems { share, open, customize }
 

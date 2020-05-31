@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_app1/reader.dart';
+import 'package:flutter_app1/interfaces/reader.dart';
 
 class ReaderModel extends ChangeNotifier{
   String _fontFamily;

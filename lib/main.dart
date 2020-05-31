@@ -5,7 +5,7 @@ import 'package:flutter_app1/models/thememodel.dart';
 import 'package:flutter_app1/models/sourcemodel.dart';
 import 'package:flutter_app1/models/feedmodel.dart';
 import 'package:provider/provider.dart';
-import 'home.dart';
+import 'interfaces/home.dart';
 
 void main() => runApp(
   new MultiProvider(
