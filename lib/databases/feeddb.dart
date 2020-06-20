@@ -32,6 +32,9 @@ class FeedDBOperations{
           db.execute(
             "CREATE TABLE feed(id INTEGER PRIMARY KEY, title TEXT, link TEXT, description TEXT, author TEXT, getTime INTEGER, sourceID INTEGER, readState INTEGER)",
           );
+          db.execute(
+            "CREATE TABLE fav(id INTEGER PRIMARY KEY, title TEXT, link TEXT, description TEXT, author TEXT, getTime INTEGER)",
+          );
         },
         version: 1,
       );

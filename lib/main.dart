@@ -4,6 +4,7 @@ import 'package:flutter_app1/models/readermodel.dart';
 import 'package:flutter_app1/models/thememodel.dart';
 import 'package:flutter_app1/models/sourcemodel.dart';
 import 'package:flutter_app1/models/feedmodel.dart';
+import 'package:flutter_app1/models/favmodel.dart';
 import 'package:provider/provider.dart';
 import 'interfaces/home.dart';
 
@@ -14,6 +15,7 @@ void main() => runApp(
         ChangeNotifierProvider(create: (context) => FeedModel()),
         ChangeNotifierProvider(create: (context) => ReaderModel()),
         ChangeNotifierProvider(create: (context) => ThemeModel()),
+        ChangeNotifierProvider(create: (context) => FavModel()),
       ],
       child: MyApp(),
   )

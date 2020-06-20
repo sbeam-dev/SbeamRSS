@@ -13,6 +13,7 @@ import 'package:share/share.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/favmodel.dart';
 
 class FeedsPage extends StatefulWidget {
   FeedsPage({Key key}) : super(key: key);
@@ -396,6 +397,14 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           title: Text("Open in browser..."),
           onTap: (){
             _launchURL(widget.entry.link);
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.favorite_border),
+          title: Text("Add to favorites"),
+          onTap: (){
+            Provider.of<FavModel>(context, listen: false).addFav(widget.entry);
             Navigator.pop(context);
           },
         )
