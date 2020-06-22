@@ -23,7 +23,61 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsPageState extends State<FeedsPage> {
+
+  void ignoreDialog() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('launched', true);
+  }
+
+  void launchDialog() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool iflaunched = (prefs.getBool('launched') ?? false);
+    if (iflaunched) {
+      return;
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+              title: Text("Welcome to SbeamRSS!"),
+              content: Column(
+                children: <Widget>[
+                  Text("For better user experience, please take time to read the docs.", style: TextStyle(fontFamily: 'sans'),)
+
+                ],
+                mainAxisSize: MainAxisSize.min,
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Take me there"),
+                  onPressed: (){
+                    launch("https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md");
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text("Don't show again"),
+                  onPressed: (){
+                    ignoreDialog();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          }
+      );
+    }
+  }
+
   @override
+
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => launchDialog()
+    );
+  }
+
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).backgroundColor,
