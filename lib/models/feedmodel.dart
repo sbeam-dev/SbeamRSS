@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../databases/feeddb.dart';
 
 class FeedModel extends ChangeNotifier {
@@ -48,11 +49,17 @@ class FeedModel extends ChangeNotifier {
   Future<void> deleteSource(int sourceID) async {
 //    print("Feedmodel delete $sourceID");
     await FeedDBOperations.deleteSourceDB(sourceID);
+    Fluttertoast.showToast(
+      msg: "Deleted!",
+    );
     loadFeed();
   }
 
   Future<void> clearFeeds(int option) async {
     await FeedDBOperations.clearDB(option);
+    Fluttertoast.showToast(
+      msg: "Cleared!",
+    );
     loadFeed();
   }
 }
