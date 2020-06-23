@@ -118,7 +118,7 @@ class _FeedsPageState extends State<FeedsPage> {
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
                             child: InkWell(
-                              splashColor: Colors.blue.withAlpha(30),
+                              splashColor: Theme.of(context).accentColor.withAlpha(30),
                               onTap: (){},
                               child: ListTile(
                                 title: Text("No articles. Swipe down to refresh."),
@@ -182,18 +182,6 @@ class _FeedCardState extends State<FeedCard> {
     );
     return htmlText.replaceAll(exp, '');
   }
-//  int _currentReadState;
-//  void softSetRead(int value) {
-//    print("called softSetRead $value $_currentReadState");
-//    Provider.of<FeedModel>(context).setRead(widget.entry, value, 0).then(
-//        (result) {
-//          print("called setstate");
-//          setState(() {
-//            _currentReadState = value;
-//          });
-//        }
-//    );
-//  }
 
   @override
   void initState() {
@@ -222,7 +210,7 @@ class _FeedCardState extends State<FeedCard> {
             color: Theme.of(context).backgroundColor,
             elevation: 0,
             child: InkWell(
-              splashColor: Colors.blue.withAlpha(30),
+              splashColor: Theme.of(context).accentColor.withAlpha(30),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
 //                softSetRead(1);
@@ -302,7 +290,7 @@ class _FeedCardState extends State<FeedCard> {
             color: Theme.of(context).backgroundColor,
             elevation: 0,
             child: InkWell(
-              splashColor: Colors.blue.withAlpha(30),
+              splashColor: Theme.of(context).accentColor.withAlpha(30),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry, sourceName: sourceName,)));
 //                softSetRead(1);
@@ -455,7 +443,7 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           },
         ),
         ListTile(
-          leading: Icon(Icons.favorite_border),
+          leading: Icon(Icons.favorite, color: Colors.pink,),
           title: Text("Add to favorites"),
           onTap: (){
             Provider.of<FavModel>(context, listen: false).addFav(widget.entry);

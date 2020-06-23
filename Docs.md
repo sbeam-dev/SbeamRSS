@@ -4,7 +4,7 @@
 
 ### Adding RSS sources
 
-After installation, you need to add some RSS subscription sources to begin your reading. To do this, switch to the "Source" section and press the "add" button.
+After installation, you need to add some RSS subscription sources to begin your reading. To do this, switch to the "Source" section and press the "add" button. You need your RSS source link to proceed.
 
 #### Where to find RSS source links?
 
@@ -12,7 +12,13 @@ Most news websites come with an RSS feed link, so you can check your favorite we
 
 ### Fetching feeds
 
-Pull down from the "Feeds" page to fetch new articles. It will take a long time if multiple sources have been added.
+Pull down from the "Feeds" page to fetch new articles. It will take a long time if multiple sources have been added. Simply wait for the loading animation to end.
+
+### Navigate feeds
+
+Scroll at home page to browse feeds. Using the bottom-right button of each feed article, you can save it to your favorites list for future convenience. Articles added to favorites list can be easily accessed via the "Favorites" bottom tab.
+
+You can search for articles using the top-right button at home page. The searching feature is currently very basic. Only feed titles can be searched, and it's case sensitive.
 
 ### Begin Reading
 

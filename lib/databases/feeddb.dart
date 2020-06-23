@@ -250,6 +250,7 @@ class FeedDBOperations{
   }
 
   static Future<List<FeedEntry>> searchFeedDB(String query) async {
+    if (query == '') return [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> searchHistory = prefs.getStringList("searchHistory") ?? [];
     bool historyNoExist = true;

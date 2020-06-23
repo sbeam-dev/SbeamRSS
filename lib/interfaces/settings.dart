@@ -46,15 +46,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: (){
                   showAboutDialog(
                       context: context,
-                      applicationVersion: "v0.3.0a",
+                      applicationVersion: "v0.3.2b",
                       applicationLegalese: "Distributed under MPL-2.0 license",
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.fromLTRB(20, 8, 0, 8),
-                          child: Text("Github:"),
+                          padding: EdgeInsets.fromLTRB(22, 8, 0, 8),
+                          child: Text("Github:", style: TextStyle(fontFamily: 'sans'),),
                         ),
                         Center(
-                            child: Text("github.com/sbeam-dev/SbeamRSS", style: Theme.of(context).textTheme.bodyText2,)
+                            child: Text("github.com/sbeam-dev/SbeamRSS", style: TextStyle(fontFamily: 'sans', fontSize: 13),)
                         )
                       ]
                   );

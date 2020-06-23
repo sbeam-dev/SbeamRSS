@@ -17,7 +17,7 @@ Alpha testing versions will be released in the github release page.
 
 During the first stage of development, the app will be working full offline(relys fully on local device to pull updates and store data). In the future, cloud integration and push notifications might be implemented.
 
-### Todos
+### To-dos
 
   - [x] Subscription source management
   - [x] Feed pull and storage
@@ -26,15 +26,16 @@ During the first stage of development, the app will be working full offline(rely
   - [x] Put on Beta testing
   - [ ] Feed filtering
   - [x] Search articles(Working on)
-  - [ ] Favorite articles(Upcoming)
+  - [x] Favorite articles
   - [ ] Advanced filter options when viewing the feeds list
   - [ ] Optimization for tablets
 
 ## Known Defects
 
 + Text can't be selected in reading page. Waiting for the flutter_html package to implement this feature.
++ The Scrollbar in reading page can't be updated instantly. It's a workaround to avoid severe performance issue.
 + If you have other suggestions, feel free to open an issue!
 
 ## Some technical detail
 
-After the recent commit, we switched from the dev branch to the latest stable branch of flutter(1.17). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.
+We use the latest stable branch of flutter(1.17). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.

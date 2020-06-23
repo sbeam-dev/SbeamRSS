@@ -7,55 +7,55 @@ import '../databases/sourcedb.dart';
 
 
 // ----------build list of source---------
-class SourceListTile extends StatefulWidget {
+class SourceListTile extends StatelessWidget {
   final RssSource source;
   const SourceListTile({this.source});
   @override
-  _SourceListTileState createState() => _SourceListTileState();
-}
-
-class _SourceListTileState extends State<SourceListTile> {
-  @override
-  Widget build(BuildContext context) {
-    return new Card(
-      child: InkWell(
-        splashColor: Colors.blue.withAlpha(30),
-        child: ListTile(
-          title: Text("${widget.source.name}", maxLines: 1, overflow: TextOverflow.ellipsis,),
-          subtitle: Text("${widget.source.url}", maxLines: 1, overflow: TextOverflow.ellipsis,),
-          trailing: Icon(Icons.more_vert),
+  Widget build(BuildContext context){
+    return new Column(
+      children: <Widget>[
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+//            splashFactory: InkRipple.splashFactory,
+            splashColor: Theme.of(context).accentColor.withAlpha(30),
+            child: ListTile(
+              title: Text("${source.name}", maxLines: 1, overflow: TextOverflow.ellipsis,),
+              subtitle: Text("${source.url}", maxLines: 1, overflow: TextOverflow.ellipsis,),
+              trailing: Icon(Icons.more_vert, color: (Theme.of(context).brightness == Brightness.light) ? Colors.black : Colors.white,),
+            ),
+            onTap: (){
+              showModalBottomSheet(context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  builder: (BuildContext context){
+                    return new SourceBottomSheet(source: source);
+                  }
+              );
+            },
+          ),
         ),
-        onTap: (){
-          showModalBottomSheet(context: context,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              builder: (BuildContext context){
-                return new SourceBottomSheet(source: widget.source);
-            }
-          );
-        },
-      ),
+        Divider(
+          height: 2,
+          thickness: 1,
+        )
+      ],
     );
   }
 }
 
-class SourceBottomSheet extends StatefulWidget {
+
+class SourceBottomSheet extends StatelessWidget {
   final RssSource source;
   const SourceBottomSheet({this.source});
-  @override
-  _SourceBottomSheet createState() => _SourceBottomSheet();
-}
-
-class _SourceBottomSheet extends State<SourceBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return new Column(
       mainAxisSize: MainAxisSize.min,
-
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.edit),
+          leading: Icon(Icons.edit, color: Theme.of(context).accentColor,),
           title: Text("Edit Name"),
           onTap: (){
             Navigator.pop(context);
@@ -64,7 +64,7 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
               context: context,
               builder: (BuildContext context){
                 return new EditBottomSheet(
-                  source: widget.source,
+                  source: source,
                   editType: 0,
                 );
               },
@@ -75,7 +75,7 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
           },
         ),
         ListTile(
-          leading: Icon(Icons.link),
+          leading: Icon(Icons.link, color: Theme.of(context).accentColor,),
           title: Text("Edit URL"),
           onTap: (){
             Navigator.pop(context);
@@ -84,7 +84,7 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
               context: context,
               builder: (BuildContext context){
                 return new EditBottomSheet(
-                  source: widget.source,
+                  source: source,
                   editType: 1,
                 );
               },
@@ -111,9 +111,9 @@ class _SourceBottomSheet extends State<SourceBottomSheet> {
             );
             pr.show();
 //            print("Delete ${widget.source.id}");
-            Future.wait([Provider.of<SourceModel>(context, listen: false).deleteEntry(widget.source.id),
-              Provider.of<FeedModel>(context, listen: false).deleteSource(widget.source.id)])
-              .then((values) => pr.hide().then((isHidden){Navigator.pop(context);}));
+            Future.wait([Provider.of<SourceModel>(context, listen: false).deleteEntry(source.id),
+              Provider.of<FeedModel>(context, listen: false).deleteSource(source.id)])
+                .then((values) => pr.hide().then((isHidden){Navigator.pop(context);}));
           },
         )
       ],
@@ -168,11 +168,12 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
             ),
             Padding(
               child: TextField(
+                style: TextStyle(fontFamily: 'sans'),
                 decoration: InputDecoration(
                     labelText: "Name",
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(8),
-                    icon: Icon(Icons.note)
+                    prefixIcon: Icon(Icons.note, color: Theme.of(context).accentColor,)
                 ),
                 onChanged: (text){inputName = text;},
               ),
@@ -180,11 +181,12 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
             ),
             Padding(
               child: TextField(
+                style: TextStyle(fontFamily: 'sans'),
                 decoration: InputDecoration(
                     labelText: "URL",
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(8),
-                    icon: Icon(Icons.link)
+                    prefixIcon: Icon(Icons.link, color: Theme.of(context).accentColor)
                 ),
                 onChanged: (text){
                   inputUrl = text;
@@ -234,7 +236,7 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
                                         builder: (context) {
                                           return new AlertDialog(
                                             title: Text("URL not valid!"),
-                                            content: Text("Check your URL, or the webfeed server is temporarily unavailable."),
+                                            content: Text("Check your URL, or the webfeed server is temporarily unavailable.", style: TextStyle(fontFamily: 'sans')),
                                             actions: <Widget>[
                                               FlatButton(
                                                 child: Text('OK'),
@@ -340,11 +342,12 @@ class _EditBottomSheet extends State<EditBottomSheet>{
             Padding(
               padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: TextField(
+                      style: TextStyle(fontFamily: 'sans'),
                       controller: controller,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           contentPadding: EdgeInsets.all(8),
-                          icon: Icon(Icons.edit)
+                          prefixIcon: Icon(Icons.edit, color: Theme.of(context).accentColor,)
                       ),
                       onChanged: _dealInput,
                 ),
@@ -382,7 +385,7 @@ class _EditBottomSheet extends State<EditBottomSheet>{
                                     builder: (context) {
                                       return new AlertDialog(
                                         title: Text("URL not valid!"),
-                                        content: Text("Check your URL, or the webfeed server is temporarily unavailable."),
+                                        content: Text("Check your URL, or the webfeed server is temporarily unavailable.", style: TextStyle(fontFamily: 'sans')),
                                         actions: <Widget>[
                                           FlatButton(
                                             child: Text('OK'),
@@ -473,7 +476,7 @@ class _SubsPageState extends State<SubsPage> {
                         (BuildContext context, int index) {
                       return Card(
                         child: InkWell(
-                          splashColor: Colors.blue.withAlpha(30),
+                          splashColor: Theme.of(context).accentColor.withAlpha(30),
                           onTap: (){},
                           child: ListTile(
                             title: Text("No subscribed RSS source."),

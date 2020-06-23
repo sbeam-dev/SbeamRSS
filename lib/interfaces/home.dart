@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).appBarTheme.color,
         unselectedLabelStyle: TextStyle(fontFamily: "NotoSans", color: Theme.of(context).appBarTheme.iconTheme.color),
         selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
-        selectedItemColor: Colors.blueAccent,
+        selectedItemColor: Theme.of(context).accentColor,
         unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
         showUnselectedLabels: true,
 //        backgroundColor: Colors.white,
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            title: Text('Favorite'),
+            title: Text('Favorites'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

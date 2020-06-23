@@ -39,19 +39,19 @@ class _ReaderScreenState extends State<ReaderScreen> {
     return '<p>' + str + '</p>';
   }
 
-  ScrollController _scrollController;
+//  ScrollController _scrollController;
   double _scrollValue = 0;
-  _scrollListener() {
-    setState(() {
-      _scrollValue = (_scrollController.position.pixels - _scrollController.position.minScrollExtent)
-          / (_scrollController.position.maxScrollExtent - _scrollController.position.minScrollExtent);
-    });
-  }
+//  _scrollListener() {
+//    setState(() {
+//      _scrollValue = (_scrollController.position.pixels - _scrollController.position.minScrollExtent)
+//          / (_scrollController.position.maxScrollExtent - _scrollController.position.minScrollExtent);
+//    });
+//  }
 
   @override
   void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
+//    _scrollController = ScrollController();
+//    _scrollController.addListener(_scrollListener);
     super.initState();
   }
 
@@ -62,24 +62,32 @@ class _ReaderScreenState extends State<ReaderScreen> {
     return Scaffold(
         body: Container(
           color: Theme.of(context).backgroundColor,
-          child: new CustomScrollView(
-            controller: _scrollController,
-            slivers: <Widget>[
-              SliverAppBar(
-                floating: true,
-                pinned: true,
-                snap: true,
-                title: Text("Article", style: Theme.of(context).textTheme.headline6,),
-                actions: <Widget>[
-                  PopupMenuButton(
-                    icon: Icon(Icons.more_vert),
-                    onSelected: (MenuItems selected) {
-                      if (selected == MenuItems.share) {
-                        Share.share("Check out this RSS article (\"${entry.title}\") from $sourceName! ${entry.link}");
-                      } else if (selected == MenuItems.open) {
-                        _launchURL(entry.link);
-                      } else if (selected == MenuItems.customize) {
-                        showModalBottomSheet(
+          child: new NotificationListener<ScrollEndNotification>(
+            onNotification: (notification){
+              setState(() {
+                _scrollValue = (notification.metrics.pixels - notification.metrics.minScrollExtent) /
+                    (notification.metrics.maxScrollExtent - notification.metrics.minScrollExtent);
+              });
+              return true;
+            },
+            child: CustomScrollView(
+//            controller: _scrollController,
+              slivers: <Widget>[
+                SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  snap: true,
+                  title: Text("Article", style: Theme.of(context).textTheme.headline6,),
+                  actions: <Widget>[
+                    PopupMenuButton(
+                      icon: Icon(Icons.more_vert),
+                      onSelected: (MenuItems selected) {
+                        if (selected == MenuItems.share) {
+                          Share.share("Check out this RSS article (\"${entry.title}\") from $sourceName! ${entry.link}");
+                        } else if (selected == MenuItems.open) {
+                          _launchURL(entry.link);
+                        } else if (selected == MenuItems.customize) {
+                          showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) {
                               return CustomizeSheet();
@@ -87,61 +95,61 @@ class _ReaderScreenState extends State<ReaderScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                        );
-                      }
-                    },
-                    itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuItems>>[
-                      new PopupMenuItem<MenuItems>(
-                        value: MenuItems.share,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                              child: Icon(Icons.share),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: Text("Share..."),
-                            ),
-                          ],
-                        )
-                      ),
-                      new PopupMenuItem<MenuItems>(
-                        value: MenuItems.open,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                              child: Icon(Icons.open_in_new),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: Text("Open link..."),
-                            ),
-                          ],
+                          );
+                        }
+                      },
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuItems>>[
+                        new PopupMenuItem<MenuItems>(
+                            value: MenuItems.share,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: Icon(Icons.share),
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text("Share..."),
+                                ),
+                              ],
+                            )
                         ),
-                      ),
-                      new PopupMenuItem<MenuItems>(
-                          value: MenuItems.customize,
+                        new PopupMenuItem<MenuItems>(
+                          value: MenuItems.open,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                child: Icon(Icons.text_fields),
+                                child: Icon(Icons.open_in_new),
                               ),
                               SizedBox(
                                 width: 100,
-                                child: Text("Customize"),
+                                child: Text("Open link..."),
                               ),
                             ],
-                          )
-                      )
-                    ],
-                  )
-                ],
+                          ),
+                        ),
+                        new PopupMenuItem<MenuItems>(
+                            value: MenuItems.customize,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: Icon(Icons.text_fields),
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text("Customize"),
+                                ),
+                              ],
+                            )
+                        )
+                      ],
+                    )
+                  ],
                 bottom: PreferredSize(
                   child: SizedBox(
                     child: LinearProgressIndicator(value: _scrollValue),
@@ -149,52 +157,53 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   ),
                   preferredSize: Size.fromHeight(2.0),
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                    [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                        child: Text(entry.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4, fontFamily: "NotoSans")),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                        child: Text(entry.author + ' from ' + sourceName, style: TextStyle(fontFamily: "NotoSans", fontSize: 15)),
-                      ),
-                      Divider(
-                        indent: 16,
-                        endIndent: 16,
-                        thickness: 2,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Consumer<ReaderModel>(
-                          builder: (context, readerModel, child){
-                            return Html(
-                              data: _toHTML(entry.description),
-                              onLinkTap: (url) => _launchURL(url),
-                              style: {
-                                "html": Style(
-                                  backgroundColor: Theme.of(context).backgroundColor,
-                                ),
-                                "a": Style(
-                                    color: Theme.of(context).brightness == Brightness.dark ? Color(0xFF8BB3F4):Color(0xFF127ACA)
-                                ),
-                                "span": Style.fromTextStyle(
-                                    TextStyle(fontSize: readerModel.fontSize, fontFamily: readerModel.fontFamily)
-                                ),
-                                "p": Style.fromTextStyle(
-                                    TextStyle(fontSize: readerModel.fontSize, fontFamily: readerModel.fontFamily)
-                                ),
-                              },
-                            );
-                          },
-                        ),
-                      )
-                    ]
                 ),
-              ),
-            ],
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                      [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+                          child: Text(entry.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4, fontFamily: "NotoSans")),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                          child: Text(entry.author + ' from ' + sourceName, style: TextStyle(fontFamily: "NotoSans", fontSize: 15)),
+                        ),
+                        Divider(
+                          indent: 16,
+                          endIndent: 16,
+                          thickness: 2,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Consumer<ReaderModel>(
+                            builder: (context, readerModel, child){
+                              return Html(
+                                data: _toHTML(entry.description),
+                                onLinkTap: (url) => _launchURL(url),
+                                style: {
+                                  "html": Style(
+                                    backgroundColor: Theme.of(context).backgroundColor,
+                                  ),
+                                  "a": Style(
+                                      color: Theme.of(context).brightness == Brightness.dark ? Color(0xFF8BB3F4):Color(0xFF127ACA)
+                                  ),
+                                  "span": Style.fromTextStyle(
+                                      TextStyle(fontSize: readerModel.fontSize, fontFamily: readerModel.fontFamily)
+                                  ),
+                                  "p": Style.fromTextStyle(
+                                      TextStyle(fontSize: readerModel.fontSize, fontFamily: readerModel.fontFamily)
+                                  ),
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ]
+                  ),
+                ),
+              ],
+            ),
           ),
         )
     );

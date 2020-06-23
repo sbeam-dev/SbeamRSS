@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Colors.white,
         brightness: Brightness.light,
+        accentColor: Color(0xFF2a90ec),
         appBarTheme: AppBarTheme(
             color: Colors.white,
             iconTheme: IconThemeData(color: Colors.black54),
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFF121212),
           brightness: Brightness.dark,
           cardColor: Color(0xFF272727),
+          accentColor: Color(0xFF78a4e7),
           appBarTheme: AppBarTheme(
               color: Color(0xFF383838),
               iconTheme: IconThemeData(color: Colors.white),
