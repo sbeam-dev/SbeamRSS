@@ -7,7 +7,7 @@ In early development state.
 
 [Documentation](https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md)
 
-## Try out our Beta version!
+## We launched at Play Store!
 
 <a href='https://play.google.com/store/apps/details?id=dev.sbeam.rss&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height=80/></a>
 
@@ -25,7 +25,7 @@ During the first stage of development, the app will be working full offline(rely
   - [x] Frontend refinement and theming
   - [x] Put on Beta testing
   - [ ] Feed filtering
-  - [x] Search articles(Working on)
+  - [x] Search articles
   - [x] Favorite articles
   - [ ] Advanced filter options when viewing the feeds list
   - [ ] Optimization for tablets

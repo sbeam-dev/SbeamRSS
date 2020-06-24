@@ -16,7 +16,7 @@ Pull down from the "Feeds" page to fetch new articles. It will take a long time 
 
 ### Navigate feeds
 
-Scroll at home page to browse feeds. Using the bottom-right button of each feed article, you can save it to your favorites list for future convenience. Articles added to favorites list can be easily accessed via the "Favorites" bottom tab.
+Scroll at home page to browse feeds. Using the bottom-right button of each feed article, you can save it to your favorites list for future convenience. Articles added to favorites list can be easily accessed via the "Favorites" bottom tab. Articles in "Favorites" list won't be deleted when deleting RSS sources or clearing old feeds in settings. You can manually delete them in the "favorites" tab.
 
 You can search for articles using the top-right button at home page. The searching feature is currently very basic. Only feed titles can be searched, and it's case sensitive.
 
