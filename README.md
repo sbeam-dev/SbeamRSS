@@ -1,11 +1,15 @@
-# SbeamRSS
+# SbeamRSS - Simple, elegant RSS reader
 [![CodeFactor](https://www.codefactor.io/repository/github/sbeam-dev/sbeamrss/badge)](https://www.codefactor.io/repository/github/sbeam-dev/sbeamrss)![releases](https://img.shields.io/github/v/release/sbeam-dev/SbeamRSS?include_prereleases)
 
 An Android RSS reader based on flutter.
 
 In early development state.
 
+Notice: We develop the app in our free time. Updates can be slow, but we haven't give up this project yet.
+
 [Documentation](https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md)
+
+[中文介绍](https://sbeam.dev/2020/09/06/sbeamrss/)
 
 ## We launched at Play Store!
 
@@ -27,7 +31,7 @@ During the first stage of development, the app will be working full offline(rely
   - [ ] Feed filtering
   - [x] Search articles
   - [x] Favorite articles
-  - [ ] Advanced filter options when viewing the feeds list
+  - [ ] OPML import&export
   - [ ] Optimization for tablets
 
 ## Known Defects
