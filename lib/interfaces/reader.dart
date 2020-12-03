@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,15 @@ class _ReaderScreenState extends State<ReaderScreen> {
     super.initState();
   }
 
+  String fontToGoogle(String font) {
+    switch (font) {
+      case "serif": return "Noto Serif";
+      case "sans": return "Roboto";
+      case "NotoSans": return "Noto Sans";
+    }
+    return "Noto Serif";
+  }
+
   @override
   Widget build(BuildContext context) {
     var entry = widget.entry;
@@ -67,6 +77,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
               setState(() {
                 _scrollValue = (notification.metrics.pixels - notification.metrics.minScrollExtent) /
                     (notification.metrics.maxScrollExtent - notification.metrics.minScrollExtent);
+                if (_scrollValue.isNaN || _scrollValue.isInfinite) _scrollValue = 0;
               });
               return true;
             },
@@ -163,11 +174,11 @@ class _ReaderScreenState extends State<ReaderScreen> {
                       [
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                          child: Text(entry.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4, fontFamily: "NotoSans")),
+                          child: Text(entry.title, style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4))),
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                          child: Text(entry.author + ' from ' + sourceName, style: TextStyle(fontFamily: "NotoSans", fontSize: 15)),
+                          child: Text(entry.author + ' from ' + sourceName, style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 15))),
                         ),
                         Divider(
                           indent: 16,
@@ -189,10 +200,10 @@ class _ReaderScreenState extends State<ReaderScreen> {
                                       color: Theme.of(context).brightness == Brightness.dark ? Color(0xFF8BB3F4):Color(0xFF127ACA)
                                   ),
                                   "span": Style.fromTextStyle(
-                                      TextStyle(fontSize: readerModel.fontSize, fontFamily: readerModel.fontFamily)
+                                      GoogleFonts.getFont(fontToGoogle(readerModel.fontFamily), textStyle: TextStyle(fontSize: readerModel.fontSize))
                                   ),
                                   "p": Style.fromTextStyle(
-                                      TextStyle(fontSize: readerModel.fontSize, fontFamily: readerModel.fontFamily)
+                                      GoogleFonts.getFont(fontToGoogle(readerModel.fontFamily), textStyle: TextStyle(fontSize: readerModel.fontSize))
                                   ),
                                 },
                               );
@@ -257,7 +268,7 @@ class _CustomizeSheetState extends State<CustomizeSheet> {
         ListTile(
           contentPadding: EdgeInsets.fromLTRB(16, 0, 0, 0),
           leading: Icon(Icons.format_size),
-          title: Text("Font Size", style: TextStyle(fontFamily: "NotoSans"),),
+          title: Text("Font Size", style: GoogleFonts.notoSans(),),
           trailing: SizedBox(
             width: 125,
             child: Row(
@@ -281,22 +292,22 @@ class _CustomizeSheetState extends State<CustomizeSheet> {
         ),
         ListTile(
           leading: Icon(Icons.font_download),
-          title: Text("Font Family:", style: TextStyle(fontFamily: "NotoSans"),),
+          title: Text("Font Family:", style: GoogleFonts.notoSans(),),
         ),
         RadioListTile<RadioItem>(
-          title: Text("Serif (Default)", style: TextStyle(fontFamily: "serif"),),
+          title: Text("Serif (Default)", style: GoogleFonts.notoSerif(),),
           value: RadioItem.serif,
           groupValue: _currentRadioItem,
           onChanged: _onRadioChanged
         ),
         RadioListTile<RadioItem>(
-          title: Text("Roboto", style: TextStyle(fontFamily: "sans"),),
+          title: Text("Roboto", style: GoogleFonts.roboto(),),
           value: RadioItem.sans,
           groupValue: _currentRadioItem,
           onChanged: _onRadioChanged,
         ),
         RadioListTile<RadioItem>(
-          title: Text("Noto Sans", style: TextStyle(fontFamily: "NotoSans"),),
+          title: Text("Noto Sans", style: GoogleFonts.notoSans(),),
           value: RadioItem.noto,
           groupValue: _currentRadioItem,
           onChanged: _onRadioChanged,

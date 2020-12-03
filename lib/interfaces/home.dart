@@ -3,6 +3,8 @@ import 'subs.dart';
 import 'settings.dart';
 import 'feeds.dart';
 import 'favorite.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // ------------Home--------------
 class MyHomePage extends StatefulWidget {
@@ -57,38 +59,70 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).appBarTheme.color,
-        unselectedLabelStyle: TextStyle(fontFamily: "NotoSans", color: Theme.of(context).appBarTheme.iconTheme.color),
-        selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
-        selectedItemColor: Theme.of(context).accentColor,
-        unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
-        showUnselectedLabels: true,
-//        backgroundColor: Colors.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.rss_feed),
-            title: Text('Feeds'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.radio),
-            title: Text('Source'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            title: Text('Favorites'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
-        ],
+      bottomNavigationBar: SalomonBottomBar(
+        margin: EdgeInsets.fromLTRB(28, 8, 28, 8),
         currentIndex: _currentIndex,
         onTap: (int index){
           _currentIndex = index;
           _pageController.jumpToPage(index);
         },
+        items: [
+          SalomonBottomBarItem(
+              icon: FaIcon(FontAwesomeIcons.rss),
+              title: Text('Feeds'),
+              selectedColor: Colors.orange
+          ),
+          SalomonBottomBarItem(
+              icon: Icon(Icons.radio),
+              title: Text('Source'),
+              selectedColor: Colors.blue
+          ),
+          SalomonBottomBarItem(
+              icon: Icon(Icons.favorite),
+              title: Text('Favorites'),
+              selectedColor: Colors.pink
+          ),
+          SalomonBottomBarItem(
+              icon: Icon(Icons.settings),
+              title: Text('Settings'),
+              selectedColor: Colors.teal
+          ),
+        ],
+        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         backgroundColor: Theme.of(context).appBarTheme.color,
+//         unselectedLabelStyle: TextStyle(fontFamily: "NotoSans", color: Theme.of(context).appBarTheme.iconTheme.color),
+//         selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
+//         selectedItemColor: Theme.of(context).accentColor,
+//         unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
+//         showUnselectedLabels: true,
+// //        backgroundColor: Colors.white,
+//         items: const <BottomNavigationBarItem>[
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.rss_feed),
+//             title: Text('Feeds'),
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.radio),
+//             title: Text('Source'),
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.favorite),
+//             title: Text('Favorites'),
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.settings),
+//             title: Text('Settings'),
+//           ),
+//         ],
+//         currentIndex: _currentIndex,
+//         onTap: (int index){
+//           _currentIndex = index;
+//           _pageController.jumpToPage(index);
+//         },
+//       ),
     );
   }
 }

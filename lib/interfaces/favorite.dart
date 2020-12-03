@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/favmodel.dart';
 import 'package:flutter_app1/databases/favdb.dart';
@@ -104,11 +105,11 @@ class _FavCardState extends State<FavCard> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 8, 16, 6),
                   child: Text(widget.entry.title,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                      style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
                           color: (Theme.of(context).brightness == Brightness.light) ?
                           (Colors.black) :
                           (Colors.white)
-                      ),
+                      )),
                       maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
                 Padding(

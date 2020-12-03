@@ -27,6 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             ThemeSettingCard(),
+            // FontSettingCard(),
             ClearDataCard(),
             Card(
                 elevation: 0,
@@ -46,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: (){
                   showAboutDialog(
                       context: context,
-                      applicationVersion: "v1.0.0",
+                      applicationVersion: "v1.0.2",
                       applicationLegalese: "Distributed under MPL-2.0 license",
                       children: <Widget>[
                         Padding(
@@ -142,6 +143,97 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
     );
   }
 }
+
+// class FontSettingCard extends StatefulWidget {
+//   @override
+//   _FontSettingCardState createState() => new _FontSettingCardState();
+// }
+//
+// class _FontSettingCardState extends State<FontSettingCard> {
+//   FontOptions _currentOption;
+//   String fontToStr(FontOptions opt) {
+//     switch(opt) {
+//       case FontOptions.JP: return "Japanese";
+//       case FontOptions.KR: return "Korean";
+//       case FontOptions.TC: return "Chinese(Traditional)";
+//       case FontOptions.SC: return "Chinese(Simplified)";
+//     }
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     _currentOption = Provider.of<ThemeModel>(context).currentFont;
+//     return Card(
+//         elevation: 0,
+//         child: InkWell(
+//           onTap: (){
+//             showDialog(
+//                 context: context,
+//                 child: SimpleDialog(
+//                   title: Text("Choose font variant..."),
+//                   children: <Widget>[
+//                     RadioListTile<FontOptions>(
+//                       title: Text("Japanese"),
+//                       value: FontOptions.JP,
+//                       groupValue: _currentOption,
+//                       onChanged: (value) {
+//                         Provider.of<ThemeModel>(context, listen: false).setFont(value);
+//                         setState(() {
+//                           _currentOption = value;
+//                         });
+//                         Navigator.pop(context);
+//                       },
+//                     ),
+//                     RadioListTile<FontOptions>(
+//                       title: Text("Korean"),
+//                       value: FontOptions.KR,
+//                       groupValue: _currentOption,
+//                       onChanged: (value) {
+//                         Provider.of<ThemeModel>(context, listen: false).setFont(value);
+//                         setState(() {
+//                           _currentOption = value;
+//                         });
+//                         Navigator.pop(context);
+//                       },
+//                     ),
+//                     RadioListTile<FontOptions>(
+//                       title: Text("Chinese(Traditional)"),
+//                       value: FontOptions.TC,
+//                       groupValue: _currentOption,
+//                       onChanged: (value) {
+//                         Provider.of<ThemeModel>(context, listen: false).setFont(value);
+//                         setState(() {
+//                           _currentOption = value;
+//                         });
+//                         Navigator.pop(context);
+//                       },
+//                     ),
+//                     RadioListTile<FontOptions>(
+//                       title: Text("Chinese(Simplified)"),
+//                       value: FontOptions.SC,
+//                       groupValue: _currentOption,
+//                       onChanged: (value) {
+//                         Provider.of<ThemeModel>(context, listen: false).setFont(value);
+//                         setState(() {
+//                           _currentOption = value;
+//                         });
+//                         Navigator.pop(context);
+//                       },
+//                     ),
+//                   ],
+//                 )
+//             );
+//           },
+//           child: ListTile(
+//             leading: Icon(Icons.font_download, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+//             title: Text("CJK font variant"),
+//             subtitle: Text(fontToStr(_currentOption)),
+//           ),
+//         )
+//     );
+//   }
+// }
+//
+//
 
 class ClearDataCard extends StatefulWidget {
   @override

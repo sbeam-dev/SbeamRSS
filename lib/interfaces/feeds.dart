@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/feedmodel.dart';
 import '../databases/feeddb.dart';
 import '../models/sourcemodel.dart';
@@ -222,16 +223,16 @@ class _FeedCardState extends State<FeedCard> {
                   Padding(
                       padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                       child: Text("From " + sourceName,
-                          style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                          style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
                     child: Text(widget.entry.title,
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                        style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
                             color: (Theme.of(context).brightness == Brightness.light) ?
                             (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.black : Colors.black54) :
                             (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.white : Colors.white70)
-                        ),
+                        ),),
                         maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
                   Padding(
@@ -309,16 +310,16 @@ class _FeedCardState extends State<FeedCard> {
                             Padding(
                                 padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                                 child: Text("From " + sourceName,
-                                    style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                                    style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
                             ),
                             Padding(
                               padding: EdgeInsets.fromLTRB(16, 0, 0, 6),
                               child: Text(widget.entry.title,
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                                  style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
                                       color: (Theme.of(context).brightness == Brightness.light) ?
                                       (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.black : Colors.black54) :
                                       (Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? Colors.white : Colors.white70)
-                                  ),
+                                  )),
                                   maxLines: 3, overflow: TextOverflow.ellipsis),
                             ),
                           Padding(
@@ -627,16 +628,16 @@ class _ResultFeedCardState extends State<ResultFeedCard> {
                   Padding(
                       padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                       child: Text("From " + sourceName,
-                          style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                          style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
                     child: Text(widget.entry.title,
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                        style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
                             color: (Theme.of(context).brightness == Brightness.light) ?
                             (Colors.black) :
                             (Colors.white)
-                        ),
+                        )),
                         maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
                   Padding(
@@ -691,16 +692,16 @@ class _ResultFeedCardState extends State<ResultFeedCard> {
                             Padding(
                                 padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                                 child: Text("From " + sourceName,
-                                    style: TextStyle(fontSize: 14, fontFamily: "NotoSans"), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                                    style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
                             ),
                             Padding(
                               padding: EdgeInsets.fromLTRB(16, 0, 0, 6),
                               child: Text(widget.entry.title,
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans",
+                                  style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
                                       color: (Theme.of(context).brightness == Brightness.light) ?
                                       (Colors.black) :
                                       (Colors.white)
-                                  ),
+                                  ),),
                                   maxLines: 3, overflow: TextOverflow.ellipsis),
                             ),
                             Padding(

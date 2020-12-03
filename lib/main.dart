@@ -7,6 +7,7 @@ import 'package:flutter_app1/models/feedmodel.dart';
 import 'package:flutter_app1/models/favmodel.dart';
 import 'package:provider/provider.dart';
 import 'interfaces/home.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(
   new MultiProvider(
@@ -37,22 +38,23 @@ class MyApp extends StatelessWidget {
         ),
         popupMenuTheme: PopupMenuThemeData(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-            textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.black, fontSize: 16)
+            textStyle: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black, fontSize: 16))
         ),
         textTheme: TextTheme(
-          headline6: TextStyle(fontFamily: "NotoSans", color: Colors.black),
-          subtitle1: TextStyle(fontFamily: "NotoSans"),
-          headline5: TextStyle(fontFamily: "NotoSans"),
+          headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black)),
+          subtitle1: GoogleFonts.getFont('Noto Sans'),
+          headline5: GoogleFonts.getFont('Noto Sans'),
         ),
         primaryTextTheme: TextTheme(
-          headline6: TextStyle(fontFamily: "NotoSans", color: Colors.black),
-          subtitle1: TextStyle(fontFamily: "NotoSans"),
-          headline5: TextStyle(fontFamily: "NotoSans"),
+          headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black)),
+          subtitle1: GoogleFonts.getFont('Noto Sans'),
+          headline5: GoogleFonts.getFont('Noto Sans'),
         ),
         pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
         dialogTheme: DialogTheme(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
+        // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       darkTheme: ThemeData(
           backgroundColor: Color(0xFF121212),
@@ -66,22 +68,23 @@ class MyApp extends StatelessWidget {
           ),
           popupMenuTheme: PopupMenuThemeData(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-              textStyle: TextStyle(fontFamily: "NotoSans", color: Colors.white, fontSize: 16)
+              textStyle: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white, fontSize: 16))
           ),
           textTheme: TextTheme(
-            headline6: TextStyle(fontFamily: "NotoSans", color: Colors.white),
-            subtitle1: TextStyle(fontFamily: "NotoSans"),
-            headline5: TextStyle(fontFamily: "NotoSans"),
+            headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white)),
+            subtitle1: GoogleFonts.getFont('Noto Sans'),
+            headline5: GoogleFonts.getFont('Noto Sans'),
           ),
           primaryTextTheme: TextTheme(
-            headline6: TextStyle(fontFamily: "NotoSans", color: Colors.white),
-            subtitle1: TextStyle(fontFamily: "NotoSans"),
-            headline5: TextStyle(fontFamily: "NotoSans"),
+            headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white)),
+            subtitle1: GoogleFonts.getFont('Noto Sans'),
+            headline5: GoogleFonts.getFont('Noto Sans'),
           ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
           dialogTheme: DialogTheme(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
           ),
+          // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       home: MyHomePage(title: 'Home Page'),
       themeMode: (Provider.of<ThemeModel>(context).currentTheme == ThemeOptions.system) ? ThemeMode.system
