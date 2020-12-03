@@ -15,9 +15,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/favmodel.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FeedsPage extends StatefulWidget {
-  FeedsPage({Key key}) : super(key: key);
+  final ScrollController scrController;
+  FeedsPage({Key key, this.scrController}) : super(key: key);
 
   @override
   _FeedsPageState createState() => _FeedsPageState();
@@ -83,6 +85,7 @@ class _FeedsPageState extends State<FeedsPage> {
     return Container(
       color: Theme.of(context).backgroundColor,
       child: NestedScrollView(
+        controller: widget.scrController,
         headerSliverBuilder: (context, innerBoxScrolled) => [
           SliverAppBar(
             floating: true,
@@ -420,7 +423,8 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.markunread),
+          contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
+          leading: FaIcon(FontAwesomeIcons.envelope),
           title: Text((Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0) ? "Mark as read" : "Mark as unread"),
           onTap: (){
             Provider.of<FeedModel>(context).setRead(widget.entry, Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? 1 : 0, widget.index);
@@ -428,7 +432,8 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           },
         ),
         ListTile(
-          leading: Icon(Icons.share),
+          contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
+          leading: FaIcon(FontAwesomeIcons.share),
           title: Text("Share..."),
           onTap: (){
             Share.share("Check out this RSS article (\"${widget.entry.title}\") from ${widget.sourceName}! ${widget.entry.link}");
@@ -436,7 +441,8 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           },
         ),
         ListTile(
-          leading: Icon(Icons.open_in_new),
+          contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
+          leading: FaIcon(FontAwesomeIcons.externalLinkAlt),
           title: Text("Open in browser..."),
           onTap: (){
             _launchURL(widget.entry.link);
@@ -444,7 +450,8 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
           },
         ),
         ListTile(
-          leading: Icon(Icons.favorite, color: Colors.pink,),
+          contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
+          leading: FaIcon(FontAwesomeIcons.heart, color: Colors.pink,),
           title: Text("Add to favorites"),
           onTap: (){
             Provider.of<FavModel>(context, listen: false).addFav(widget.entry);

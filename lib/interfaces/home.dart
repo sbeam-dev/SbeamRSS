@@ -19,6 +19,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   PageController _pageController;
+  final ScrollController _feedScroller = ScrollController();
 
   @override
   void initState() {
@@ -34,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _getMainPage(int i){
     switch(i) {
-      case(0): return new FeedsPage();
+      case(0): return new FeedsPage(scrController: _feedScroller,);
       case(1): return new SubsPage();
       case(2): return new FavPage();
       case(3): return new SettingsPage();
@@ -68,22 +69,40 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: [
           SalomonBottomBarItem(
-              icon: FaIcon(FontAwesomeIcons.rss),
-              title: Text('Feeds'),
+              icon: GestureDetector(
+                child: FaIcon(FontAwesomeIcons.rss),
+                onDoubleTap: (){
+                  _feedScroller.animateTo(
+                      0.0,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 300),
+                  );
+                },
+              ),
+              title: GestureDetector(
+                child: Text("Feeds"),
+                onDoubleTap: (){
+                  _feedScroller.animateTo(
+                    0.0,
+                    curve: Curves.easeOut,
+                    duration: const Duration(milliseconds: 300),
+                  );
+                },
+              ),
               selectedColor: Colors.orange
           ),
           SalomonBottomBarItem(
-              icon: Icon(Icons.radio),
+              icon: FaIcon(FontAwesomeIcons.newspaper),
               title: Text('Source'),
               selectedColor: Colors.blue
           ),
           SalomonBottomBarItem(
-              icon: Icon(Icons.favorite),
+              icon: FaIcon(FontAwesomeIcons.heart),
               title: Text('Favorites'),
               selectedColor: Colors.pink
           ),
           SalomonBottomBarItem(
-              icon: Icon(Icons.settings),
+              icon: FaIcon(FontAwesomeIcons.cog),
               title: Text('Settings'),
               selectedColor: Colors.teal
           ),

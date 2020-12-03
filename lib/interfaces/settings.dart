@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/thememodel.dart';
 import '../models/feedmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key, this.title}) : super(key: key);
@@ -36,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     launch("https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md");
                   },
                   child: ListTile(
-                    leading: Icon(Icons.help, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+                    leading: FaIcon(FontAwesomeIcons.questionCircle, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
                     title: Text("Help"),
                   ),
                 )
@@ -61,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.info_outline, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+                  leading: FaIcon(FontAwesomeIcons.infoCircle, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
                   title: Text("About"),
                 ),
               )
@@ -134,7 +135,10 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
             );
           },
           child: ListTile(
-            leading: Icon(Icons.palette, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[FaIcon(FontAwesomeIcons.palette, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)],
+            ),
             title: Text("Theme"),
             subtitle: Text((_currentOption == ThemeOptions.system) ? "System default"
                 : ((_currentOption == ThemeOptions.light) ? "Light" : "Dark")),
@@ -297,7 +301,11 @@ class _ClearDataCardState extends State<ClearDataCard> {
             );
           },
           child: ListTile(
-            leading: Icon(Icons.storage, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+            // contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[FaIcon(FontAwesomeIcons.hdd, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)],
+            ),
             title: Text("Clear cache"),
             subtitle: Text("Delete stored old feeds"),
           ),
