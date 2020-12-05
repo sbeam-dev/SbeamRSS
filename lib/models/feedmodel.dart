@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../databases/feeddb.dart';
+import 'package:connectivity/connectivity.dart';
 
 class FeedModel extends ChangeNotifier {
   List<FeedEntry> _feedDump;
@@ -33,6 +34,14 @@ class FeedModel extends ChangeNotifier {
   Future<void> refreshFeed() async {
 //    print("called");
     if (_isRefreshing) return;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      //not connected
+      Fluttertoast.showToast(
+        msg: "Please check your internet connection!",
+      );
+      return;
+    }
     _isRefreshing = true;
     await FeedDBOperations.refreshToDB();
     _isRefreshing = false;
