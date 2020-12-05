@@ -5,7 +5,7 @@ An Android RSS reader based on flutter.
 
 In early development state.
 
-Notice: We develop the app in our free time. Updates can be slow, but as we daily drive the app, we will keep this app usable.
+Notice: We develop the app in our free time. Updates can be slow, but as we daily drive the app, we will keep it usable.
 
 [Documentation](https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md)
 
@@ -32,7 +32,6 @@ During the first stage of development, the app will be working fully offline(use
   - [x] Search articles
   - [x] Favorite articles
   - [ ] UI&Font optimizations
-  - [ ] More informative feed pulling
   - [ ] OPML import&export
   - [ ] Optimization for tablets
 
@@ -40,8 +39,9 @@ During the first stage of development, the app will be working fully offline(use
 
 + Text can't be selected in reading page. Waiting for the flutter_html package to implement this feature.
 + The Scrollbar in reading page can't be updated instantly. It's a workaround to avoid severe performance issue.
++ TargetSDK reverted from 30 to 29 to avoid breaking `fluttertoast`.
 + If you have other suggestions, feel free to open an issue!
 
 ## Building
 
-We use the latest stable branch of flutter(1.22). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.
+We use the latest beta branch of flutter(1.24). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.
