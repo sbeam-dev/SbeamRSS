@@ -41,9 +41,11 @@ class MyApp extends StatelessWidget {
             textStyle: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black, fontSize: 16))
         ),
         textTheme: TextTheme(
+          headline4: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black), fontSize: 30),
           headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black)),
           subtitle1: GoogleFonts.getFont('Noto Sans'),
           headline5: GoogleFonts.getFont('Noto Sans'),
+          bodyText2: GoogleFonts.getFont('Noto Sans'),
         ),
         primaryTextTheme: TextTheme(
           headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black)),
@@ -71,9 +73,11 @@ class MyApp extends StatelessWidget {
               textStyle: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white, fontSize: 16))
           ),
           textTheme: TextTheme(
+            headline4: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white), fontSize: 30),
             headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white)),
             subtitle1: GoogleFonts.getFont('Noto Sans'),
             headline5: GoogleFonts.getFont('Noto Sans'),
+            bodyText2: GoogleFonts.getFont('Noto Sans'),
           ),
           primaryTextTheme: TextTheme(
             headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white)),

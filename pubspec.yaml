@@ -39,6 +39,7 @@ dependencies:
   salomon_bottom_bar: ^2.0.0
   font_awesome_flutter: ^8.10.0
   connectivity: ^2.0.2
+  expansion_tile_card: ^1.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
