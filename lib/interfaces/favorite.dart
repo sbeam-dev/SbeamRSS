@@ -15,54 +15,156 @@ class FavPage extends StatefulWidget {
 class _FavPageState extends State<FavPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Favorites", style: Theme.of(context).textTheme.headline6),
-        centerTitle: true,
-      ),
-      body: Container(
-        color: Theme.of(context).backgroundColor,
-        child: Consumer<FavModel>(
-          builder: (context, favModel, child){
-            if(favModel.feedDump == null) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              int _len = favModel.feedDump.length;
-              if (_len == 0) {
-                return ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: InkWell(
-                        splashColor: Colors.blue.withAlpha(30),
-                        onTap: (){},
-                        child: ListTile(
-                          title: Text("Empty here."),
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text("Favorites", style: Theme.of(context).textTheme.headline6),
+    //     centerTitle: true,
+    //   ),
+    // body: Container(
+    //   color: Theme.of(context).backgroundColor,
+    //   child: Consumer<FavModel>(
+    //     builder: (context, favModel, child){
+    //       if(favModel.feedDump == null) {
+    //         return Center(
+    //           child: CircularProgressIndicator(),
+    //         );
+    //       } else {
+    //         int _len = favModel.feedDump.length;
+    //         if (_len == 0) {
+    //           return ListView.builder(
+    //             padding: EdgeInsets.zero,
+    //             itemBuilder: (BuildContext context, int index) {
+    //               return Card(
+    //                 child: InkWell(
+    //                   splashColor: Colors.blue.withAlpha(30),
+    //                   onTap: (){},
+    //                   child: ListTile(
+    //                     title: Text("Empty here."),
+    //                   ),
+    //                 ),
+    //               );
+    //             },
+    //             itemCount: 1,
+    // );
+    // } else {
+    //             return ListView.builder(
+    //               padding: EdgeInsets.zero,
+    //               itemBuilder: (BuildContext context, int index) {
+    //                 return new FavCard(entry: favModel.feedDump[index], index: index,);
+    //               },
+    //               itemCount: _len,
+    //             );
+    //           }
+    //         }
+    //       },
+    //     ),
+    //   ),
+    // );
+    return Container(
+      color: Theme.of(context).backgroundColor,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            // floating: true,
+            // snap: true,
+            pinned: true,
+            expandedHeight: 80,
+            backgroundColor: Theme.of(context).backgroundColor,
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                double percent = ((constraints.maxHeight -
+                    kToolbarHeight -
+                    MediaQuery.of(context).padding.top) *
+                    100 /
+                    (80 -
+                        kToolbarHeight)); //change first number to reflect expanded height
+                double dx = 0;
+                dx = 16 +
+                    (100 - percent) *
+                        (MediaQuery.of(context).size.width - 32 - 83) *
+                        (0.005);
+                // print(dx);
+                // 83 is the width of text widget
+                // print(constraints.maxHeight - kToolbarHeight);
+                return Stack(
+                  children: <Widget>[
+                    Container(
+                      color: Theme.of(context)
+                          .appBarTheme
+                          .color
+                          .withOpacity((100 - percent) / 100),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: kToolbarHeight / 4, left: 0.0),
+                      child: Transform.translate(
+                        child: Transform.scale(
+                          scale: 1 + 0.008 * percent,
+                          child: Text(
+                            "Favorites",
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          alignment: Alignment.bottomLeft,
                         ),
+                        offset: Offset(
+                            dx, 4 + constraints.maxHeight - kToolbarHeight),
                       ),
-                    );
-                  },
-                  itemCount: 1,
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          Consumer<FavModel>(
+            builder: (context, favModel, child) {
+              if (favModel.feedDump == null) {
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      return CircularProgressIndicator();
+                    },
+                    childCount: 1,
+                  ),
                 );
               } else {
-                return ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new FavCard(entry: favModel.feedDump[index], index: index,);
-                  },
-                  itemCount: _len,
-                );
+                int _len = favModel.feedDump.length;
+                if (_len == 0) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return Card(
+                          child: InkWell(
+                            splashColor: Theme.of(context).accentColor.withAlpha(30),
+                            onTap: (){},
+                            child: ListTile(
+                              title: Text("Empty here."),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: 1,
+                    ),
+                  );
+                } else {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return new FavCard(
+                          entry: favModel.feedDump[index],
+                          index: index,);
+                      },
+                      childCount: _len,
+                    ),
+                  );
+                }
               }
-            }
-          },
-        ),
+            },
+          )
+        ],
       ),
     );
   }
 }
-
 
 class FavCard extends StatefulWidget {
   FavCard({Key key, this.entry, this.index}) : super(key: key);
@@ -74,11 +176,7 @@ class FavCard extends StatefulWidget {
 
 class _FavCardState extends State<FavCard> {
   String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-        r"<[^>]*>",
-        multiLine: true,
-        caseSensitive: true
-    );
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
     return htmlText.replaceAll(exp, '');
   }
 
@@ -87,6 +185,7 @@ class _FavCardState extends State<FavCard> {
 //    _currentReadState = widget.entry.readState;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -96,8 +195,14 @@ class _FavCardState extends State<FavCard> {
           elevation: 0,
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderScreen(entry: widget.entry.toFeedEntry(), sourceName: "Favorites",)));
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ReaderScreen(
+                            entry: widget.entry.toFeedEntry(),
+                            sourceName: "Favorites",
+                          )));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,16 +210,23 @@ class _FavCardState extends State<FavCard> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 8, 16, 6),
                   child: Text(widget.entry.title,
-                      style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
-                          color: (Theme.of(context).brightness == Brightness.light) ?
-                          (Colors.black) :
-                          (Colors.white)
-                      )),
-                      maxLines: 2, overflow: TextOverflow.ellipsis),
+                      style: GoogleFonts.getFont("Noto Sans",
+                          textStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: (Theme.of(context).brightness ==
+                                      Brightness.light)
+                                  ? (Colors.black)
+                                  : (Colors.white))),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 4, overflow: TextOverflow.ellipsis),
+                  child: Text(removeAllHtmlTags(widget.entry.description),
+                      style: TextStyle(fontSize: 16, fontFamily: "serif"),
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 4, 0),
@@ -123,7 +235,8 @@ class _FavCardState extends State<FavCard> {
                     children: <Widget>[
                       Text(
                         formatTime(widget.entry.getTime * 1000),
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(
                         height: 32,
@@ -131,8 +244,9 @@ class _FavCardState extends State<FavCard> {
                           padding: EdgeInsets.zero,
                           iconSize: 18,
                           icon: Icon(Icons.delete),
-                          onPressed: (){
-                            Provider.of<FavModel>(context, listen: false).deleteFav(widget.entry.link);
+                          onPressed: () {
+                            Provider.of<FavModel>(context, listen: false)
+                                .deleteFav(widget.entry.link);
                           },
                         ),
                       ),

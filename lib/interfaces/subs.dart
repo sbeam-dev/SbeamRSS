@@ -16,6 +16,9 @@ class SourceListTile extends StatelessWidget {
     return new Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: ExpansionTileCard(
+        baseColor: Theme.of(context).cardColor,
+        initialElevation: 0.5,
+        elevation: 1.5,
         contentPadding: EdgeInsets.symmetric(horizontal: 12),
         title: Text(source.name, maxLines: 1, overflow: TextOverflow.ellipsis),
         leading: CircleAvatar(child: Text(source.name[0]),),
@@ -91,7 +94,7 @@ class SourceListTile extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 12, 0),
+                padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
                 child: OutlinedButton(
                   child: Text("Delete"),
                   onPressed: () {
@@ -478,17 +481,22 @@ class _SubsPageState extends State<SubsPage> {
           SliverAppBar(
             pinned: true,
             expandedHeight: 80,
+            backgroundColor: Theme.of(context).backgroundColor,
             flexibleSpace: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 double percent = ((constraints.maxHeight - kToolbarHeight - MediaQuery.of(context).padding.top) *
                     100 /
                     (80 - kToolbarHeight)); //change first number to reflect expanded height
                 double dx = 0;
-                dx = 16+(100 - percent)*(MediaQuery.of(context).size.width-32-127)*(0.005);
+                dx = 16+(100 - percent)*(MediaQuery.of(context).size.width-32-122)*(0.005);
                 // print(dx);
-                // 127 is the width of text widget
+                // 12x is the width of text widget
+                // print(constraints.maxHeight - kToolbarHeight);
                 return Stack(
                   children: <Widget>[
+                    Container(
+                      color: Theme.of(context).appBarTheme.color.withOpacity((100-percent)/100),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(
                           top: kToolbarHeight / 4, left: 0.0),
@@ -499,7 +507,7 @@ class _SubsPageState extends State<SubsPage> {
                           alignment: Alignment.bottomLeft,
                         ),
                         offset:
-                            Offset(dx, constraints.maxHeight - kToolbarHeight),
+                            Offset(dx, 4+constraints.maxHeight - kToolbarHeight),
                       ),
                     ),
                   ],

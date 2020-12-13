@@ -28,12 +28,18 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Sbeam RSS Reader',
       theme: ThemeData(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFF0F0F0),
+        primaryColor: Color(0xFF1f8dd6),
+        primaryColorBrightness: Brightness.dark,
         brightness: Brightness.light,
         accentColor: Color(0xFF2a90ec),
+        bottomAppBarColor: Colors.white,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Colors.white
+        ),
         appBarTheme: AppBarTheme(
             color: Colors.white,
-            iconTheme: IconThemeData(color: Colors.black54),
+            iconTheme: IconThemeData(color: Colors.black87),
             elevation: 4
         ),
         popupMenuTheme: PopupMenuThemeData(
@@ -41,8 +47,8 @@ class MyApp extends StatelessWidget {
             textStyle: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black, fontSize: 16))
         ),
         textTheme: TextTheme(
-          headline4: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black), fontSize: 30),
-          headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black)),
+          // headline4: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.black), fontSize: 30),
+          headline6: GoogleFonts.getFont('Ubuntu', textStyle: TextStyle(color: Colors.black)),
           subtitle1: GoogleFonts.getFont('Noto Sans'),
           headline5: GoogleFonts.getFont('Noto Sans'),
           bodyText2: GoogleFonts.getFont('Noto Sans'),
@@ -59,12 +65,17 @@ class MyApp extends StatelessWidget {
         // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       darkTheme: ThemeData(
-          backgroundColor: Color(0xFF121212),
+          backgroundColor: Color(0xFF181819),
           brightness: Brightness.dark,
-          cardColor: Color(0xFF272727),
+          cardColor: Color(0xFF222223),
+          primaryColor: Color(0xFF5cc1ff),
+          primaryColorBrightness: Brightness.dark,
           accentColor: Color(0xFF78a4e7),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Color(0xFF202022)
+          ),
           appBarTheme: AppBarTheme(
-              color: Color(0xFF383838),
+              color: Color(0xFF202022),
               iconTheme: IconThemeData(color: Colors.white),
               elevation: 4
           ),
@@ -73,8 +84,8 @@ class MyApp extends StatelessWidget {
               textStyle: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white, fontSize: 16))
           ),
           textTheme: TextTheme(
-            headline4: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white), fontSize: 30),
-            headline6: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white)),
+            // headline4: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Colors.white), fontSize: 30),
+            headline6: GoogleFonts.getFont('Ubuntu', textStyle: TextStyle(color: Colors.white)),
             subtitle1: GoogleFonts.getFont('Noto Sans'),
             headline5: GoogleFonts.getFont('Noto Sans'),
             bodyText2: GoogleFonts.getFont('Noto Sans'),

@@ -87,21 +87,71 @@ class _FeedsPageState extends State<FeedsPage> {
       child: NestedScrollView(
         controller: widget.scrController,
         headerSliverBuilder: (context, innerBoxScrolled) => [
+          // SliverAppBar(
+          //   floating: true,
+          //   snap: true,
+          //   title: Text("Feeds", style: Theme.of(context).textTheme.headline6),
+          //   centerTitle: true,
+          //   actions: <Widget>[
+          //     IconButton(
+          //       icon: Icon(Icons.search),
+          //       onPressed: (){
+          //         showSearch(
+          //             context: context,
+          //             delegate: FeedSearchDelegate(),
+          //         );
+          //       },
+          //     )
+          //   ],
+          // ),
           SliverAppBar(
-            floating: true,
-            snap: true,
-            title: Text("Feeds", style: Theme.of(context).textTheme.headline6),
-            centerTitle: true,
+            // floating: true,
+            // snap: true,
+            pinned: true,
+            expandedHeight: 80,
+            backgroundColor: Theme.of(context).backgroundColor,
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                double percent = ((constraints.maxHeight - kToolbarHeight - MediaQuery.of(context).padding.top) *
+                    100 /
+                    (80 - kToolbarHeight)); //change first number to reflect expanded height
+                double dx = 0;
+                dx = 16+(100 - percent)*(MediaQuery.of(context).size.width-32-54)*(0.005);
+                // print(dx);
+                // 54 is the width of text widget
+                // print(constraints.maxHeight - kToolbarHeight);
+                return Stack(
+                  children: <Widget>[
+                    Container(
+                      color: Theme.of(context).appBarTheme.color.withOpacity((100-percent)/100),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: kToolbarHeight / 4, left: 0.0),
+                      child: Transform.translate(
+                        child: Transform.scale(
+                          scale: 1+0.008*percent,
+                          child: Text("Feeds", style: Theme.of(context).textTheme.headline6,),
+                          alignment: Alignment.bottomLeft,
+                        ),
+                        offset:
+                        Offset(dx, 4+constraints.maxHeight - kToolbarHeight),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
             actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: (){
-                  showSearch(
-                      context: context,
-                      delegate: FeedSearchDelegate(),
-                  );
-                },
-              )
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: (){
+                      showSearch(
+                          context: context,
+                          delegate: FeedSearchDelegate(),
+                      );
+                    },
+                  )
             ],
           ),
         ],

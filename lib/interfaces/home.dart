@@ -110,38 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedItemColor: Theme.of(context).accentColor,
         unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         backgroundColor: Theme.of(context).appBarTheme.color,
-//         unselectedLabelStyle: TextStyle(fontFamily: "NotoSans", color: Theme.of(context).appBarTheme.iconTheme.color),
-//         selectedLabelStyle: TextStyle(fontFamily: "NotoSans"),
-//         selectedItemColor: Theme.of(context).accentColor,
-//         unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,
-//         showUnselectedLabels: true,
-// //        backgroundColor: Colors.white,
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.rss_feed),
-//             title: Text('Feeds'),
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.radio),
-//             title: Text('Source'),
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.favorite),
-//             title: Text('Favorites'),
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.settings),
-//             title: Text('Settings'),
-//           ),
-//         ],
-//         currentIndex: _currentIndex,
-//         onTap: (int index){
-//           _currentIndex = index;
-//           _pageController.jumpToPage(index);
-//         },
-//       ),
     );
   }
 }
