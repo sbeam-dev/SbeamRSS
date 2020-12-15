@@ -71,7 +71,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
     var sourceName = widget.sourceName;
     return Scaffold(
         body: Container(
-          color: Theme.of(context).backgroundColor,
+          color: (Theme.of(context).brightness == Brightness.light) ? Colors.white : Theme.of(context).backgroundColor,
           child: new NotificationListener<ScrollEndNotification>(
             onNotification: (notification){
               setState(() {

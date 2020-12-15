@@ -191,8 +191,8 @@ class _FavCardState extends State<FavCard> {
     return Column(
       children: <Widget>[
         Card(
-          color: Theme.of(context).backgroundColor,
-          elevation: 0,
+          // color: Theme.of(context).backgroundColor,
+          elevation: 1,
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
             onTap: () {
@@ -244,6 +244,7 @@ class _FavCardState extends State<FavCard> {
                           padding: EdgeInsets.zero,
                           iconSize: 18,
                           icon: Icon(Icons.delete),
+                          color: Colors.red,
                           onPressed: () {
                             Provider.of<FavModel>(context, listen: false)
                                 .deleteFav(widget.entry.link);
@@ -257,12 +258,12 @@ class _FavCardState extends State<FavCard> {
             ),
           ),
         ),
-        Divider(
-          height: 8,
-          thickness: 2,
-          indent: 16,
-          endIndent: 16,
-        )
+        // Divider(
+        //   height: 8,
+        //   thickness: 2,
+        //   indent: 16,
+        //   endIndent: 16,
+        // )
       ],
     );
   }

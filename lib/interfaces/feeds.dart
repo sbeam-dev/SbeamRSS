@@ -54,7 +54,7 @@ class _FeedsPageState extends State<FeedsPage> {
                 FlatButton(
                   child: Text("Take me there"),
                   onPressed: (){
-                    launch("https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md");
+                    launch("https://github.com/sbeam-dev/SbeamRSS/wiki/Quick-start");
                     Navigator.of(context).pop();
                   },
                 ),

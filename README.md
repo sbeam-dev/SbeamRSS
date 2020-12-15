@@ -7,7 +7,7 @@ In early development state.
 
 Notice: We develop the app in our free time. Updates can be slow, but as we daily drive the app, we will keep it usable.
 
-[Documentation](https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md)
+[Documentation](https://github.com/sbeam-dev/SbeamRSS/wiki/)
 
 [中文介绍](https://sbeam.dev/2020/09/06/sbeamrss/)
 
@@ -40,6 +40,7 @@ During the first stage of development, the app will be working fully offline(use
 + Text can't be selected in reading page. Waiting for the flutter_html package to implement this feature.
 + The Scrollbar in reading page can't be updated instantly. It's a workaround to avoid severe performance issue.
 + TargetSDK reverted from 30 to 29 to avoid breaking `fluttertoast`.
++ There is a bug([Flutter issue](https://github.com/flutter/flutter/issues/70744)) when inputting new subscription. It has been fixed but not yet included in the current release.
 + If you have other suggestions, feel free to open an issue!
 
 ## Building

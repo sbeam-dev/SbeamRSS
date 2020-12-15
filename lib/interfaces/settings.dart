@@ -31,10 +31,10 @@ class _SettingsPageState extends State<SettingsPage> {
             // FontSettingCard(),
             ClearDataCard(),
             Card(
-                elevation: 0,
+                elevation: 1,
                 child: InkWell(
                   onTap: (){
-                    launch("https://github.com/sbeam-dev/SbeamRSS/blob/master/Docs.md");
+                    launch("https://github.com/sbeam-dev/SbeamRSS/wiki");
                   },
                   child: ListTile(
                     leading: FaIcon(FontAwesomeIcons.questionCircle, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
@@ -43,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 )
             ),
             Card(
-              elevation: 0,
+              elevation: 1,
               child: InkWell(
                 onTap: (){
                   showAboutDialog(
@@ -86,7 +86,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
   Widget build(BuildContext context) {
     _currentOption = Provider.of<ThemeModel>(context).currentTheme;
     return Card(
-        elevation: 0,
+        elevation: 1,
         child: InkWell(
           onTap: (){
             showDialog(
@@ -253,7 +253,7 @@ class _ClearDataCardState extends State<ClearDataCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 0,
+        elevation: 1,
         child: InkWell(
           onTap: (){
             showDialog(
