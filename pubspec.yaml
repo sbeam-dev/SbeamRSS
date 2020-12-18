@@ -29,12 +29,12 @@ dependencies:
   time_formatter: ^1.0.0
   incrementally_loading_listview: ^0.3.0
   url_launcher: ^5.7.10
-  share: ^0.6.5
+  share: ^0.6.5+4
   progress_dialog: ^1.2.3
   cached_network_image: ^2.3.3
   transparent_image: ^1.0.0
   flutter_svg: ^0.19.2
-  fluttertoast: ^7.1.5
+  fluttertoast: ^7.1.6
   google_fonts: ^1.1.1
   salomon_bottom_bar: ^2.0.0
   font_awesome_flutter: ^8.10.0
