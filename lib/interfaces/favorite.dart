@@ -79,9 +79,9 @@ class _FavPageState extends State<FavPage> {
                     (80 -
                         kToolbarHeight)); //change first number to reflect expanded height
                 double dx = 0;
-                dx = 16 +
+                dx = 18 +
                     (100 - percent) *
-                        (MediaQuery.of(context).size.width - 32 - 83) *
+                        (MediaQuery.of(context).size.width - 36 - 83) *
                         (0.005);
                 // print(dx);
                 // 83 is the width of text widget

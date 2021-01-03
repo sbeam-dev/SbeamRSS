@@ -488,7 +488,7 @@ class _SubsPageState extends State<SubsPage> {
                     100 /
                     (80 - kToolbarHeight)); //change first number to reflect expanded height
                 double dx = 0;
-                dx = 16+(100 - percent)*(MediaQuery.of(context).size.width-32-122)*(0.005);
+                dx = 18+(100 - percent)*(MediaQuery.of(context).size.width-36-122)*(0.005);
                 // print(dx);
                 // 12x is the width of text widget
                 // print(constraints.maxHeight - kToolbarHeight);

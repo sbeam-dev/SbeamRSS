@@ -23,9 +23,12 @@ class ReaderScreen extends StatefulWidget {
 class _ReaderScreenState extends State<ReaderScreen> {
 
   _launchURL(String url) async {
+    // print(url);
     if (await canLaunch(url)) {
+      // print("Launching");
       await launch(url);
     } else {
+      // print("Can't launch");
       return;
     }
   }
@@ -194,7 +197,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                                 onLinkTap: (url) => _launchURL(url),
                                 style: {
                                   "html": Style(
-                                    backgroundColor: Theme.of(context).backgroundColor,
+                                    backgroundColor: (Theme.of(context).brightness == Brightness.light) ? Colors.white : Theme.of(context).backgroundColor,
                                   ),
                                   "a": Style(
                                       color: Theme.of(context).brightness == Brightness.dark ? Color(0xFF8BB3F4):Color(0xFF127ACA)
