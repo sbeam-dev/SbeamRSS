@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case(0): return new FeedsPage(scrController: _feedScroller,);
       case(1): return new SubsPage();
       case(2): return new FavPage();
-      case(3): return new SettingsPage();
+      // case(3): return new SettingsPage();
     }
     return Text("Error");
   }
@@ -56,12 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
             _getMainPage(0),
             _getMainPage(1),
             _getMainPage(2),
-            _getMainPage(3),
+            // _getMainPage(3),
           ],
         ),
       ),
       bottomNavigationBar: SalomonBottomBar(
-        margin: EdgeInsets.fromLTRB(28, 8, 28, 8),
+        margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
         currentIndex: _currentIndex,
         onTap: (int index){
           _currentIndex = index;
@@ -101,11 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Favorites'),
               selectedColor: Colors.pink
           ),
-          SalomonBottomBarItem(
-              icon: FaIcon(FontAwesomeIcons.cog),
-              title: Text('Settings'),
-              selectedColor: Colors.teal
-          ),
+          // SalomonBottomBarItem(
+          //     icon: FaIcon(FontAwesomeIcons.cog),
+          //     title: Text('Settings'),
+          //     selectedColor: Colors.teal
+          // ),
         ],
         selectedItemColor: Theme.of(context).accentColor,
         unselectedItemColor: Theme.of(context).appBarTheme.iconTheme.color,

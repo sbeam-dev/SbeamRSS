@@ -19,7 +19,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings", style: Theme.of(context).textTheme.headline6),
+        title: Text("Settings", style: Theme.of(context).primaryTextTheme.headline6),
         centerTitle: true,
       ),
       body: Container(
@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: (){
                   showAboutDialog(
                       context: context,
-                      applicationVersion: "v1.0.4",
+                      applicationVersion: "v1.0.5",
                       applicationLegalese: "Distributed under MPL-2.0 license",
                       children: <Widget>[
                         Padding(

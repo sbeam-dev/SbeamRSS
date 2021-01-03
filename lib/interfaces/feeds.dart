@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/feedmodel.dart';
 import '../databases/feeddb.dart';
@@ -151,7 +152,13 @@ class _FeedsPageState extends State<FeedsPage> {
                           delegate: FeedSearchDelegate(),
                       );
                     },
-                  )
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                    },
+                  ),
             ],
           ),
         ],

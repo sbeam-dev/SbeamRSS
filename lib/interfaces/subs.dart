@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
@@ -139,6 +140,43 @@ class SourceListTile extends StatelessWidget {
 
 
 // --------------Add button-----------
+class AddTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ElevatedButton(
+              onPressed: (){
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AddSourceBottomSheet();
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                );
+              },
+              child: Text("ADD RSS SOURCE")
+          ),
+          // ButtonBar(
+          //   children: [
+          //     ElevatedButton(onPressed: (){}, child: Text("Import")),
+          //     ElevatedButton(onPressed: (){}, child: Text("Export")),
+          //     // ElevatedButton(onPressed: (){}, child: Text("3")),
+          //   ],
+          // ),
+        ],
+      )
+    );
+  }
+}
+
+
 class AddSourceBottomSheet extends StatefulWidget {
   @override
   _AddSourceBottomSheet createState() => _AddSourceBottomSheet();
@@ -516,18 +554,9 @@ class _SubsPageState extends State<SubsPage> {
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.add),
+                icon: Icon(Icons.settings),
                 onPressed: () {
-                  showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AddSourceBottomSheet();
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
                 },
               ),
             ],
@@ -547,6 +576,7 @@ class _SubsPageState extends State<SubsPage> {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
+                      if (index == 1) return AddTile();
                       return Card(
                         child: InkWell(
                           splashColor: Theme.of(context).accentColor.withAlpha(30),
@@ -557,18 +587,19 @@ class _SubsPageState extends State<SubsPage> {
                         ),
                       );
                     },
-                    childCount: 1,
+                    childCount: 2,
                   ),
                 );
               } else {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
+                      if (index == sourceModel.listLen) return AddTile();
                       return SourceListTile(
                           source: sourceModel.sourceDump[index]);
                       // return _buildSubItem(index, sourceModel.sourceDump);
                     },
-                    childCount: sourceModel.listLen,
+                    childCount: sourceModel.listLen+1,
                   ),
                 );
               }

@@ -62,6 +62,22 @@ class MyApp extends StatelessWidget {
         dialogTheme: DialogTheme(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
+              'Noto Sans',
+              textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)
+            )),
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
+            shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                // side: BorderSide(color: Colors.red)
+            )),
+            minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
+            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF51A2E8)),
+            overlayColor: MaterialStateProperty.all<Color>(Color(0xFF368DE8)),
+          )
+        ),
         // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       darkTheme: ThemeData(
@@ -99,6 +115,22 @@ class MyApp extends StatelessWidget {
           dialogTheme: DialogTheme(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
           ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
+                  'Noto Sans',
+                  textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)
+              )),
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
+              shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                // side: BorderSide(color: Colors.red)
+              )),
+              minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5EA0DB)),
+              overlayColor: MaterialStateProperty.all<Color>(Color(0xFF70BCE6)),
+            )
+        ),
           // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       home: MyHomePage(title: 'Home Page'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/favmodel.dart';
@@ -67,6 +68,14 @@ class _FavPageState extends State<FavPage> {
           SliverAppBar(
             // floating: true,
             // snap: true,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                },
+              ),
+            ],
             pinned: true,
             expandedHeight: 80,
             backgroundColor: Theme.of(context).backgroundColor,
