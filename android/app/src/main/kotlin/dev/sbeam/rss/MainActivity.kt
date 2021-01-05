@@ -1,10 +1,9 @@
 package dev.sbeam.rss
 
-//import android.os.Bundle
-//import io.flutter.app.FlutterActivity
-//import io.flutter.plugins.GeneratedPluginRegistrant
+//import android.content.Context
+//import android.content.SharedPreferences
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
+class MainActivity : FlutterActivity() {
 
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/interfaces/settings.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
@@ -20,7 +21,7 @@ class SourceListTile extends StatelessWidget {
         baseColor: Theme.of(context).cardColor,
         initialElevation: 0.5,
         elevation: 1.5,
-        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+        contentPadding: EdgeInsets.fromLTRB(12, 0, 12, 0),
         title: Text(source.name, maxLines: 1, overflow: TextOverflow.ellipsis),
         leading: CircleAvatar(child: Text(source.name[0]),),
         initiallyExpanded: false,
@@ -29,9 +30,10 @@ class SourceListTile extends StatelessWidget {
               title: Text(source.url, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyText2,),
               leading: Transform.translate(
                 offset: Offset(10,0),
-                child: FaIcon(FontAwesomeIcons.link, size: 22,),
+                child: Icon(FlutterIcons.link_2_fea, size: 22,),
               ),
               contentPadding: EdgeInsets.fromLTRB(14, 0, 16, 0),
+              dense: true,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,7 +43,7 @@ class SourceListTile extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 6, 4),
                     child: OutlinedButton(
-                      child: Text("Edit name",),
+                      child: Text("Edit name", style: TextStyle(color: Theme.of(context).accentColor),),
                       onPressed: () {
                         showModalBottomSheet(
                           isScrollControlled: true,
@@ -68,7 +70,7 @@ class SourceListTile extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(6, 0, 12, 4),
                     child: OutlinedButton(
-                      child: Text("Edit url"),
+                      child: Text("Edit url", style: TextStyle(color: Theme.of(context).accentColor)),
                       onPressed: () {
                         showModalBottomSheet(
                           isScrollControlled: true,
@@ -161,7 +163,7 @@ class AddTile extends StatelessWidget {
                   ),
                 );
               },
-              child: Text("ADD RSS SOURCE")
+              child: Text("ADD RSS SOURCE", style: TextStyle(color: Theme.of(context).brightness == Brightness.light?Colors.black:Colors.white),)
           ),
           // ButtonBar(
           //   children: [
@@ -219,13 +221,13 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
             ),
             Padding(
               child: TextField(
-                style: TextStyle(fontFamily: 'sans'),
+                // style: TextStyle(fontFamily: 'sans'),
                 decoration: InputDecoration(
                     labelText: "Name",
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(8),
                     prefixIcon: Icon(
-                      Icons.note,
+                      FlutterIcons.pencil_mco,
                       color: Theme.of(context).accentColor,
                     )),
                 onChanged: (text) {
@@ -236,13 +238,13 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
             ),
             Padding(
               child: TextField(
-                style: TextStyle(fontFamily: 'sans'),
+                // style: TextStyle(fontFamily: 'sans'),
                 decoration: InputDecoration(
                     labelText: "URL",
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(8),
                     prefixIcon:
-                        Icon(Icons.link, color: Theme.of(context).accentColor)),
+                        Icon(FlutterIcons.link_mco, color: Theme.of(context).accentColor)),
                 onChanged: (text) {
                   inputUrl = text;
                   if (text != "" && changeColor == 0) {
@@ -259,14 +261,14 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
                 Ink(
                   decoration: ShapeDecoration(
                     color: changeColor == 1
-                        ? Colors.lightBlue
+                        ? Theme.of(context).accentColor
                         : Colors.transparent,
                     shape: CircleBorder(),
                   ),
                   child: IconButton(
                     iconSize: 24,
                     icon: Icon(
-                      Icons.send,
+                      FlutterIcons.md_checkmark_ion,
                       color: changeColor == 0
                           ? Theme.of(context).appBarTheme.iconTheme.color
                           : Colors.white,
@@ -533,7 +535,7 @@ class _SubsPageState extends State<SubsPage> {
                 return Stack(
                   children: <Widget>[
                     Container(
-                      color: Theme.of(context).appBarTheme.color.withOpacity((100-percent)/100),
+                      color: Theme.of(context).appBarTheme.color.withOpacity(percent>100?0:((100-percent)/100)),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

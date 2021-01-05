@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/interfaces/settings.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/feedmodel.dart';
 import '../databases/feeddb.dart';
@@ -121,10 +122,11 @@ class _FeedsPageState extends State<FeedsPage> {
                 // print(dx);
                 // 54 is the width of text widget
                 // print(constraints.maxHeight - kToolbarHeight);
+                // print(percent);
                 return Stack(
                   children: <Widget>[
                     Container(
-                      color: Theme.of(context).appBarTheme.color.withOpacity((100-percent)/100),
+                      color: Theme.of(context).appBarTheme.color.withOpacity(percent>100?0:((100-percent)/100)),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -481,7 +483,7 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
       children: <Widget>[
         ListTile(
           contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
-          leading: FaIcon(FontAwesomeIcons.envelope),
+          leading: Icon(FlutterIcons.md_mail_unread_ion),
           title: Text((Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0) ? "Mark as read" : "Mark as unread"),
           onTap: (){
             Provider.of<FeedModel>(context).setRead(widget.entry, Provider.of<FeedModel>(context).feedDump[widget.index].readState == 0 ? 1 : 0, widget.index);
@@ -490,7 +492,7 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
         ),
         ListTile(
           contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
-          leading: FaIcon(FontAwesomeIcons.share),
+          leading: Icon(FlutterIcons.md_share_ion),
           title: Text("Share..."),
           onTap: (){
             Share.share("Check out this RSS article (\"${widget.entry.title}\") from ${widget.sourceName}! ${widget.entry.link}");
@@ -499,7 +501,7 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
         ),
         ListTile(
           contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
-          leading: FaIcon(FontAwesomeIcons.externalLinkAlt),
+          leading: Icon(FlutterIcons.md_open_ion),
           title: Text("Open in browser..."),
           onTap: (){
             _launchURL(widget.entry.link);
@@ -508,7 +510,7 @@ class _FeedBottomSheetState extends State<FeedBottomSheet> {
         ),
         ListTile(
           contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
-          leading: FaIcon(FontAwesomeIcons.heart, color: Colors.pink,),
+          leading: Icon(FlutterIcons.md_heart_ion, color: Colors.pink,),
           title: Text("Add to favorites"),
           onTap: (){
             Provider.of<FavModel>(context, listen: false).addFav(widget.entry);

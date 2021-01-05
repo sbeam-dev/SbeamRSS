@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app1/models/thememodel.dart';
 import '../models/feedmodel.dart';
@@ -21,34 +23,55 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: Text("Settings", style: Theme.of(context).primaryTextTheme.headline6),
         centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
-        color: Theme.of(context).backgroundColor,
+        padding: EdgeInsets.zero,
+        color: Theme.of(context).brightness == Brightness.light ? Colors.white:Theme.of(context).backgroundColor,
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
           children: <Widget>[
+            Padding(
+                padding: EdgeInsets.fromLTRB(72, 12, 16, 4),
+                child: Text("Appearance", style: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Theme.of(context).accentColor))),
+            ),
             ThemeSettingCard(),
             // FontSettingCard(),
+            Divider(
+              thickness: 1,
+              height: 4,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(72, 12, 16, 4),
+              child: Text("Storage", style: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Theme.of(context).accentColor))),
+            ),
             ClearDataCard(),
-            Card(
-                elevation: 1,
+            Divider(
+              thickness: 1,
+              height: 4,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(72, 12, 16, 4),
+              child: Text("Miscellaneous", style: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Theme.of(context).accentColor))),
+            ),
+            Material(
                 child: InkWell(
                   onTap: (){
                     launch("https://github.com/sbeam-dev/SbeamRSS/wiki");
                   },
                   child: ListTile(
-                    leading: FaIcon(FontAwesomeIcons.questionCircle, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+                    leading: Icon(FlutterIcons.help_circle_outline_mco, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
                     title: Text("Help"),
                   ),
-                )
+                ),
+              color: Theme.of(context).brightness == Brightness.light ? Colors.white:Theme.of(context).backgroundColor,
             ),
-            Card(
-              elevation: 1,
+            Material(
               child: InkWell(
                 onTap: (){
                   showAboutDialog(
                       context: context,
-                      applicationVersion: "v1.0.5",
+                      applicationVersion: "v1.0.6",
                       applicationLegalese: "Distributed under MPL-2.0 license",
                       children: <Widget>[
                         Padding(
@@ -62,10 +85,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   );
                 },
                 child: ListTile(
-                  leading: FaIcon(FontAwesomeIcons.infoCircle, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
+                  leading: Icon(FlutterIcons.information_outline_mco, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black),
                   title: Text("About"),
                 ),
-              )
+                // splashColor: Theme.of(context).accentColor,
+              ),
+              color: Theme.of(context).brightness == Brightness.light ? Colors.white:Theme.of(context).backgroundColor,
             )
 
           ],
@@ -85,8 +110,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
   @override
   Widget build(BuildContext context) {
     _currentOption = Provider.of<ThemeModel>(context).currentTheme;
-    return Card(
-        elevation: 1,
+    return Material(
         child: InkWell(
           onTap: (){
             showDialog(
@@ -135,15 +159,17 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
             );
           },
           child: ListTile(
+            // leading: Icon(FlutterIcons.theme_light_dark_mco),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[FaIcon(FontAwesomeIcons.palette, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)],
+              children: <Widget>[Icon(FlutterIcons.theme_light_dark_mco, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)],
             ),
             title: Text("Theme"),
             subtitle: Text((_currentOption == ThemeOptions.system) ? "System default"
                 : ((_currentOption == ThemeOptions.light) ? "Light" : "Dark")),
           ),
-        )
+        ),
+      color: Theme.of(context).brightness == Brightness.light ? Colors.white:Theme.of(context).backgroundColor,
     );
   }
 }
@@ -252,8 +278,7 @@ class _ClearDataCardState extends State<ClearDataCard> {
   }
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 1,
+    return Material(
         child: InkWell(
           onTap: (){
             showDialog(
@@ -304,12 +329,13 @@ class _ClearDataCardState extends State<ClearDataCard> {
             // contentPadding: EdgeInsets.fromLTRB(20, 0, 16, 0),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[FaIcon(FontAwesomeIcons.hdd, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)],
+              children: <Widget>[Icon(FlutterIcons.file_cabinet_mco, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)],
             ),
             title: Text("Clear cache"),
             subtitle: Text("Delete stored old feeds"),
           ),
-        )
+        ),
+      color: Theme.of(context).brightness == Brightness.light ? Colors.white:Theme.of(context).backgroundColor,
     );
   }
 }

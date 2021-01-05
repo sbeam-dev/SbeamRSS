@@ -101,7 +101,7 @@ class _FavPageState extends State<FavPage> {
                       color: Theme.of(context)
                           .appBarTheme
                           .color
-                          .withOpacity((100 - percent) / 100),
+                          .withOpacity(percent>100?0:((100-percent)/100)),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

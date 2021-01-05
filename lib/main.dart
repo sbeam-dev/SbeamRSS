@@ -28,15 +28,13 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Sbeam RSS Reader',
       theme: ThemeData(
-        backgroundColor: Color(0xFFF0F0F0),
-        primaryColor: Color(0xFF1f8dd6),
-        primaryColorBrightness: Brightness.dark,
+        backgroundColor: Color(0xFFF5F5F6),
+        // primaryColor: Color(0xFF1f8dd6),
+        primaryColor: Color(0xFF65dcb7),
+        primaryColorBrightness: Brightness.light,
         brightness: Brightness.light,
-        accentColor: Color(0xFF2a90ec),
-        bottomAppBarColor: Colors.white,
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Colors.white
-        ),
+        accentColor: Color(0xFF489c81),
+        canvasColor: Colors.white,
         appBarTheme: AppBarTheme(
             color: Colors.white,
             iconTheme: IconThemeData(color: Colors.black87),
@@ -66,7 +64,7 @@ class MyApp extends StatelessWidget {
           style: ButtonStyle(
             textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
               'Noto Sans',
-              textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)
+              textStyle: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500)
             )),
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
             shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
@@ -74,8 +72,8 @@ class MyApp extends StatelessWidget {
                 // side: BorderSide(color: Colors.red)
             )),
             minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
-            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF51A2E8)),
-            overlayColor: MaterialStateProperty.all<Color>(Color(0xFF368DE8)),
+            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF65dcb7)),
+            overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
           )
         ),
         // visualDensity: VisualDensity.adaptivePlatformDensity
@@ -84,12 +82,10 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFF181819),
           brightness: Brightness.dark,
           cardColor: Color(0xFF222223),
-          primaryColor: Color(0xFF5cc1ff),
-          primaryColorBrightness: Brightness.dark,
-          accentColor: Color(0xFF78a4e7),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Color(0xFF202022)
-          ),
+          primaryColor: Color(0xFF0e6d55),
+          canvasColor: Color(0xFF202022),
+          primaryColorBrightness: Brightness.light,
+          accentColor: Color(0xFF489c81),
           appBarTheme: AppBarTheme(
               color: Color(0xFF202022),
               iconTheme: IconThemeData(color: Colors.white),
@@ -127,8 +123,8 @@ class MyApp extends StatelessWidget {
                 // side: BorderSide(color: Colors.red)
               )),
               minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
-              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5EA0DB)),
-              overlayColor: MaterialStateProperty.all<Color>(Color(0xFF70BCE6)),
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF0e6d55)),
+              overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
             )
         ),
           // visualDensity: VisualDensity.adaptivePlatformDensity
