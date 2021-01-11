@@ -5,7 +5,7 @@ An Android RSS reader based on flutter.
 
 In early development state.
 
-Notice: We develop the app in our free time. Updates can be slow, but as we daily drive the app, we will keep it usable.
+Notice: We develop the app in our free time. Updates can be slow, but as we daily drive the app, we will keep it alive.
 
 [Documentation](https://github.com/sbeam-dev/SbeamRSS/wiki/)
 
@@ -19,7 +19,7 @@ Alpha testing versions will be released in the github release page.
 
 ## Features
 
-During the first stage of development, the app will be working fully offline(uses local device to pull updates and store data). In the future, cloud integration and push notifications might be implemented(*Currently on low priority*).
+The app works fully offline(uses local device to pull updates and store data). In the future, cloud integration and push notifications might be implemented(*low priority*).
 
 ### To-dos
 
@@ -29,10 +29,11 @@ During the first stage of development, the app will be working fully offline(use
   - [x] Frontend refinement and theming
   - [x] Put on Beta testing
   - [ ] Feed filtering
-  - [x] Search articles
+  - [x] Search articles (need improvements)
   - [x] Favorite articles
   - [ ] UI&Font optimizations
   - [ ] OPML import&export
+  - [ ] Backup and restore
   - [ ] Optimization for tablets
 
 ## Known Defects
