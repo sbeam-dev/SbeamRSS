@@ -76,6 +76,22 @@ class MyApp extends StatelessWidget {
             overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
           )
         ),
+        // outlinedButtonTheme: OutlinedButtonThemeData(
+        //     style: ButtonStyle(
+        //       textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
+        //           'Noto Sans',
+        //           textStyle: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500)
+        //       )),
+        //       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
+        //       shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(12.0),
+        //         side: BorderSide(color: Color(0xFF489c81))
+        //       )),
+        //       minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
+        //       // backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF65dcb7)),
+        //       // overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
+        //     )
+        // )
         // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       darkTheme: ThemeData(
@@ -127,6 +143,22 @@ class MyApp extends StatelessWidget {
               overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
             )
         ),
+          // outlinedButtonTheme: OutlinedButtonThemeData(
+          //   style: ButtonStyle(
+          //     textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
+          //         'Noto Sans',
+          //         textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)
+          //     )),
+          //     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
+          //     shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(12.0),
+          //       side: BorderSide(color: Color(0xFF489c81))
+          //     )),
+          //     minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
+          //     // backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF0e6d55)),
+          //     // overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
+          //   )
+          // )
           // visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       home: MyHomePage(title: 'Home Page'),

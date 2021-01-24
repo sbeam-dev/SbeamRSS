@@ -145,12 +145,12 @@ class SourceListTile extends StatelessWidget {
 class AddTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ElevatedButton(
+    return new Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: ElevatedButton(
               onPressed: (){
                 showModalBottomSheet(
                   isScrollControlled: true,
@@ -165,15 +165,81 @@ class AddTile extends StatelessWidget {
               },
               child: Text("ADD RSS SOURCE", style: TextStyle(color: Theme.of(context).brightness == Brightness.light?Colors.black:Colors.white),)
           ),
-          // ButtonBar(
-          //   children: [
-          //     ElevatedButton(onPressed: (){}, child: Text("Import")),
-          //     ElevatedButton(onPressed: (){}, child: Text("Export")),
-          //     // ElevatedButton(onPressed: (){}, child: Text("3")),
-          //   ],
-          // ),
-        ],
-      )
+        ),
+        LayoutBuilder(
+            builder: (context, constraint){
+              double buttonWidth = (constraint.maxWidth-30)/2;
+              return ButtonBar(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: buttonWidth,
+                    child: OutlinedButton(
+                      onPressed: (){
+
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(FlutterIcons.import_mco,
+                            color: Theme.of(context).brightness == Brightness.light?Colors.black:Colors.white,
+                          ),
+                          Text("Import", style: TextStyle(color: Theme.of(context).brightness == Brightness.light?Colors.black:Colors.white),)
+                        ],
+                      ),
+                      style: ButtonStyle(
+                        textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
+                            'Noto Sans',
+                            textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)
+                        )),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
+                        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            side: BorderSide(color: Color(0xFF489c81))
+                        )),
+                        // minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
+                        // backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF0e6d55)),
+                        // overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: buttonWidth,
+                    child: OutlinedButton(
+                      onPressed: (){
+
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(FlutterIcons.export_mco,
+                            color: Theme.of(context).brightness == Brightness.light?Colors.black:Colors.white,
+                          ),
+                          Text("Export", style: TextStyle(color: Theme.of(context).brightness == Brightness.light?Colors.black:Colors.white),)
+                        ],
+                      ),
+                      style: ButtonStyle(
+                        textStyle: MaterialStateProperty.all<TextStyle>(GoogleFonts.getFont(
+                            'Noto Sans',
+                            textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)
+                        )),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(16, 8, 16, 8)),
+                        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            side: BorderSide(color: Color(0xFF489c81))
+                        )),
+                        // minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(48)),
+                        // backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF0e6d55)),
+                        // overlayColor: MaterialStateProperty.all<Color>(Color(0xFF489c81)),
+                      ),
+
+                    ),
+                  )
+                ],
+              );
+            }
+        ),
+      ],
     );
   }
 }
