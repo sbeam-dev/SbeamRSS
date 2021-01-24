@@ -89,23 +89,6 @@ class _FeedsPageState extends State<FeedsPage> {
       child: NestedScrollView(
         controller: widget.scrController,
         headerSliverBuilder: (context, innerBoxScrolled) => [
-          // SliverAppBar(
-          //   floating: true,
-          //   snap: true,
-          //   title: Text("Feeds", style: Theme.of(context).textTheme.headline6),
-          //   centerTitle: true,
-          //   actions: <Widget>[
-          //     IconButton(
-          //       icon: Icon(Icons.search),
-          //       onPressed: (){
-          //         showSearch(
-          //             context: context,
-          //             delegate: FeedSearchDelegate(),
-          //         );
-          //       },
-          //     )
-          //   ],
-          // ),
           SliverAppBar(
             // floating: true,
             // snap: true,
@@ -179,14 +162,26 @@ class _FeedsPageState extends State<FeedsPage> {
                     child: ListView.builder(
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            child: InkWell(
-                              splashColor: Theme.of(context).accentColor.withAlpha(30),
-                              onTap: (){},
-                              child: ListTile(
-                                title: Text("No articles. Swipe down to refresh."),
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 32, 0, 16),
+                                child: Icon(FlutterIcons.folder_open_o_faw, size: 64,
+                                  color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                                ),
                               ),
-                            ),
+                              Text("No articles.", style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                                color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                                fontSize: 24
+                              )),),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                child: Text("Swipe down to refresh.", style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                                    color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                                    fontSize: 20
+                                )),),
+                              )
+                            ],
                           );
                         },
                         itemCount: 1,

@@ -6,6 +6,7 @@ import 'package:flutter_app1/models/favmodel.dart';
 import 'package:flutter_app1/databases/favdb.dart';
 import 'reader.dart';
 import 'package:time_formatter/time_formatter.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class FavPage extends StatefulWidget {
   FavPage({Key key}) : super(key: key);
@@ -141,14 +142,26 @@ class _FavPageState extends State<FavPage> {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                        return Card(
-                          child: InkWell(
-                            splashColor: Theme.of(context).accentColor.withAlpha(30),
-                            onTap: (){},
-                            child: ListTile(
-                              title: Text("Empty here."),
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 32, 0, 16),
+                              child: Icon(FlutterIcons.bookmark_fea, size: 64,
+                                color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                              ),
                             ),
-                          ),
+                            Text("Empty here.", style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                                color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                                fontSize: 24
+                            )),),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 8, 0, 16),
+                              child: Text("Save your favorites on feeds page.", style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                                  color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                                  fontSize: 20
+                              )),),
+                            )
+                          ],
                         );
                       },
                       childCount: 1,

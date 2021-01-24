@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../databases/sourcedb.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ----------build list of source---------
 class SourceListTile extends StatelessWidget {
@@ -579,14 +579,26 @@ class _SubsPageState extends State<SubsPage> {
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       if (index == 1) return AddTile();
-                      return Card(
-                        child: InkWell(
-                          splashColor: Theme.of(context).accentColor.withAlpha(30),
-                          onTap: (){},
-                          child: ListTile(
-                            title: Text("No subscribed RSS source."),
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 32, 0, 16),
+                            child: Icon(FlutterIcons.radio_fea, size: 64,
+                              color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                            ),
                           ),
-                        ),
+                          Text("Empty here.", style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                              color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                              fontSize: 24
+                          )),),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 8, 0, 16),
+                            child: Text("Tap the button to add source.", style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                                color: (Theme.of(context).brightness==Brightness.light)?Colors.black54:Colors.white54,
+                                fontSize: 20
+                            )),),
+                          )
+                        ],
                       );
                     },
                     childCount: 2,
