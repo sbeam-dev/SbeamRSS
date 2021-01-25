@@ -8,6 +8,8 @@ import 'package:progress_dialog/progress_dialog.dart';
 import '../databases/sourcedb.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 
 // ----------build list of source---------
 class SourceListTile extends StatelessWidget {
@@ -143,6 +145,23 @@ class SourceListTile extends StatelessWidget {
 
 // --------------Add button-----------
 class AddTile extends StatelessWidget {
+
+  Future<int> importFile() async {
+    //return 0 when success, -1 when cancelled, other when error
+    FilePickerResult result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['opml'],
+    );
+    if(result != null) {
+      File file = File(result.files.single.path);
+      print("Selected!");
+      // call import
+      return 0;
+    } else {
+      return -1;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -176,7 +195,24 @@ class AddTile extends StatelessWidget {
                     width: buttonWidth,
                     child: OutlinedButton(
                       onPressed: (){
-
+                        ProgressDialog pr = new ProgressDialog(context,
+                            type: ProgressDialogType.Normal,
+                            isDismissible: false);
+                        pr.style(
+                            message: "Loading...",
+                            borderRadius: 10,
+                            backgroundColor:
+                            Theme.of(context).appBarTheme.color,
+                            progressWidget: Padding(
+                              child: CircularProgressIndicator(),
+                              padding: EdgeInsets.all(16),
+                            ),
+                            messageTextStyle:
+                            Theme.of(context).textTheme.headline6);
+                        pr.show();
+                        importFile().then(
+                            (value){pr.hide();}
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
