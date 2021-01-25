@@ -371,14 +371,17 @@ class _FeedCardState extends State<FeedCard> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                                padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                                child: FittedBox(
-                                  child: CachedNetworkImage(
-                                    imageUrl: headImageSrc,
-                                    placeholder: (context, url) => Image.memory(kTransparentImage),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                padding: EdgeInsets.fromLTRB(16, 4, 20, 4),
+                                child: ClipRRect(
+                                  child: FittedBox(
+                                    child: CachedNetworkImage(
+                                      imageUrl: headImageSrc,
+                                      placeholder: (context, url) => Image.memory(kTransparentImage, width: 100, height: 100,),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    ),
                                   ),
-                                ),
+                                  borderRadius: BorderRadius.circular(8),
+                                )
                             ),
                           ],
                         );

@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:date_time_format/date_time_format.dart';
 import 'package:share/share.dart';
 import 'package:provider/provider.dart';
 import '../models/readermodel.dart';
@@ -177,16 +178,27 @@ class _ReaderScreenState extends State<ReaderScreen> {
                       [
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                          child: Text(entry.title, style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, height: 1.4))),
+                          child: Text(entry.title, style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 28, fontWeight: FontWeight.bold))),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                          child: Text(entry.author + ' from ' + sourceName, style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 15))),
+                          padding: EdgeInsets.fromLTRB(16, 6, 16, 4),
+                          child: Text(entry.author, style: GoogleFonts.robotoSlab(fontSize: 16)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 2, 16, 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(sourceName, style: GoogleFonts.robotoSlab(fontSize: 16)),
+                              Text(DateTime.fromMillisecondsSinceEpoch(entry.getTime*1000).format('M j, H:i'),
+                                  style: GoogleFonts.robotoSlab(fontStyle: FontStyle.italic, fontWeight: FontWeight.w300, fontSize: 15)),
+                            ],
+                          ),
                         ),
                         Divider(
-                          indent: 16,
-                          endIndent: 16,
-                          thickness: 2,
+                          indent: 0,
+                          endIndent: 0,
+                          thickness: 1,
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),

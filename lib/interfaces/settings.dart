@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: (){
                   showAboutDialog(
                       context: context,
-                      applicationVersion: "v1.0.6",
+                      applicationVersion: "v1.0.7",
                       applicationLegalese: "Distributed under MPL-2.0 license",
                       children: <Widget>[
                         Padding(

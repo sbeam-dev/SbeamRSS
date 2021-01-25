@@ -17,51 +17,6 @@ class FavPage extends StatefulWidget {
 class _FavPageState extends State<FavPage> {
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text("Favorites", style: Theme.of(context).textTheme.headline6),
-    //     centerTitle: true,
-    //   ),
-    // body: Container(
-    //   color: Theme.of(context).backgroundColor,
-    //   child: Consumer<FavModel>(
-    //     builder: (context, favModel, child){
-    //       if(favModel.feedDump == null) {
-    //         return Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       } else {
-    //         int _len = favModel.feedDump.length;
-    //         if (_len == 0) {
-    //           return ListView.builder(
-    //             padding: EdgeInsets.zero,
-    //             itemBuilder: (BuildContext context, int index) {
-    //               return Card(
-    //                 child: InkWell(
-    //                   splashColor: Colors.blue.withAlpha(30),
-    //                   onTap: (){},
-    //                   child: ListTile(
-    //                     title: Text("Empty here."),
-    //                   ),
-    //                 ),
-    //               );
-    //             },
-    //             itemCount: 1,
-    // );
-    // } else {
-    //             return ListView.builder(
-    //               padding: EdgeInsets.zero,
-    //               itemBuilder: (BuildContext context, int index) {
-    //                 return new FavCard(entry: favModel.feedDump[index], index: index,);
-    //               },
-    //               itemCount: _len,
-    //             );
-    //           }
-    //         }
-    //       },
-    //     ),
-    //   ),
-    // );
     return Container(
       color: Theme.of(context).backgroundColor,
       child: CustomScrollView(
@@ -213,8 +168,8 @@ class _FavCardState extends State<FavCard> {
     return Column(
       children: <Widget>[
         Card(
-          // color: Theme.of(context).backgroundColor,
-          elevation: 1,
+          color: Theme.of(context).backgroundColor,
+          elevation: 0,
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
             onTap: () {
@@ -230,7 +185,7 @@ class _FavCardState extends State<FavCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 6),
+                  padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
                   child: Text(widget.entry.title,
                       style: GoogleFonts.getFont("Noto Sans",
                           textStyle: TextStyle(
@@ -246,8 +201,8 @@ class _FavCardState extends State<FavCard> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: Text(removeAllHtmlTags(widget.entry.description),
-                      style: TextStyle(fontSize: 16, fontFamily: "serif"),
-                      maxLines: 4,
+                      style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 17)),
+                      maxLines: 5,
                       overflow: TextOverflow.ellipsis),
                 ),
                 Padding(
@@ -257,8 +212,9 @@ class _FavCardState extends State<FavCard> {
                     children: <Widget>[
                       Text(
                         formatTime(widget.entry.getTime * 1000),
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w300),
+                        style: GoogleFonts.notoSans(textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w300,
+                            color: Theme.of(context).brightness==Brightness.light?Colors.black87:Colors.white70
+                        )),
                       ),
                       SizedBox(
                         height: 32,
@@ -280,12 +236,12 @@ class _FavCardState extends State<FavCard> {
             ),
           ),
         ),
-        // Divider(
-        //   height: 8,
-        //   thickness: 2,
-        //   indent: 16,
-        //   endIndent: 16,
-        // )
+        Divider(
+          height: 8,
+          thickness: 1,
+          indent: 0,
+          endIndent: 0,
+        )
       ],
     );
   }
