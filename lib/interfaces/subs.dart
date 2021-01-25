@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/components/opmlparser.dart';
 import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
 import 'package:provider/provider.dart';
@@ -175,8 +181,16 @@ class AddTile extends StatelessWidget {
                   SizedBox(
                     width: buttonWidth,
                     child: OutlinedButton(
-                      onPressed: (){
-
+                      onPressed: () async{
+                        FilePickerResult result = await FilePicker.platform.pickFiles();
+                        if(result != null){
+                          File file = File(result.files.single.path);
+                          String opml = file.readAsStringSync();
+                          OPMLParser.parseOPML(opml).forEach((element) {
+                            Provider.of<SourceModel>(context, listen: false).addEntry(element.name, element.url);
+                          });
+                          Fluttertoast.showToast(msg: "Loaded!");
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -206,8 +220,12 @@ class AddTile extends StatelessWidget {
                   SizedBox(
                     width: buttonWidth,
                     child: OutlinedButton(
-                      onPressed: (){
-
+                      onPressed: () async{
+                        String output = OPMLParser.generateOPML(Provider.of<SourceModel>(context, listen: false).sourceDump);
+                        String dir = (await getExternalStorageDirectory()).path;
+                        File file = new File("$dir/rss.opml");
+                        file.writeAsStringSync(output);
+                        Fluttertoast.showToast(msg: "Saved to $dir/rss.opml");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

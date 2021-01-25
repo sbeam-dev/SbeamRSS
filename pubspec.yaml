@@ -44,6 +44,8 @@ dependencies:
   database: any
   search: any
   database_adapter_sqlite: any
+  file_picker: ^2.1.5
+  path_provider:
 
 
   # The following adds the Cupertino Icons font to your application.

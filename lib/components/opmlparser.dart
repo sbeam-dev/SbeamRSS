@@ -1,11 +1,9 @@
-import 'dart:html';
-
 import 'package:flutter_app1/databases/sourcedb.dart';
 import 'package:xml/xml.dart';
 
 class OPMLParser{
   static List<RssSource> parseOPML(String input, {int startId = 0}){
-    List<RssSource> result;
+    List<RssSource> result = [];
     XmlDocument.parse(input).findAllElements('outline').forEach((element) {
       if(element.getAttribute("type") == "rss"){
         result.add(new RssSource(
@@ -19,7 +17,7 @@ class OPMLParser{
   }
 
   static String generateOPML(List<RssSource> input){
-    XmlBuilder builder;
+    XmlBuilder builder = new XmlBuilder();
     builder.processing('xml', 'version="1.0"');
     builder.element("opml", attributes: {"version": "2.0"},
       nest: () {
@@ -31,7 +29,8 @@ class OPMLParser{
           input.forEach((element) {
             builder.element("outline", attributes: {
               "text": element.name,
-              "xmlUrl": element.url
+              "xmlUrl": element.url,
+              "type": "rss"
             });
           });
         });
