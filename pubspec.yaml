@@ -30,7 +30,6 @@ dependencies:
   incrementally_loading_listview: ^0.3.0
   url_launcher: ^5.7.10
   share: ^0.6.5+4
-  progress_dialog: ^1.2.3
   cached_network_image: ^2.3.3
   transparent_image: ^1.0.0
   flutter_svg: ^0.19.2
@@ -47,6 +46,7 @@ dependencies:
   date_time_format: ^1.1.1
   file_picker: ^2.1.5
   flutter_file_dialog: ^1.0.0
+  ars_progress_dialog: ^0.1.2
   path_provider:
 
   # The following adds the Cupertino Icons font to your application.

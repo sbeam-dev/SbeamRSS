@@ -32,7 +32,7 @@ The app works fully offline(uses local device to pull updates and store data). I
   - [x] Search articles (need improvements)
   - [x] Favorite articles
   - [ ] UI&Font optimizations
-  - [ ] OPML import&export
+  - [x] OPML import&export
   - [ ] Backup and restore
   - [ ] Optimization for tablets
 

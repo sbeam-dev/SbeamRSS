@@ -9,12 +9,12 @@ import 'package:path_provider/path_provider.dart';
 import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:date_time_format/date_time_format.dart';
 import '../databases/sourcedb.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 
 // ----------build list of source---------
 class SourceListTile extends StatelessWidget {
@@ -108,27 +108,20 @@ class SourceListTile extends StatelessWidget {
                 child: OutlinedButton(
                   child: Text("Delete"),
                   onPressed: () {
-                    ProgressDialog pr = new ProgressDialog(context,
-                        type: ProgressDialogType.Normal, isDismissible: false);
-                    pr.style(
-                      message: "Loading...",
-                      borderRadius: 10,
-                      backgroundColor: Theme.of(context).appBarTheme.color,
-                      progressWidget: Padding(
-                        child: CircularProgressIndicator(),
-                        padding: EdgeInsets.all(16),
-                      ),
-                      messageTextStyle: Theme.of(context).textTheme.headline6,
+                    ArsProgressDialog progressDialog = ArsProgressDialog(
+                        context,
+                        dismissable: false,
+                        // backgroundColor: Theme.of(context).appBarTheme.color,
                     );
-                    pr.show();
+
+                    progressDialog.show(); // show dialog
                     Future.wait([
                       Provider.of<SourceModel>(context, listen: false)
                           .deleteEntry(source.id),
                       Provider.of<FeedModel>(context, listen: false)
                           .deleteSource(source.id)
-                    ]).then((values) => pr.hide().then((isHidden) {
-                      Navigator.pop(context);
-                    }));
+                    ]);
+                    progressDialog.dismiss(); //close dialog
                   },
                   style: OutlinedButton.styleFrom(
                     // padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
@@ -206,25 +199,14 @@ class AddTile extends StatelessWidget {
                     width: buttonWidth,
                     child: OutlinedButton(
                       onPressed: (){
-                        ProgressDialog pr = new ProgressDialog(context,
-                            type: ProgressDialogType.Normal,
-                            isDismissible: false);
-                        pr.style(
-                            message: "Loading...",
-                            borderRadius: 10,
-                            backgroundColor:
-                            Theme.of(context).appBarTheme.color,
-                            progressWidget: Padding(
-                              child: CircularProgressIndicator(),
-                              padding: EdgeInsets.all(16),
-                            ),
-                            messageTextStyle:
-                            Theme.of(context).textTheme.headline6);
-                        pr.show();
-                        importFile(Provider.of<SourceModel>(context, listen: false)).then(
-                            (value){pr.hide();}
+                        ArsProgressDialog progressDialog = ArsProgressDialog(
+                          context,
+                          dismissable: false,
+                          // backgroundColor: Theme.of(context).appBarTheme.color,
                         );
-
+                        progressDialog.show();
+                        importFile(Provider.of<SourceModel>(context, listen: false));
+                        progressDialog.dismiss();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -398,55 +380,42 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
                     onPressed: changeColor == 0
                         ? null
                         : () {
-                            ProgressDialog pr = new ProgressDialog(context,
-                                type: ProgressDialogType.Normal,
-                                isDismissible: false);
-                            pr.style(
-                                message: "Loading...",
-                                borderRadius: 10,
-                                backgroundColor:
-                                    Theme.of(context).appBarTheme.color,
-                                progressWidget: Padding(
-                                  child: CircularProgressIndicator(),
-                                  padding: EdgeInsets.all(16),
-                                ),
-                                messageTextStyle:
-                                    Theme.of(context).textTheme.headline6);
-                            pr.show();
+                      ArsProgressDialog progressDialog = ArsProgressDialog(
+                        context,
+                        dismissable: false,
+                        // backgroundColor: Theme.of(context).appBarTheme.color,
+                      );
+                      progressDialog.show();
                             Provider.of<SourceModel>(context, listen: false)
                                 .checkEntry(inputUrl)
                                 .then((value) {
                               if (value == false) {
-                                pr.hide().then((isHidden) {
-                                  showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (context) {
-                                        return new AlertDialog(
-                                          title: Text("URL not valid!"),
-                                          content: Text(
-                                              "Check your URL, or the webfeed server is temporarily unavailable.",
-                                              style: TextStyle(
-                                                  fontFamily: 'sans')),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text('OK'),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                            )
-                                          ],
-                                        );
-                                      });
-                                });
+                                progressDialog.dismiss();
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      return new AlertDialog(
+                                        title: Text("URL not valid!"),
+                                        content: Text(
+                                            "Check your URL, or the webfeed server is temporarily unavailable.",
+                                            style: TextStyle(
+                                                fontFamily: 'sans')),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text('OK'),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    });
                               } else {
                                 Provider.of<SourceModel>(context, listen: false)
-                                    .addEntry(inputName, inputUrl)
-                                    .then((value) {
-                                  pr.hide().then((isHidden) {
-                                    Navigator.pop(context);
-                                  });
-                                });
+                                    .addEntry(inputName, inputUrl);
+                                progressDialog.dismiss();
+                                Navigator.pop(context);
                               }
                             });
                           },
@@ -561,54 +530,42 @@ class _EditBottomSheet extends State<EditBottomSheet> {
                           .editEntry(widget.source.id, inputName, inputUrl);
                       Navigator.pop(context);
                     } else {
-                      ProgressDialog pr = new ProgressDialog(context,
-                          type: ProgressDialogType.Normal,
-                          isDismissible: false);
-                      pr.style(
-                          message: "Loading...",
-                          borderRadius: 10,
-                          backgroundColor: Theme.of(context).appBarTheme.color,
-                          progressWidget: Padding(
-                            child: CircularProgressIndicator(),
-                            padding: EdgeInsets.all(16),
-                          ),
-                          messageTextStyle:
-                              Theme.of(context).textTheme.headline6);
-                      pr.show();
+                      ArsProgressDialog progressDialog = ArsProgressDialog(
+                        context,
+                        dismissable: false,
+                        // backgroundColor: Theme.of(context).appBarTheme.color,
+                      );
+                      progressDialog.show();
                       Provider.of<SourceModel>(context, listen: false)
                           .checkEntry(inputUrl)
                           .then((value) {
 //                                print(inputUrl);
                         if (value == false) {
-                          pr.hide().then((isHidden) {
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  return new AlertDialog(
-                                    title: Text("URL not valid!"),
-                                    content: Text(
-                                        "Check your URL, or the webfeed server is temporarily unavailable.",
-                                        style: TextStyle(fontFamily: 'sans')),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text('OK'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      )
-                                    ],
-                                  );
-                                });
-                          });
+                          progressDialog.dismiss();
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) {
+                                return new AlertDialog(
+                                  title: Text("URL not valid!"),
+                                  content: Text(
+                                      "Check your URL, or the webfeed server is temporarily unavailable.",
+                                      style: TextStyle(fontFamily: 'sans')),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
                         } else {
                           Provider.of<SourceModel>(context, listen: false)
-                              .editEntry(widget.source.id, inputName, inputUrl)
-                              .then((value) {
-                            pr.hide().then((isHidden) {
-                              Navigator.pop(context);
-                            });
-                          });
+                              .editEntry(widget.source.id, inputName, inputUrl);
+                          progressDialog.dismiss();
+                          Navigator.pop(context);
                         }
                       });
                     }
