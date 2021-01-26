@@ -46,6 +46,7 @@ dependencies:
   database_adapter_sqlite: any
   date_time_format: ^1.1.1
   file_picker: ^2.1.5
+  path_provider:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

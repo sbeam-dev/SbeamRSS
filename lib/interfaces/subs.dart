@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/components/opmlparser.dart';
 import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +152,7 @@ class SourceListTile extends StatelessWidget {
 // --------------Add button-----------
 class AddTile extends StatelessWidget {
 
-  Future<int> importFile() async {
+  Future<int> importFile(sourcemodel) async {
     //return 0 when success, -1 when cancelled, other when error
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -154,8 +160,13 @@ class AddTile extends StatelessWidget {
     );
     if(result != null) {
       File file = File(result.files.single.path);
-      print("Selected!");
+      // print("Selected!");
       // call import
+      String opml = file.readAsStringSync();
+      OPMLParser.parseOPML(opml).forEach((element) {
+        Provider.of<SourceModel>(context, listen: false).addEntry(element.name, element.url);
+      });
+      Fluttertoast.showToast(msg: "Loaded!");
       return 0;
     } else {
       return -1;
@@ -210,9 +221,10 @@ class AddTile extends StatelessWidget {
                             messageTextStyle:
                             Theme.of(context).textTheme.headline6);
                         pr.show();
-                        importFile().then(
+                        importFile(Provider.of<SourceModel>(context, listen: false)).then(
                             (value){pr.hide();}
                         );
+
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -242,8 +254,12 @@ class AddTile extends StatelessWidget {
                   SizedBox(
                     width: buttonWidth,
                     child: OutlinedButton(
-                      onPressed: (){
-
+                      onPressed: () async{
+                        String output = OPMLParser.generateOPML(Provider.of<SourceModel>(context, listen: false).sourceDump);
+                        String dir = (await getExternalStorageDirectory()).path;
+                        File file = new File("$dir/rss.opml");
+                        file.writeAsStringSync(output);
+                        Fluttertoast.showToast(msg: "Saved to $dir/rss.opml");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
