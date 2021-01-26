@@ -30,6 +30,8 @@
 .pub/
 /build/
 
+android/key.properties
+
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -38,5 +40,3 @@ lib/generated_plugin_registrant.dart
 
 #.lock File
 pubspec.lock
-
-/android/key.properties

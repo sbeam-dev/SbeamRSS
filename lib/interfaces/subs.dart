@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/components/opmlparser.dart';
@@ -11,11 +10,11 @@ import '../models/sourcemodel.dart';
 import '../models/feedmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:date_time_format/date_time_format.dart';
 import '../databases/sourcedb.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 // ----------build list of source---------
 class SourceListTile extends StatelessWidget {
@@ -152,7 +151,7 @@ class SourceListTile extends StatelessWidget {
 // --------------Add button-----------
 class AddTile extends StatelessWidget {
 
-  Future<int> importFile(sourcemodel) async {
+  Future<int> importFile(sourceModel) async {
     //return 0 when success, -1 when cancelled, other when error
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -163,10 +162,11 @@ class AddTile extends StatelessWidget {
       // print("Selected!");
       // call import
       String opml = file.readAsStringSync();
-      OPMLParser.parseOPML(opml).forEach((element) {
-        Provider.of<SourceModel>(context, listen: false).addEntry(element.name, element.url);
+      List<RssSource> parseResult = OPMLParser.parseOPML(opml);
+      parseResult.forEach((element) {
+        sourceModel.addEntry(element.name, element.url);
       });
-      Fluttertoast.showToast(msg: "Loaded!");
+      Fluttertoast.showToast(msg: "Successfully loaded " + parseResult.length.toString() + " sources!");
       return 0;
     } else {
       return -1;
@@ -256,10 +256,14 @@ class AddTile extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () async{
                         String output = OPMLParser.generateOPML(Provider.of<SourceModel>(context, listen: false).sourceDump);
-                        String dir = (await getExternalStorageDirectory()).path;
-                        File file = new File("$dir/rss.opml");
+                        String dir = (await getTemporaryDirectory()).path;
+                        String tmpPath = "$dir/SbeamRSS"+DateTime.now().format()+".opml";
+                        File file = new File(tmpPath);
                         file.writeAsStringSync(output);
-                        Fluttertoast.showToast(msg: "Saved to $dir/rss.opml");
+                        final params = SaveFileDialogParams(sourceFilePath: tmpPath);
+                        final filePath = await FlutterFileDialog.saveFile(params: params);
+                        // print(filePath);
+                        Fluttertoast.showToast(msg: "Saved to $filePath!");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
