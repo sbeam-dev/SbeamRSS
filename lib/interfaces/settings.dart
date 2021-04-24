@@ -115,7 +115,7 @@ class _ThemeSettingCardState extends State<ThemeSettingCard> {
           onTap: (){
             showDialog(
                 context: context,
-                child: SimpleDialog(
+                builder: (_) => new SimpleDialog(
                   title: Text("Choose theme..."),
                   children: <Widget>[
                     RadioListTile<ThemeOptions>(
@@ -283,7 +283,7 @@ class _ClearDataCardState extends State<ClearDataCard> {
           onTap: (){
             showDialog(
                 context: context,
-                child: SimpleDialog(
+                builder: (_) => new  SimpleDialog(
                   title: Text("Delete old feeds"),
                   children: <Widget>[
                     SimpleDialogOption(
