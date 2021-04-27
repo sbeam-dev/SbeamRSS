@@ -41,7 +41,7 @@ class SourceModel extends ChangeNotifier{
 
   Future<bool> checkEntry(String url) async {
     bool flag = true;
-    var response = await Http.get(url).catchError((error){flag = false;});
+    var response = await Http.get(Uri.parse(url)).catchError((error){flag = false;});
     if (flag == false) return flag;
     if (response.statusCode > 350) {
       flag = false;

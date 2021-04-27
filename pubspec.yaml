@@ -11,7 +11,7 @@ description: A RSS reader.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.7+22
+version: 1.1.1+24
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -21,31 +21,31 @@ dependencies:
     sdk: flutter
   sqflite:
   path:
-  provider: ^4.3.2
-  webfeed: ^0.6.0
-  http: ^0.12.2
+  provider: ^5.0.0
+  webfeed: ^0.7.0
+  http: ^0.13.1
   flutter_html: ^1.1.1
-  shared_preferences: ^0.5.12
+  shared_preferences: ^2.0.5
   time_formatter: ^1.0.0
   incrementally_loading_listview: ^0.3.0
-  url_launcher: ^5.7.10
-  share: ^0.6.5+4
+  url_launcher: ^6.0.3
+  share: ^2.0.1
   cached_network_image: ^2.3.3
-  transparent_image: ^1.0.0
-  flutter_svg: ^0.19.2
-  fluttertoast: ^7.1.6
-  google_fonts: ^1.1.1
-  salomon_bottom_bar: ^2.0.0
-  font_awesome_flutter: ^8.10.0
-  connectivity: ^2.0.2
-  expansion_tile_card: ^1.1.0
+  transparent_image: ^2.0.0
+  flutter_svg: ^0.20.0-nullsafety.3
+  fluttertoast: ^8.0.6
+  google_fonts: ^2.0.0
+  salomon_bottom_bar: ^3.0.0
+  font_awesome_flutter: ^9.0.0
+  connectivity: ^3.0.3
+  expansion_tile_card: ^2.0.0
   flutter_icons: ^1.1.0
   database: any
   search: any
   database_adapter_sqlite: any
-  date_time_format: ^1.1.1
-  file_picker: ^2.1.5
-  flutter_file_dialog: ^1.0.0
+  date_time_format: ^2.0.1
+  file_picker: ^3.0.1
+  flutter_file_dialog: ^2.0.0
   ars_progress_dialog: ^0.1.2
   path_provider:
 

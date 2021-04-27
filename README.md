@@ -28,13 +28,15 @@ The app works fully offline(uses local device to pull updates and store data). I
   - [x] UI for reading feed articles
   - [x] Frontend refinement and theming
   - [x] Put on Beta testing
-  - [ ] Feed filtering
+  - [ ] Feed filtering (categories)
   - [x] Search articles (need improvements)
   - [x] Favorite articles
-  - [ ] UI&Font optimizations
+  - [x] UI&Font optimizations
   - [x] OPML import&export
   - [ ] Backup and restore
+  - [ ] Better CJK font
   - [ ] Optimization for tablets
+  - [ ] Better reading page performance
 
 ## Known Defects
 
@@ -44,4 +46,4 @@ The app works fully offline(uses local device to pull updates and store data). I
 
 ## Building
 
-We use the latest beta branch of flutter(1.25). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.
+We use the latest beta branch of flutter(2.2). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.

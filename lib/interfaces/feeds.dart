@@ -53,14 +53,14 @@ class _FeedsPageState extends State<FeedsPage> {
                 mainAxisSize: MainAxisSize.min,
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text("Take me there"),
                   onPressed: (){
                     launch("https://github.com/sbeam-dev/SbeamRSS/wiki/Quick-start");
                     Navigator.of(context).pop();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text("Don't show again"),
                   onPressed: (){
                     ignoreDialog();

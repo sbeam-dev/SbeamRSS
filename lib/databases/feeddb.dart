@@ -126,7 +126,7 @@ class FeedDBOperations{
     sourceList = await SourceDBOperations.querySourceDatabase();
     for (final source in sourceList) {
       bool successFlag = true;
-      Http.Response response = await Http.get(source.url).catchError((error) {
+      Http.Response response = await Http.get(Uri.parse(source.url)).catchError((error) {
         successFlag = false;
       });
       if (!successFlag) continue;

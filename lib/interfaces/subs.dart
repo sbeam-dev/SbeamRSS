@@ -402,7 +402,7 @@ class _AddSourceBottomSheet extends State<AddSourceBottomSheet> {
                                             style: TextStyle(
                                                 fontFamily: 'sans')),
                                         actions: <Widget>[
-                                          FlatButton(
+                                          TextButton(
                                             child: Text('OK'),
                                             onPressed: () {
                                               Navigator.pop(context);
@@ -552,12 +552,13 @@ class _EditBottomSheet extends State<EditBottomSheet> {
                                       "Check your URL, or the webfeed server is temporarily unavailable.",
                                       style: TextStyle(fontFamily: 'sans')),
                                   actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    )
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('OK'),
+                                    ),
+
                                   ],
                                 );
                               });
