@@ -37,6 +37,7 @@ The app works fully offline(uses local device to pull updates and store data). I
   - [ ] Better CJK font
   - [ ] Optimization for tablets
   - [ ] Better reading page performance
+  - [ ] Null safety
 
 ## Known Defects
 

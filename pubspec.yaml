@@ -24,7 +24,7 @@ dependencies:
   provider: ^5.0.0
   webfeed: ^0.7.0
   http: ^0.13.1
-  flutter_html: ^1.1.1
+  flutter_html: ^1.3.0
   shared_preferences: ^2.0.5
   time_formatter: ^1.0.0
   incrementally_loading_listview: ^0.3.0
