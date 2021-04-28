@@ -40,9 +40,6 @@ dependencies:
   connectivity: ^3.0.3
   expansion_tile_card: ^2.0.0
   flutter_icons: ^1.1.0
-  database: any
-  search: any
-  database_adapter_sqlite: any
   date_time_format: ^2.0.1
   file_picker: ^3.0.1
   flutter_file_dialog: ^2.0.0

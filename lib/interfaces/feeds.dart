@@ -691,45 +691,53 @@ class _ResultFeedCardState extends State<ResultFeedCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                      child: Text("From " + sourceName,
-                          style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
+                    padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                    child: Text(sourceName,
+                      style: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Theme.of(context).accentColor,fontSize: 15),),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(16, 0, 16, 6),
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
                     child: Text(widget.entry.title,
                         style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
                             color: (Theme.of(context).brightness == Brightness.light) ?
                             (Colors.black) :
                             (Colors.white)
-                        )),
+                        ),),
                         maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 4, overflow: TextOverflow.ellipsis),
+                    child: Text(removeAllHtmlTags(widget.entry.description),
+                        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 17)),
+                        maxLines: 5, overflow: TextOverflow.ellipsis),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(16, 4, 4, 4),
+                    padding: EdgeInsets.fromLTRB(16, 6, 4, 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
                           formatTime(widget.entry.getTime * 1000),
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                          style: GoogleFonts.notoSans(textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w300,
+                              color: Theme.of(context).brightness==Brightness.light?Colors.black87:Colors.white70
+                          )),
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
           Divider(
             height: 8,
-            thickness: 2,
-            indent: 16,
-            endIndent: 16,
+            thickness: 1,
+            indent: 0,
+            endIndent: 0,
           )
         ],
       );
@@ -747,74 +755,69 @@ class _ResultFeedCardState extends State<ResultFeedCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
+                  LayoutBuilder(
+                      builder: (context, constraint){
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
                             Padding(
-                                padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                                child: Text("From " + sourceName,
-                                    style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(16, 0, 0, 6),
-                              child: Text(widget.entry.title,
-                                  style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
-                                      color: (Theme.of(context).brightness == Brightness.light) ?
-                                      (Colors.black) :
-                                      (Colors.white)
-                                  ),),
-                                  maxLines: 3, overflow: TextOverflow.ellipsis),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
-                              child: Text(removeAllHtmlTags(widget.entry.description),style: TextStyle(fontSize: 16, fontFamily: "serif"), maxLines: 2, overflow: TextOverflow.ellipsis),
+                                padding: EdgeInsets.fromLTRB(16, 4, 20, 4),
+                                child: ClipRRect(
+                                  child: FittedBox(
+                                    child: CachedNetworkImage(
+                                      imageUrl: headImageSrc,
+                                      placeholder: (context, url) => Image.memory(kTransparentImage, width: 100, height: 100,),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    ),
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                )
                             ),
                           ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 140,
-                        width: 140,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-//                          child: ExtendedImage.network(
-//                            headImageSrc,
-//                            cache: true,
-//                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: headImageSrc,
-                            placeholder: (context, url) => Image.memory(kTransparentImage),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
-                        ),
-                      )
-                    ],
+                        );
+                      }
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(16, 4, 4, 4),
+                      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                      child: Text(sourceName,
+                        style: GoogleFonts.getFont('Noto Sans', textStyle: TextStyle(color: Theme.of(context).accentColor,fontSize: 15),),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                      )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: Text(widget.entry.title,
+                        style: GoogleFonts.getFont("Noto Sans", textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
+                            color: (Theme.of(context).brightness == Brightness.light) ?
+                            Colors.black:Colors.white
+                        )),
+                        maxLines: 3, overflow: TextOverflow.ellipsis),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 6, 4, 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
                           formatTime(widget.entry.getTime * 1000),
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                          style: GoogleFonts.notoSans(textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w300,
+                              color: Theme.of(context).brightness==Brightness.light?Colors.black87:Colors.white70
+                          )),
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
           Divider(
             height: 8,
-            thickness: 2,
-            indent: 16,
-            endIndent: 16,
+            thickness: 1,
+            indent: 0,
+            endIndent: 0,
           )
         ],
       );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:date_time_format/date_time_format.dart';
@@ -282,7 +283,7 @@ class _CustomizeSheetState extends State<CustomizeSheet> {
       children: <Widget>[
         ListTile(
           contentPadding: EdgeInsets.fromLTRB(16, 0, 0, 0),
-          leading: Icon(Icons.format_size),
+          leading: Icon(FlutterIcons.text_size_oct, color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.white,),
           title: Text("Font Size", style: GoogleFonts.notoSans(),),
           trailing: SizedBox(
             width: 125,
@@ -306,7 +307,7 @@ class _CustomizeSheetState extends State<CustomizeSheet> {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.font_download),
+          leading: Icon(FlutterIcons.font_download_mdi,color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.white,),
           title: Text("Font Family:", style: GoogleFonts.notoSans(),),
         ),
         RadioListTile<RadioItem>(
