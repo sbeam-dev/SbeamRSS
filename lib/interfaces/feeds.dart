@@ -19,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/favmodel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+enum MainMenuItems { search, settings }
+
 class FeedsPage extends StatefulWidget {
   final ScrollController scrController;
   FeedsPage({Key key, this.scrController}) : super(key: key);
@@ -130,20 +132,82 @@ class _FeedsPageState extends State<FeedsPage> {
             ),
             actions: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.search),
+                    icon: Icon(Icons.filter_list),
                     onPressed: (){
-                      showSearch(
-                          context: context,
-                          delegate: FeedSearchDelegate(),
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return FeedFilterSheet();
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       );
                     },
                   ),
-                  IconButton(
-                    icon: Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
-                    },
+                  PopupMenuButton(
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<MainMenuItems>>[
+                        new PopupMenuItem<MainMenuItems>(
+                            value: MainMenuItems.search,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: Icon(Icons.search),
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text("Search"),
+                                ),
+                              ],
+                            )
+                        ),
+                        new PopupMenuItem<MainMenuItems>(
+                            value: MainMenuItems.settings,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: Icon(Icons.settings),
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text("Settings"),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                      icon: Icon(Icons.more_vert),
+                      onSelected: (MainMenuItems selected) {
+                        if (selected == MainMenuItems.search) {
+                          showSearch(
+                            context: context,
+                            delegate: FeedSearchDelegate(),
+                          );
+                        } else {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                        }
+                      },
                   ),
+                  // IconButton(
+                  //   icon: Icon(Icons.search),
+                  //   onPressed: (){
+                  //     showSearch(
+                  //         context: context,
+                  //         delegate: FeedSearchDelegate(),
+                  //     );
+                  //   },
+                  // ),
+                  // IconButton(
+                  //   icon: Icon(Icons.settings),
+                  //   onPressed: () {
+                  //     Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                  //   },
+                  // ),
             ],
           ),
         ],
@@ -842,6 +906,46 @@ class LoadingCard extends StatelessWidget {
         );
       },
       itemCount: 1,
+    );
+  }
+}
+
+class FeedFilterSheet extends StatefulWidget {
+  @override
+  _FeedFilterSheet createState() => _FeedFilterSheet();
+}
+
+class _FeedFilterSheet extends State<FeedFilterSheet> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          title: Center(
+            child: Text(
+              "Select categories",
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+        ),
+        CheckboxListTile(
+            value: true,
+            onChanged: (value){},
+            title: Text('Default')
+        ),
+        CheckboxListTile(
+            value: false,
+            onChanged: (value){},
+            title: Text('Custom 1')
+        ),
+        CheckboxListTile(
+            value: true,
+            onChanged: (value){},
+            title: Text('Custom 2')
+        )
+      ],
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/components/opmlparser.dart';
+import 'package:flutter_app1/interfaces/categories.dart';
 import 'package:flutter_app1/interfaces/settings.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -635,6 +636,12 @@ class _SubsPageState extends State<SubsPage> {
               },
             ),
             actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.list_alt),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CategoriesPage()));
+                },
+              ),
               IconButton(
                 icon: Icon(Icons.settings),
                 onPressed: () {
