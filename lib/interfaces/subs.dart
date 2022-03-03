@@ -147,8 +147,8 @@ class AddTile extends StatelessWidget {
   Future<int> importFile(sourceModel) async {
     //return 0 when success, -1 when cancelled, other when error
     FilePickerResult result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['opml'],
+      type: FileType.any, // FileType.custom causes error, opml extension not supported
+      // allowedExtensions: ['opml'],
     );
     if(result != null) {
       File file = File(result.files.single.path);

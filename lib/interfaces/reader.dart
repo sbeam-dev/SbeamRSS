@@ -10,6 +10,7 @@ import 'package:share/share.dart';
 import 'package:provider/provider.dart';
 import '../models/readermodel.dart';
 import '../databases/feeddb.dart';
+import 'package:html/dom.dart' as dom;
 
 enum MenuItems { share, open, customize }
 
@@ -207,7 +208,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
                             builder: (context, readerModel, child){
                               return Html(
                                 data: _toHTML(entry.description),
-                                onLinkTap: (url) => _launchURL(url),
+                                onLinkTap: (String url, RenderContext context, Map<String, String> attributes, dom.Element element) {
+                                  _launchURL(url);
+                                },
                                 style: {
                                   "html": Style(
                                     backgroundColor: (Theme.of(context).brightness == Brightness.light) ? Colors.white : Theme.of(context).backgroundColor,

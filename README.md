@@ -19,7 +19,7 @@ Alpha testing versions will be released in the github release page.
 
 ## Features
 
-The app works fully offline(uses local device to pull updates and store data). In the future, cloud integration and push notifications might be implemented(*low priority*).
+The app works fully offline(uses local device to pull updates and store data).
 
 ### To-dos
 
@@ -38,6 +38,7 @@ The app works fully offline(uses local device to pull updates and store data). I
   - [ ] Optimization for tablets
   - [ ] Better reading page performance
   - [ ] Null safety
+  - [ ] Material You Theming Support
 
 ## Known Defects
 
@@ -47,4 +48,4 @@ The app works fully offline(uses local device to pull updates and store data). I
 
 ## Building
 
-We use the latest beta branch of flutter(2.2). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.
+We use the latest stable branch of flutter(2.10). The used pub packages can be found in `pubspecs.yaml`. Pull requests are welcomed.
