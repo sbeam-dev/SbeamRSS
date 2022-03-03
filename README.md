@@ -43,7 +43,6 @@ The app works fully offline(uses local device to pull updates and store data).
 ## Known Defects
 
 + Text can't be selected in reading page. Waiting for the flutter_html package to implement this feature.
-+ The Scrollbar in reading page can't be updated instantly. It's a workaround to avoid severe performance issue.
 + If you have other suggestions, feel free to open an issue!
 
 ## Building
