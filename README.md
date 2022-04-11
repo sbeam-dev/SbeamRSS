@@ -3,9 +3,7 @@
 
 An Android RSS reader based on flutter.
 
-In early development state.
-
-Notice: We develop the app in our free time. Updates can be slow, but as we daily drive the app, we will keep it alive.
+**The project is currently not actively maintained. Please check out a similar app [Thud](https://github.com/aerotoad/Thud).**
 
 [Documentation](https://github.com/sbeam-dev/SbeamRSS/wiki/)
 
