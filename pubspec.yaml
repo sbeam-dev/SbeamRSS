@@ -36,7 +36,7 @@ dependencies:
   fluttertoast: ^8.0.6
   google_fonts: ^2.0.0
   salomon_bottom_bar: ^3.0.0
-  font_awesome_flutter: ^9.0.0
+  font_awesome_flutter: ^10.1.0
   connectivity: ^3.0.3
   expansion_tile_card: ^2.0.0
   flutter_icons: ^1.1.0
@@ -45,6 +45,7 @@ dependencies:
   flutter_file_dialog: ^2.0.0
   ars_progress_dialog: ^0.1.2
   path_provider:
+  get_storage: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -8,19 +8,23 @@ import 'package:flutter_app1/models/favmodel.dart';
 import 'package:provider/provider.dart';
 import 'interfaces/home.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() => runApp(
-  new MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => SourceModel()),
-        ChangeNotifierProvider(create: (context) => FeedModel()),
-        ChangeNotifierProvider(create: (context) => ReaderModel()),
-        ChangeNotifierProvider(create: (context) => ThemeModel()),
-        ChangeNotifierProvider(create: (context) => FavModel()),
-      ],
-      child: MyApp(),
-  )
-);
+void main() async {
+  await GetStorage.init('categories');
+  runApp(
+    new MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => SourceModel()),
+          ChangeNotifierProvider(create: (context) => FeedModel()),
+          ChangeNotifierProvider(create: (context) => ReaderModel()),
+          ChangeNotifierProvider(create: (context) => ThemeModel()),
+          ChangeNotifierProvider(create: (context) => FavModel()),
+        ],
+        child: MyApp(),
+    )
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
