@@ -33,10 +33,7 @@ The app works fully offline(uses local device to pull updates and store data).
   - [x] Favorite articles
   - [x] UI&Font optimizations
   - [x] OPML import&export
-  - [ ] Backup and restore
-  - [ ] Better CJK font
   - [ ] Optimization for tablets
-  - [ ] Better reading page performance
   - [ ] Null safety
   - [ ] Material You Theming Support
 
